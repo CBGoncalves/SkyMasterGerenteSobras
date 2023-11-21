@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<AnchorPane fx:controller="com.projetos.skymaster.skymastergerentesobras.controllers.LoginController"
+      xmlns:fx="http://javafx.com/fxml"
+      styleClass="root">
+
+    <stylesheets>
+        <URL value="@../css/login.css"/>
+    </stylesheets>
+
+    <ImageView
+            fx:id="logoSky"
+            fitWidth="150" fitHeight="150"
+            preserveRatio="true"
+            AnchorPane.leftAnchor="375" AnchorPane.topAnchor="130">
+        <image>
+            <Image url="@../img/logo_sky.jpg"/>
+        </image>
+    </ImageView>
+
+    <Label text="Nome do Usuário"
+           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="280"/>
+    <TextField fx:id="campoUsuario"
+           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="300"/>
+
+    <Label text="Senha"
+           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="354"/>
+    <PasswordField fx:id="campoSenha"
+                   AnchorPane.leftAnchor="306" AnchorPane.topAnchor="374"/>
+
+
+    <Button fx:id="btnEntrar" text="Entrar" onAction="#handleSubmitButtonAction"
+            AnchorPane.leftAnchor="378" AnchorPane.topAnchor="443"/>
+
+</AnchorPane>

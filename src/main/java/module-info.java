@@ -4,7 +4,10 @@ module com.projetos.skymaster.skymastergerentesobras {
 
     requires org.controlsfx.controls;
     requires org.kordamp.ikonli.javafx;
+    requires java.sql;
 
     opens com.projetos.skymaster.skymastergerentesobras to javafx.fxml;
     exports com.projetos.skymaster.skymastergerentesobras;
+    exports com.projetos.skymaster.skymastergerentesobras.controllers;
+    opens com.projetos.skymaster.skymastergerentesobras.controllers to javafx.fxml;
 }

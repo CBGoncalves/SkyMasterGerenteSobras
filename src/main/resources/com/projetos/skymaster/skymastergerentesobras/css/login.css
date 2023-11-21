@@ -1,0 +1,22 @@
+@font-face {
+    font-family: 'Poppins Medium';
+    src: url("../fonts/Poppins-Medium.ttf");
+}
+
+.root {
+    -fx-font-family: 'Poppins Medium';
+    -fx-font-size: 14px;
+    -fx-background-color: #FFFFFF;
+}
+
+#btnEntrar {
+    -fx-background-color: #011A5D;
+    -fx-text-fill: #FFFFFF;
+    -fx-max-width: 145px;
+    -fx-max-height: 41px;
+}
+
+#campoUsuario, #campoSenha {
+    -fx-max-width: 289px;
+    -fx-max-height: 33px;
+}

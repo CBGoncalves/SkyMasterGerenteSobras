@@ -6,41 +6,36 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
-<GridPane fx:controller="com.projetos.skymaster.skymastergerentesobras.controllers.LoginController"
-          xmlns:fx="http://javafx.com/fxml"
-          alignment="center" hgap="10" vgap="10"
-          styleClass="root">
-    <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
+<AnchorPane fx:controller="com.projetos.skymaster.skymastergerentesobras.controllers.LoginController"
+      xmlns:fx="http://javafx.com/fxml"
+      styleClass="root">
 
     <stylesheets>
         <URL value="@../css/login.css"/>
     </stylesheets>
 
     <ImageView
-        fx:id="logoSky"
-        fitWidth="150" fitHeight="150"
-        GridPane.halignment="CENTER"
-        preserveRatio="true">
+            fx:id="logoSky"
+            fitWidth="150" fitHeight="150"
+            preserveRatio="true"
+            AnchorPane.leftAnchor="375" AnchorPane.topAnchor="130">
         <image>
             <Image url="@../img/logo_sky.jpg"/>
         </image>
-
     </ImageView>
 
     <Label text="Nome do Usuário"
-           GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="280"/>
     <TextField fx:id="campoUsuario"
-            GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="300"/>
+
     <Label text="Senha"
-           GridPane.columnIndex="0" GridPane.RowIndex="3"/>
+           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="354"/>
     <PasswordField fx:id="campoSenha"
-            GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-
-    <Button fx:id="btnEntrar" text="Entrar"
-            GridPane.columnIndex="0" GridPane.rowIndex="7"
-            GridPane.halignment="CENTER"
-            onAction="#handleSubmitButtonAction"/>
+                   AnchorPane.leftAnchor="306" AnchorPane.topAnchor="374"/>
 
 
+    <Button fx:id="btnEntrar" text="Entrar" onAction="#handleSubmitButtonAction"
+            AnchorPane.leftAnchor="378" AnchorPane.topAnchor="443"/>
 
-</GridPane>
+</AnchorPane>

@@ -25,7 +25,6 @@ public class LoginController {
     private Button btnEntrar;
 
     public void handleSubmitButtonAction(ActionEvent event) throws SQLException {
-
         Window owner = btnEntrar.getScene().getWindow();
 
         String usuario = campoUsuario.getText();
@@ -42,28 +41,10 @@ public class LoginController {
                     "Preencha o campo senha!");
             return;
         }
+        Stage stageLogin = (Stage) btnEntrar.getScene().getWindow();
 
         UserDao userDao = new UserDao();
-        userDao.selectUser(usuario, senha);
-
-        try {
-            Stage stageLogin = (Stage) btnEntrar.getScene().getWindow();
-            stageLogin.close();
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/TelaInicial.fxml"));
-            Parent root = loader.load();
-
-            Stage telaInicial = new Stage();
-            telaInicial.setTitle("Tela Inicial");
-            telaInicial.setScene(new Scene(root));
-            telaInicial.show();
-
-            showAlert(Alert.AlertType.CONFIRMATION, owner, "Sucesso!",
-                    "Bem vindo " + usuario + "!");
-
-        } catch (IOException e) {
-            System.out.println("Erro:" + e);
-        }
+        userDao.selectUserFromLogin(usuario, senha, stageLogin);
 
     }
 

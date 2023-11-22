@@ -10,4 +10,6 @@ module com.projetos.skymaster.skymastergerentesobras {
     exports com.projetos.skymaster.skymastergerentesobras;
     exports com.projetos.skymaster.skymastergerentesobras.controllers;
     opens com.projetos.skymaster.skymastergerentesobras.controllers to javafx.fxml;
+    opens com.projetos.skymaster.skymastergerentesobras.models;
+
 }

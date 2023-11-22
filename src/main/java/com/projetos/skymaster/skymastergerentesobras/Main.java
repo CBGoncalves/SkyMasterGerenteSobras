@@ -14,6 +14,7 @@ public class Main extends Application {
 
         stage.setTitle("Bem-Vindo!");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 

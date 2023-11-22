@@ -2,7 +2,7 @@ package com.projetos.skymaster.skymastergerentesobras.controllers;
 
 import javafx.event.ActionEvent;
 
-public class NavigationBar {
+public class NavigationBarController {
 
     public void handleCadastrarUsuario(ActionEvent event) {
     }

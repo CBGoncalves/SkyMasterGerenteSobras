@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'Poppins Medium';
+    src: url("../fonts/Poppins-Medium.ttf");
+}
+
+.root {
+    -fx-font-family: 'Poppins Medium';
+    -fx-font-size: 14px;
+    -fx-background-color: #FFFFFF;
+}
+
+#title {
+    -fx-font-size: 24px;
+}

@@ -1,0 +1,26 @@
+@font-face {
+    font-family: 'Poppins Regular';
+    src: url("../fonts/Poppins-Regular.ttf");
+}
+
+.navigation {
+    -fx-padding: 7 0 0 0;
+}
+
+.label {
+    -fx-text-fill: #FFFFFF;
+}
+
+.menu, .menu-bar{
+    -fx-font-family: 'Poppins Regular';
+    -fx-font-size: 14px;
+    -fx-background-color: #011A5D;
+    -fx-border-width: 0;
+}
+
+.context-menu, .menu-item, .menu:hover {
+    -fx-background-color: #001140;
+}
+
+
+

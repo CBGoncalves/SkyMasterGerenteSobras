@@ -39,6 +39,7 @@ public class UserDao {
                     Stage telaInicial = new Stage();
                     telaInicial.setTitle("Tela Inicial");
                     telaInicial.setScene(new Scene(root));
+                    telaInicial.setResizable(false);
                     telaInicial.show();
 
                     showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",

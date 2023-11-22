@@ -11,7 +11,6 @@ public class Registro {
     private String nomeMarca;
     private String nomeObra;
     private String nomeUsuario;
-    private String nomeTipoUsuario;
     private LocalDate data;
 
     public String getTipo() {
@@ -76,14 +75,6 @@ public class Registro {
 
     public void setNomeUsuario(String nomeUsuario) {
         this.nomeUsuario = nomeUsuario;
-    }
-
-    public String getNomeTipoUsuario() {
-        return nomeTipoUsuario;
-    }
-
-    public void setNomeTipoUsuario(String nomeTipoUsuario) {
-        this.nomeTipoUsuario = nomeTipoUsuario;
     }
 
     public LocalDate getData() {

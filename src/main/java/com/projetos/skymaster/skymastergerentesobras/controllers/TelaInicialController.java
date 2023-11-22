@@ -50,11 +50,11 @@ public class TelaInicialController {
         marcaColumn.setCellValueFactory(new PropertyValueFactory<>("nomeMarca"));
         obraColumn.setCellValueFactory(new PropertyValueFactory<>("nomeObra"));
         usuarioColumn.setCellValueFactory(new PropertyValueFactory<>("nomeUsuario"));
-        tipoUsuarioColumn.setCellValueFactory(new PropertyValueFactory<>("nomeTipoUsuario"));
         dataColumn.setCellValueFactory(new PropertyValueFactory<>("data"));
 
         try {
             List<Registro> registros = registroDao.selectRegistersByDate();
+
             tableView.getItems().addAll(registros);
         } catch (SQLException e) {
             e.printStackTrace();

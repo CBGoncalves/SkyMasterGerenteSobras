@@ -40,16 +40,83 @@ public class NavigationBarController {
     }
 
     public void handleListarUsuario(ActionEvent event) {
+        try {
+            Stage stageAtual = (Stage) menuBar.getScene().getWindow();
+            stageAtual.close();
 
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/ListarUsuario.fxml"));
+            Parent root = loader.load();
+
+            Stage listarUsuario = new Stage();
+            listarUsuario.setTitle("Listar Usuário");
+            listarUsuario.setScene(new Scene(root));
+            listarUsuario.setResizable(false);
+            listarUsuario.getIcons().add(icon);
+            listarUsuario.show();
+
+        } catch (IOException e) {
+
+        }
     }
 
     public void handleCadastrarItens(ActionEvent event) {
+        try {
+            Stage stageAtual = (Stage) menuBar.getScene().getWindow();
+            stageAtual.close();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/CadastrarItem.fxml"));
+            Parent root = loader.load();
+
+            Stage cadastrarItem = new Stage();
+            cadastrarItem.setTitle("Cadastrar Item");
+            cadastrarItem.setScene(new Scene(root));
+            cadastrarItem.setResizable(false);
+            cadastrarItem.getIcons().add(icon);
+            cadastrarItem.show();
+
+        } catch (IOException e) {
+
+        }
     }
 
     public void handleListarItens(ActionEvent event) {
+        try {
+            Stage stageAtual = (Stage) menuBar.getScene().getWindow();
+            stageAtual.close();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/ListarItem.fxml"));
+            Parent root = loader.load();
+
+            Stage listarItem = new Stage();
+            listarItem.setTitle("Listar Item");
+            listarItem.setScene(new Scene(root));
+            listarItem.setResizable(false);
+            listarItem.getIcons().add(icon);
+            listarItem.show();
+
+        } catch (IOException e) {
+
+        }
     }
 
     public void handleCadastrarMarcas(ActionEvent event) {
+        try {
+            Stage stageAtual = (Stage) menuBar.getScene().getWindow();
+            stageAtual.close();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/CadastrarMarca.fxml"));
+            Parent root = loader.load();
+
+            Stage cadastrarMarca = new Stage();
+            cadastrarMarca.setTitle("Cadastrar Marca");
+            cadastrarMarca.setScene(new Scene(root));
+            cadastrarMarca.setResizable(false);
+            cadastrarMarca.getIcons().add(icon);
+            cadastrarMarca.show();
+
+        } catch (IOException e) {
+
+        }
     }
 
     public void handleListarMarcas(ActionEvent event) {

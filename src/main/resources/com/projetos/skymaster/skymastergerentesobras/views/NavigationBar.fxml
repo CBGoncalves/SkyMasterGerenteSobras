@@ -7,40 +7,40 @@
          xmlns:fx="http://javafx.com/fxml"
          fx:controller="com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController"
          prefWidth="900.0" prefHeight="45.0"
-         styleClass="navigation">
+         styleClass="navigation" fx:id="menuBar">
 
     <stylesheets>
         <URL value="@../css/navigationBar.css"/>
     </stylesheets>
 
     <Menu text="Usuário" >
-        <MenuItem text="Cadastrar Usuários" onAction="#handleCadastrarUsuario"/>
-        <MenuItem text="Listar Usuários" onAction="#handleListarUsuario"/>
+        <MenuItem fx:id="itemCadUsuario" text="Cadastrar Usuários" onAction="#handleCadastrarUsuario"/>
+        <MenuItem fx:id="itemListUsuario" text="Listar Usuários" onAction="#handleListarUsuario"/>
     </Menu>
 
     <Menu text="Itens">
-        <MenuItem text="Cadastrar Itens" onAction="#handleCadastrarItens"/>
-        <MenuItem text="Listar Itens" onAction="#handleListarItens"/>
+        <MenuItem fx:id="itemCadItem" text="Cadastrar Itens" onAction="#handleCadastrarItens"/>
+        <MenuItem fx:id="itemListItem" text="Listar Itens" onAction="#handleListarItens"/>
     </Menu>
 
     <Menu text="Marcas">
-        <MenuItem text="Cadastrar Marcas" onAction="#handleCadastrarMarcas"/>
-        <MenuItem text="Listar Marcas" onAction="#handleListarMarcas"/>
+        <MenuItem fx:id="itemCadMarcas" text="Cadastrar Marcas" onAction="#handleCadastrarMarcas"/>
+        <MenuItem fx:id="itemListMarcas" text="Listar Marcas" onAction="#handleListarMarcas"/>
     </Menu>
 
     <Menu text="Obras">
-        <MenuItem text="Cadastrar Obras" onAction="#handleCadastrarObras"/>
-        <MenuItem text="Listar Obras" onAction="#handleListarObras"/>
+        <MenuItem fx:id="itemCadObras" text="Cadastrar Obras" onAction="#handleCadastrarObras"/>
+        <MenuItem fx:id="itemListObras" text="Listar Obras" onAction="#handleListarObras"/>
     </Menu>
 
     <Menu text="Registros">
-        <MenuItem text="Cadastrar Entradas" onAction="#handleCadastrarEntradas"/>
-        <MenuItem text="Cadastrar Saídas" onAction="#handleCadastrarSaidas"/>
-        <MenuItem text="Histórico de Registros" onAction="#handleHistorico"/>
+        <MenuItem fx:id="itemCadEntradas" text="Cadastrar Entradas" onAction="#handleCadastrarEntradas"/>
+        <MenuItem fx:id="itemCadSaidas" text="Cadastrar Saídas" onAction="#handleCadastrarSaidas"/>
+        <MenuItem fx:id="itemHistRegistros" text="Histórico de Registros" onAction="#handleHistorico"/>
     </Menu>
 
     <Menu text="Relatórios">
-        <MenuItem text="Gerar Relatório" onAction="#handleGerarRelatorio"/>
+        <MenuItem fx:id="itemRelatorios" text="Gerar Relatório" onAction="#handleGerarRelatorio"/>
     </Menu>
 
 

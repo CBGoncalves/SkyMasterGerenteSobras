@@ -1,18 +1,15 @@
 package com.projetos.skymaster.skymastergerentesobras.dao;
 
+import com.projetos.skymaster.skymastergerentesobras.controllers.TelaInicialController;
+import com.projetos.skymaster.skymastergerentesobras.models.Usuario;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class UserDao {
 
@@ -20,21 +17,35 @@ public class UserDao {
     private static final String DB_USER = "root";
     private static final String DB_PASS = "root";
 
-    public void selectUserFromLogin(String usuario, String senha, Stage stageLogin) throws SQLException {
+    public String tipoUsuario;
+
+    public String selectUserFromLogin(String usuario, String senha, Stage stageLogin) throws SQLException {
         try {
             Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 
-            PreparedStatement preparedStatement = con.prepareStatement("SELECT nomeUsuario, senhaUsuario FROM usuario WHERE nomeUsuario=? AND senhaUsuario=?");
+            PreparedStatement preparedStatement = con.prepareStatement("SELECT nomeUsuario, senhaUsuario, tipoUsuario.nomeTipoUsuario \n" +
+                    "FROM usuario \n" +
+                    "INNER JOIN tipousuario ON usuario.codTipoUsuario = tipousuario.codTipoUsuario\n" +
+                    "WHERE nomeUsuario=? AND senhaUsuario=?;");
             preparedStatement.setString(1, usuario);
             preparedStatement.setString(2, senha);
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
+                tipoUsuario = rs.getString("nomeTipoUsuario");
+                System.out.println(tipoUsuario);
+
+                Usuario u = new Usuario();
+                u.setTipoUsuario(tipoUsuario);
+
                 try {
                     stageLogin.close();
 
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/TelaInicial.fxml"));
                     Parent root = loader.load();
+
+                    TelaInicialController controller = loader.getController();
+                    controller.setUser(u);
 
                     Stage telaInicial = new Stage();
                     telaInicial.setTitle("Tela Inicial");
@@ -46,8 +57,9 @@ public class UserDao {
                             "Bem vindo " + usuario + "!");
 
                 } catch (IOException e) {
-
+                    e.printStackTrace();
                 }
+
             } else {
                 showAlert(Alert.AlertType.ERROR, "Falha no login!",
                         "Usuário ou senha incorretos!");
@@ -56,6 +68,8 @@ public class UserDao {
         } catch (SQLException e) {
             printSQLException(e);
         }
+
+        return tipoUsuario;
     }
 
     public static void printSQLException(SQLException exception) {

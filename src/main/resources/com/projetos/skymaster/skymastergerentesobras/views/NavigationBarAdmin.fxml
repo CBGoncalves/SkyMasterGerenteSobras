@@ -13,6 +13,11 @@
         <URL value="@../css/navigationBar.css"/>
     </stylesheets>
 
+    <Menu fx:id="menuUsuario" text="Usuário" >
+        <MenuItem fx:id="itemCadUsuario" text="Cadastrar Usuários" onAction="#handleCadastrarUsuario"/>
+        <MenuItem fx:id="itemListUsuario" text="Listar Usuários" onAction="#handleListarUsuario"/>
+    </Menu>
+
     <Menu text="Itens">
         <MenuItem fx:id="itemCadItem" text="Cadastrar Itens" onAction="#handleCadastrarItens"/>
         <MenuItem fx:id="itemListItem" text="Listar Itens" onAction="#handleListarItens"/>

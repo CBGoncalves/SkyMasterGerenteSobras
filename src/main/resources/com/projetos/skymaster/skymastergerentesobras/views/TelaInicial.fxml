@@ -16,7 +16,8 @@
         <URL value="@../css/telaInicial.css"/>
     </stylesheets>
 
-    <fx:include source="NavigationBar.fxml" />
+    <fx:include fx:id="elemento1" source="NavigationBar.fxml" />
+    <fx:include fx:id="elemento2" source="NavigationBarAdmin.fxml" />
 
     <ImageView
             fx:id="logoSky"

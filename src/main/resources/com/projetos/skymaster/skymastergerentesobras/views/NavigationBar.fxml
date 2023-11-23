@@ -14,28 +14,28 @@
     </stylesheets>
 
     <Menu text="Itens">
-        <MenuItem fx:id="itemCadItem" text="Cadastrar Itens" onAction="#handleCadastrarItens"/>
-        <MenuItem fx:id="itemListItem" text="Listar Itens" onAction="#handleListarItens"/>
+        <MenuItem text="Cadastrar Itens" onAction="#handleCadastrarItens"/>
+        <MenuItem text="Listar Itens" onAction="#handleListarItens"/>
     </Menu>
 
     <Menu text="Marcas">
-        <MenuItem fx:id="itemCadMarcas" text="Cadastrar Marcas" onAction="#handleCadastrarMarcas"/>
-        <MenuItem fx:id="itemListMarcas" text="Listar Marcas" onAction="#handleListarMarcas"/>
+        <MenuItem text="Cadastrar Marcas" onAction="#handleCadastrarMarcas"/>
+        <MenuItem text="Listar Marcas" onAction="#handleListarMarcas"/>
     </Menu>
 
     <Menu text="Obras">
-        <MenuItem fx:id="itemCadObras" text="Cadastrar Obras" onAction="#handleCadastrarObras"/>
-        <MenuItem fx:id="itemListObras" text="Listar Obras" onAction="#handleListarObras"/>
+        <MenuItem text="Cadastrar Obras" onAction="#handleCadastrarObras"/>
+        <MenuItem text="Listar Obras" onAction="#handleListarObras"/>
     </Menu>
 
     <Menu text="Registros">
-        <MenuItem fx:id="itemCadEntradas" text="Cadastrar Entradas" onAction="#handleCadastrarEntradas"/>
-        <MenuItem fx:id="itemCadSaidas" text="Cadastrar Saídas" onAction="#handleCadastrarSaidas"/>
-        <MenuItem fx:id="itemHistRegistros" text="Histórico de Registros" onAction="#handleHistorico"/>
+        <MenuItem text="Cadastrar Entradas" onAction="#handleCadastrarEntradas"/>
+        <MenuItem text="Cadastrar Saídas" onAction="#handleCadastrarSaidas"/>
+        <MenuItem text="Histórico de Registros" onAction="#handleHistorico"/>
     </Menu>
 
     <Menu text="Relatórios">
-        <MenuItem fx:id="itemRelatorios" text="Gerar Relatório" onAction="#handleGerarRelatorio"/>
+        <MenuItem text="Gerar Relatório" onAction="#handleGerarRelatorio"/>
     </Menu>
 
 

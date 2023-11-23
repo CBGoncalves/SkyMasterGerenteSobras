@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -41,16 +42,19 @@ public class UserDao {
                 try {
                     stageLogin.close();
 
+                    Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
+
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/TelaInicial.fxml"));
                     Parent root = loader.load();
 
                     TelaInicialController controller = loader.getController();
-                    controller.setUser(u);
+                    controller.setUsuario(u);
 
                     Stage telaInicial = new Stage();
                     telaInicial.setTitle("Tela Inicial");
                     telaInicial.setScene(new Scene(root));
                     telaInicial.setResizable(false);
+                    telaInicial.getIcons().add(icon);
                     telaInicial.show();
 
                     showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",

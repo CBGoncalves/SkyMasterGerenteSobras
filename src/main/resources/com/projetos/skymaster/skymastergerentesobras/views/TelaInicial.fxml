@@ -16,8 +16,8 @@
         <URL value="@../css/telaInicial.css"/>
     </stylesheets>
 
-    <fx:include fx:id="elemento1" source="NavigationBar.fxml" />
-    <fx:include fx:id="elemento2" source="NavigationBarAdmin.fxml" />
+    <fx:include fx:id="navFuncionario" source="NavigationBar.fxml" />
+    <fx:include fx:id="navAdmin" source="NavigationBarAdmin.fxml" />
 
     <ImageView
             fx:id="logoSky"
@@ -25,7 +25,7 @@
             preserveRatio="true"
             AnchorPane.leftAnchor="18" AnchorPane.topAnchor="70">
         <image>
-            <Image url="@../img/logo_sky2.jpg"/>
+            <Image url="@../img/logo_sky.jpg"/>
         </image>
     </ImageView>
 

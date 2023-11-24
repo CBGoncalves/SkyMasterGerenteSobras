@@ -1,18 +1,14 @@
 package com.projetos.skymaster.skymastergerentesobras.controllers;
 
-import com.projetos.skymaster.skymastergerentesobras.dao.UserDao;
+import com.projetos.skymaster.skymastergerentesobras.dao.UsuarioDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-import java.io.IOException;
 import java.sql.SQLException;
 
 public class LoginController {
@@ -43,8 +39,8 @@ public class LoginController {
         }
         Stage stageLogin = (Stage) btnEntrar.getScene().getWindow();
 
-        UserDao userDao = new UserDao();
-        userDao.selectUserFromLogin(usuario, senha, stageLogin);
+        UsuarioDao usuarioDao = new UsuarioDao();
+        usuarioDao.selectUserFromLogin(usuario, senha, stageLogin);
 
     }
 

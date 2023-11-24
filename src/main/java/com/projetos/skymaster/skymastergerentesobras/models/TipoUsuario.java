@@ -1,26 +1,27 @@
 package com.projetos.skymaster.skymastergerentesobras.models;
 
 public class TipoUsuario {
-    private static TipoUsuario instance;
-    private String tipoUsuario;
+    private int codTipoUsuario;
+    private String nomeTipoUsuario;
 
-    private TipoUsuario() {
-        // Construtor privado para evitar instâncias adicionais
+    public int getCodTipoUsuario() {
+        return codTipoUsuario;
     }
 
-    public static TipoUsuario getInstance() {
-        if (instance == null) {
-            instance = new TipoUsuario();
-        }
-        return instance;
+    public void setCodTipoUsuario(int codTipoUsuario) {
+        this.codTipoUsuario = codTipoUsuario;
     }
 
-    public String getTipoUsuario() {
-        return tipoUsuario;
+    public String getNomeTipoUsuario() {
+        return nomeTipoUsuario;
     }
 
-    public void setTipoUsuario(String tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
+    public void setNomeTipoUsuario(String nomeTipoUsuario) {
+        this.nomeTipoUsuario = nomeTipoUsuario;
     }
 
+    @Override
+    public String toString() {
+        return nomeTipoUsuario;
+    }
 }

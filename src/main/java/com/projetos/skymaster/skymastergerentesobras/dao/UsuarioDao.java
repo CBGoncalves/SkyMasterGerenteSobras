@@ -1,6 +1,6 @@
 package com.projetos.skymaster.skymastergerentesobras.dao;
 
-import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuario;
+import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.*;
 
-public class UserDao {
+public class UsuarioDao {
 
     private static final String DB_URL = "jdbc:mysql://localhost:3306/smgerentesobra";
     private static final String DB_USER = "root";
@@ -35,7 +35,7 @@ public class UserDao {
                 tipoUsuario = rs.getString("nomeTipoUsuario");
                 System.out.println(tipoUsuario);
 
-                TipoUsuario.getInstance().setTipoUsuario(tipoUsuario);
+                TipoUsuarioNav.getInstance().setTipoUsuario(tipoUsuario);
 
                 try {
                     stageLogin.close();
@@ -69,6 +69,29 @@ public class UserDao {
         }
 
         return tipoUsuario;
+    }
+
+    public void createUsuario(String usuario, String senha, String tipoUsuario) throws SQLException {
+        int idTipoUsuario = 0;
+        if (tipoUsuario.equals("Administrador")){
+            idTipoUsuario = 1;
+        } else if (tipoUsuario.equals("Funcionário")) {
+            idTipoUsuario = 2;
+        }
+        try {
+            Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO usuario(nomeUsuario,senhaUsuario,codTipoUsuario)VALUES(?,?,?);");
+            preparedStatement.setString(1,usuario);
+            preparedStatement.setString(2,senha);
+            preparedStatement.setInt(3,idTipoUsuario);
+            preparedStatement.executeUpdate();
+
+            showAlert(Alert.AlertType.CONFIRMATION,"Sucesso!",
+                    "Usuário cadastrado com sucesso!");
+
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
     }
 
     public static void printSQLException(SQLException exception) {

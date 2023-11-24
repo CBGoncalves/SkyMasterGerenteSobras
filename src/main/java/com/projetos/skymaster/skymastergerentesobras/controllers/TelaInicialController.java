@@ -2,19 +2,24 @@ package com.projetos.skymaster.skymastergerentesobras.controllers;
 
 import com.projetos.skymaster.skymastergerentesobras.dao.RegistroDao;
 import com.projetos.skymaster.skymastergerentesobras.models.Registro;
-import com.projetos.skymaster.skymastergerentesobras.models.Usuario;
+import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuario;
 import javafx.fxml.FXML;
-import javafx.scene.control.MenuBar;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
 public class TelaInicialController {
 
+    @FXML
+    private AnchorPane root;
     @FXML
     private TableView<Registro> tableView;
     @FXML
@@ -35,17 +40,9 @@ public class TelaInicialController {
     private TableColumn<Registro, String> usuarioColumn;
     @FXML
     private TableColumn<Registro, LocalDate> dataColumn;
-    @FXML
-    private MenuBar navFuncionario;
-    @FXML
-    private MenuBar navAdmin;
-    private Usuario u;
+
     private RegistroDao registroDao;
 
-    public void setUsuario(Usuario u) {
-        this.u = u;
-        atualizarInterface();
-    }
 
     public void initialize() throws SQLException {
 
@@ -69,15 +66,26 @@ public class TelaInicialController {
             e.printStackTrace();
         }
 
-    }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/NavigationBar.fxml"));
+            Parent menuBar = loader.load();
+            root.getChildren().add(menuBar);
 
-    private void atualizarInterface() {
-        String tipoUsuario = u.getTipoUsuario();
+            NavigationBarController menuBarController = loader.getController();
 
-        if ("Funcionário".equals(tipoUsuario)) {
-            navAdmin.setVisible(false);
-        } else {
-            navFuncionario.setVisible(false);
+            String tipoUsuario = TipoUsuario.getInstance().getTipoUsuario();
+
+            if ("Administrador".equals(tipoUsuario)) {
+                menuBarController.exibirOpcoesAdmin();
+            } else if ("Funcionário".equals(tipoUsuario)) {
+                menuBarController.exibirOpcoesFuncionario();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+
+
     }
 }

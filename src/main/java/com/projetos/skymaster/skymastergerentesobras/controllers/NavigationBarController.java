@@ -5,7 +5,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -15,6 +17,9 @@ public class NavigationBarController {
 
     @FXML
     private MenuBar menuBar;
+    @FXML
+    private Menu UsuarioItem;
+
     Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
 
     public void handleCadastrarUsuario(ActionEvent event) {
@@ -256,5 +261,13 @@ public class NavigationBarController {
         } catch (IOException e) {
 
         }
+    }
+
+    public void exibirOpcoesAdmin() {
+        UsuarioItem.setVisible(true);
+    }
+
+    public void exibirOpcoesFuncionario() {
+        UsuarioItem.setVisible(false);
     }
 }

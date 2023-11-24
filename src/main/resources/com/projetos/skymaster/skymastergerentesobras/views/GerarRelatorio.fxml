@@ -6,7 +6,7 @@
 <?import java.net.URL?>
 <AnchorPane fx:controller="com.projetos.skymaster.skymastergerentesobras.controllers.GerarRelatorioController"
             xmlns:fx="http://javafx.com/fxml"
-            styleClass="root"
+            styleClass="root" fx:id="root"
             prefWidth="900.0" prefHeight="600.0">
 
     <stylesheets>
@@ -14,7 +14,6 @@
     </stylesheets>
 
     <fx:include fx:id="navFuncionario" source="NavigationBar.fxml" />
-    <fx:include fx:id="navAdmin" source="NavigationBarAdmin.fxml" />
 
     <ImageView
             fx:id="logoSky"

@@ -1,7 +1,6 @@
 package com.projetos.skymaster.skymastergerentesobras.dao;
 
-import com.projetos.skymaster.skymastergerentesobras.controllers.TelaInicialController;
-import com.projetos.skymaster.skymastergerentesobras.models.Usuario;
+import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuario;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -36,8 +35,7 @@ public class UserDao {
                 tipoUsuario = rs.getString("nomeTipoUsuario");
                 System.out.println(tipoUsuario);
 
-                Usuario u = new Usuario();
-                u.setTipoUsuario(tipoUsuario);
+                TipoUsuario.getInstance().setTipoUsuario(tipoUsuario);
 
                 try {
                     stageLogin.close();
@@ -46,9 +44,6 @@ public class UserDao {
 
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/TelaInicial.fxml"));
                     Parent root = loader.load();
-
-                    TelaInicialController controller = loader.getController();
-                    controller.setUsuario(u);
 
                     Stage telaInicial = new Stage();
                     telaInicial.setTitle("Tela Inicial");

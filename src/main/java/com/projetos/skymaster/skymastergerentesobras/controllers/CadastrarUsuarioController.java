@@ -11,8 +11,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.controlsfx.control.action.Action;
 
@@ -139,7 +142,20 @@ public class CadastrarUsuarioController {
     }
 
     public void handleCancelarButtonAction(ActionEvent event) throws IOException {
+        Stage stageCadastro = (Stage) btnCancelar.getScene().getWindow();
+        stageCadastro.close();
 
+        Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/TelaInicial.fxml"));
+        Parent root = loader.load();
+
+        Stage telaInicial = new Stage();
+        telaInicial.setTitle("Tela Inicial");
+        telaInicial.setScene(new Scene(root));
+        telaInicial.setResizable(false);
+        telaInicial.getIcons().add(icon);
+        telaInicial.show();
     }
 
     private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {

@@ -1,18 +1,25 @@
 package com.projetos.skymaster.skymastergerentesobras.controllers;
 
-import com.projetos.skymaster.skymastergerentesobras.models.Registro;
 import com.projetos.skymaster.skymastergerentesobras.dao.RegistroDao;
+import com.projetos.skymaster.skymastergerentesobras.models.Registro;
+import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuario;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
 public class TelaInicialController {
 
+    @FXML
+    private AnchorPane root;
     @FXML
     private TableView<Registro> tableView;
     @FXML
@@ -32,11 +39,10 @@ public class TelaInicialController {
     @FXML
     private TableColumn<Registro, String> usuarioColumn;
     @FXML
-    private TableColumn<Registro, String> tipoUsuarioColumn;
-    @FXML
     private TableColumn<Registro, LocalDate> dataColumn;
 
     private RegistroDao registroDao;
+
 
     public void initialize() throws SQLException {
 
@@ -59,5 +65,27 @@ public class TelaInicialController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/NavigationBar.fxml"));
+            Parent menuBar = loader.load();
+            root.getChildren().add(menuBar);
+
+            NavigationBarController menuBarController = loader.getController();
+
+            String tipoUsuario = TipoUsuario.getInstance().getTipoUsuario();
+
+            if ("Administrador".equals(tipoUsuario)) {
+                menuBarController.exibirOpcoesAdmin();
+            } else if ("Funcionário".equals(tipoUsuario)) {
+                menuBarController.exibirOpcoesFuncionario();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
     }
 }

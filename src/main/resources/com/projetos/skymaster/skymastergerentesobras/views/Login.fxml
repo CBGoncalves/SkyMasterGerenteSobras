@@ -20,7 +20,7 @@
             preserveRatio="true"
             AnchorPane.leftAnchor="375" AnchorPane.topAnchor="130">
         <image>
-            <Image url="@../img/logo_sky2.jpg"/>
+            <Image url="@../img/logo_sky.jpg"/>
         </image>
     </ImageView>
 

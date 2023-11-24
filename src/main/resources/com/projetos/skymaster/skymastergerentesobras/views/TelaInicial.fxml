@@ -9,14 +9,14 @@
 <?import javafx.scene.control.TableColumn?>
 <AnchorPane fx:controller="com.projetos.skymaster.skymastergerentesobras.controllers.TelaInicialController"
             xmlns:fx="http://javafx.com/fxml"
-            styleClass="root"
+            styleClass="root" fx:id="root"
             prefWidth="900.0" prefHeight="600.0">
 
     <stylesheets>
         <URL value="@../css/telaInicial.css"/>
     </stylesheets>
 
-    <fx:include source="NavigationBar.fxml" />
+    <fx:include fx:id="navFuncionario" source="NavigationBar.fxml" />
 
     <ImageView
             fx:id="logoSky"
@@ -24,7 +24,7 @@
             preserveRatio="true"
             AnchorPane.leftAnchor="18" AnchorPane.topAnchor="70">
         <image>
-            <Image url="@../img/logo_sky2.jpg"/>
+            <Image url="@../img/logo_sky.jpg"/>
         </image>
     </ImageView>
 

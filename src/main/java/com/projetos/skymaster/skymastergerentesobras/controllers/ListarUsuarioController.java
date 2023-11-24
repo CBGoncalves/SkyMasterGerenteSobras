@@ -1,6 +1,6 @@
 package com.projetos.skymaster.skymastergerentesobras.controllers;
 
-import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuario;
+import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,7 +23,7 @@ public class ListarUsuarioController {
 
             NavigationBarController menuBarController = loader.getController();
 
-            String tipoUsuario = TipoUsuario.getInstance().getTipoUsuario();
+            String tipoUsuario = TipoUsuarioNav.getInstance().getTipoUsuario();
 
             if ("Administrador".equals(tipoUsuario)) {
                 menuBarController.exibirOpcoesAdmin();

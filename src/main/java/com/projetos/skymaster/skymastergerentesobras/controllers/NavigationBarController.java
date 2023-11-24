@@ -1,5 +1,6 @@
 package com.projetos.skymaster.skymastergerentesobras.controllers;
 
+import com.projetos.skymaster.skymastergerentesobras.dao.TipoUsuarioDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +30,8 @@ public class NavigationBarController {
             stageAtual.close();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/CadastrarUsuario.fxml"));
+            CadastrarUsuarioController controller = new CadastrarUsuarioController(new TipoUsuarioDao());
+            loader.setController(controller);
             Parent root = loader.load();
 
             Stage cadastrarUsuario = new Stage();
@@ -39,7 +42,7 @@ public class NavigationBarController {
             cadastrarUsuario.show();
 
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
     }
 

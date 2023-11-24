@@ -1,6 +1,6 @@
 package com.projetos.skymaster.skymastergerentesobras.dao;
 
-import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuario;
+import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.*;
 
-public class UserDao {
+public class UsuarioDao {
 
     private static final String DB_URL = "jdbc:mysql://localhost:3306/smgerentesobra";
     private static final String DB_USER = "root";
@@ -35,7 +35,7 @@ public class UserDao {
                 tipoUsuario = rs.getString("nomeTipoUsuario");
                 System.out.println(tipoUsuario);
 
-                TipoUsuario.getInstance().setTipoUsuario(tipoUsuario);
+                TipoUsuarioNav.getInstance().setTipoUsuario(tipoUsuario);
 
                 try {
                     stageLogin.close();

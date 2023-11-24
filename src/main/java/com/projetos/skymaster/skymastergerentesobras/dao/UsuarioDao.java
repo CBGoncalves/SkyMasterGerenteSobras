@@ -71,6 +71,29 @@ public class UsuarioDao {
         return tipoUsuario;
     }
 
+    public void createUsuario(String usuario, String senha, String tipoUsuario) throws SQLException {
+        int idTipoUsuario = 0;
+        if (tipoUsuario.equals("Administrador")){
+            idTipoUsuario = 1;
+        } else if (tipoUsuario.equals("Funcionário")) {
+            idTipoUsuario = 2;
+        }
+        try {
+            Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO usuario(nomeUsuario,senhaUsuario,codTipoUsuario)VALUES(?,?,?);");
+            preparedStatement.setString(1,usuario);
+            preparedStatement.setString(2,senha);
+            preparedStatement.setInt(3,idTipoUsuario);
+            preparedStatement.executeUpdate();
+
+            showAlert(Alert.AlertType.CONFIRMATION,"Sucesso!",
+                    "Usuário cadastrado com sucesso!");
+
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+    }
+
     public static void printSQLException(SQLException exception) {
         for (Throwable e : exception) {
             if (e instanceof SQLException) {

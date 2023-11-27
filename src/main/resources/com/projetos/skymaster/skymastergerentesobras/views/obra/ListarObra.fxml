@@ -10,10 +10,10 @@
             prefWidth="900.0" prefHeight="600.0">
 
     <stylesheets>
-        <URL value="@../css/listarObra.css"/>
+        <URL value="@../../css/obra/listarObra.css"/>
     </stylesheets>
 
-    <fx:include fx:id="navFuncionario" source="NavigationBar.fxml" />
+    <fx:include fx:id="navFuncionario" source="../NavigationBar.fxml" />
 
     <ImageView
             fx:id="logoSky"
@@ -21,7 +21,7 @@
             preserveRatio="true"
             AnchorPane.leftAnchor="18" AnchorPane.topAnchor="70">
         <image>
-            <Image url="@../img/logo_sky.jpg"/>
+            <Image url="@../../img/logo_sky.jpg"/>
         </image>
     </ImageView>
 

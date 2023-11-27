@@ -8,7 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -29,7 +28,7 @@ public class NavigationBarController {
             Stage stageAtual = (Stage) menuBar.getScene().getWindow();
             stageAtual.close();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/CadastrarUsuario.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/usuario/CadastrarUsuario.fxml"));
             CadastrarUsuarioController controller = new CadastrarUsuarioController(new TipoUsuarioDao());
             loader.setController(controller);
             Parent root = loader.load();
@@ -51,7 +50,7 @@ public class NavigationBarController {
             Stage stageAtual = (Stage) menuBar.getScene().getWindow();
             stageAtual.close();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/ListarUsuario.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/usuario/ListarUsuario.fxml"));
             Parent root = loader.load();
 
             Stage listarUsuario = new Stage();
@@ -71,7 +70,7 @@ public class NavigationBarController {
             Stage stageAtual = (Stage) menuBar.getScene().getWindow();
             stageAtual.close();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/CadastrarItem.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/item/CadastrarItem.fxml"));
             Parent root = loader.load();
 
             Stage cadastrarItem = new Stage();
@@ -91,7 +90,7 @@ public class NavigationBarController {
             Stage stageAtual = (Stage) menuBar.getScene().getWindow();
             stageAtual.close();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/ListarItem.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/item/ListarItem.fxml"));
             Parent root = loader.load();
 
             Stage listarItem = new Stage();
@@ -111,7 +110,7 @@ public class NavigationBarController {
             Stage stageAtual = (Stage) menuBar.getScene().getWindow();
             stageAtual.close();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/CadastrarMarca.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/marca/CadastrarMarca.fxml"));
             Parent root = loader.load();
 
             Stage cadastrarMarca = new Stage();
@@ -131,7 +130,7 @@ public class NavigationBarController {
             Stage stageAtual = (Stage) menuBar.getScene().getWindow();
             stageAtual.close();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/ListarMarca.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/marca/ListarMarca.fxml"));
             Parent root = loader.load();
 
             Stage listarMarca = new Stage();
@@ -151,7 +150,7 @@ public class NavigationBarController {
             Stage stageAtual = (Stage) menuBar.getScene().getWindow();
             stageAtual.close();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/CadastrarObra.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/obra/CadastrarObra.fxml"));
             Parent root = loader.load();
 
             Stage cadastrarObra = new Stage();
@@ -171,7 +170,7 @@ public class NavigationBarController {
             Stage stageAtual = (Stage) menuBar.getScene().getWindow();
             stageAtual.close();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/ListarObra.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/obra/ListarObra.fxml"));
             Parent root = loader.load();
 
             Stage listarObra = new Stage();
@@ -191,7 +190,7 @@ public class NavigationBarController {
             Stage stageAtual = (Stage) menuBar.getScene().getWindow();
             stageAtual.close();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/CadastrarEntrada.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/registro/CadastrarEntrada.fxml"));
             Parent root = loader.load();
 
             Stage cadastrarEntrada = new Stage();
@@ -211,7 +210,7 @@ public class NavigationBarController {
             Stage stageAtual = (Stage) menuBar.getScene().getWindow();
             stageAtual.close();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/CadastrarSaida.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/registro/CadastrarSaida.fxml"));
             Parent root = loader.load();
 
             Stage cadastrarSaida = new Stage();
@@ -231,7 +230,7 @@ public class NavigationBarController {
             Stage stageAtual = (Stage) menuBar.getScene().getWindow();
             stageAtual.close();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/HistoricoRegistro.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/registro/HistoricoRegistro.fxml"));
             Parent root = loader.load();
 
             Stage historicoRegistro = new Stage();

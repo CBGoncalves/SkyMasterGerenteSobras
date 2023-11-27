@@ -28,12 +28,13 @@ public class UsuarioDao {
         try {
             Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 
-            PreparedStatement preparedStatement = con.prepareStatement("SELECT usuario.nomeUsuario, usuario.senhaUsuario, tipousuario.nomeTipoUsuario \n" +
+            PreparedStatement preparedStatement = con.prepareStatement("SELECT usuario.codUsuario, usuario.nomeUsuario, usuario.senhaUsuario, tipousuario.nomeTipoUsuario \n" +
                     "FROM usuario \n" +
                     "INNER JOIN tipousuario ON usuario.codTipoUsuario = tipousuario.codTipoUsuario;");
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 Usuario usuario = new Usuario();
+                usuario.setCodUsuario(rs.getInt("codUsuario"));
                 usuario.setNome(rs.getString("nomeUsuario"));
                 usuario.setSenha(rs.getString("senhaUsuario"));
                 usuario.setTipo(rs.getString("nomeTipoUsuario"));
@@ -121,6 +122,17 @@ public class UsuarioDao {
         }
     }
 
+    public void deleteUsuario(Usuario u) {
+        try {
+            Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            PreparedStatement preparedStatement = con.prepareStatement("DELETE FROM usuario WHERE codUsuario = ?;");
+            preparedStatement.setInt(1, u.getCodUsuario());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+
+    }
     public static void printSQLException(SQLException exception) {
         for (Throwable e : exception) {
             if (e instanceof SQLException) {

@@ -32,6 +32,7 @@
                AnchorPane.leftAnchor="198" AnchorPane.topAnchor="131"
                minWidth="680" minHeight="450" >
         <columns>
+            <TableColumn fx:id="codUsuarioColumn" text="Id"/>
             <TableColumn fx:id="nomeColumn" text="Nome"/>
             <TableColumn fx:id="senhaColumn" text="Senha"/>
             <TableColumn fx:id="tipoUsuarioColumn" text="Tipo Usuário"/>

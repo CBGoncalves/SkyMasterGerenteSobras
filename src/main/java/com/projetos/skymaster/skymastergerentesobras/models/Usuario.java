@@ -1,9 +1,19 @@
 package com.projetos.skymaster.skymastergerentesobras.models;
 
 public class Usuario {
+
+    private int codUsuario;
     private String nome;
     private String senha;
     private String tipo;
+
+    public int getCodUsuario() {
+        return codUsuario;
+    }
+
+    public void setCodUsuario(int codUsuario) {
+        this.codUsuario = codUsuario;
+    }
 
     public String getNome() {
         return nome;

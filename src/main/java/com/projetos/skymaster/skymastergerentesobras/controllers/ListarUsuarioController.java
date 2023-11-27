@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -23,6 +24,8 @@ public class ListarUsuarioController {
 
     @FXML
     private TableView tableView;
+    @FXML
+    private TableColumn<Usuario, String> codUsuarioColumn;
     @FXML
     private TableColumn<Usuario, String> nomeColumn;
     @FXML
@@ -57,6 +60,8 @@ public class ListarUsuarioController {
 
         usuarioDao = new UsuarioDao();
 
+        codUsuarioColumn.setVisible(false);
+        codUsuarioColumn.setCellValueFactory(new PropertyValueFactory<>("codUsuario"));
         nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
         senhaColumn.setCellValueFactory(new PropertyValueFactory<>("senha"));
         tipoUsuarioColumn.setCellValueFactory(new PropertyValueFactory<>("tipo"));
@@ -71,9 +76,40 @@ public class ListarUsuarioController {
 
     }
 
-    public void handleEditarButtonAction(ActionEvent event) {
+    public void handleEditarButtonAction(ActionEvent event) throws IOException{
+        TableView.TableViewSelectionModel<Usuario> selectionModel = tableView.getSelectionModel();
+        if (selectionModel.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Erro ao Editar",
+                    "Você precisa selecionar um usuário para edição!");
+        }
+
+
     }
 
-    public void handleDeletarButtonAction(ActionEvent event) {
+    public void handleDeletarButtonAction(ActionEvent event){
+        Usuario usuario = (Usuario) tableView.getSelectionModel().getSelectedItem();
+        boolean vazio = usuarioVazio(usuario);
+        if (vazio == true) {
+            showAlert(Alert.AlertType.WARNING, "Erro ao Editar",
+                    "Você precisa selecionar um usuário para edição!");
+            return;
+        }
+        usuarioDao.deleteUsuario(usuario);
+        showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
+                "Usuario deletado com sucesso!");
+        tableView.getItems().remove(usuario);
+    }
+
+    public boolean usuarioVazio(Usuario usuario) {
+        return usuario.getNome() == null && usuario.getSenha() == null && usuario.getTipo() == null;
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.initOwner(null);
+        alert.show();
     }
 }

@@ -122,6 +122,28 @@ public class UsuarioDao {
         }
     }
 
+    public void updateUsuario(int codUsuario, String nome, String senha, String tipoUsuario) throws SQLException {
+        int idTipoUsuario = 0;
+        if (tipoUsuario.equals("Administrador")) {
+            idTipoUsuario = 1;
+        } else if (tipoUsuario.equals("Funcionário")) {
+            idTipoUsuario = 2;
+        }
+
+        try {
+            Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            PreparedStatement preparedStatement = con.prepareStatement("UPDATE usuario SET usuario.nomeUsuario=?, usuario.senhaUsuario=?, usuario.codTipoUsuario=? WHERE usuario.codUsuario=?;");
+            preparedStatement.setString(1, nome);
+            preparedStatement.setString(2, senha);
+            preparedStatement.setInt(3, idTipoUsuario);
+            preparedStatement.setInt(4, codUsuario);
+            preparedStatement.executeUpdate();
+
+        } catch(SQLException e) {
+            printSQLException(e);
+        }
+    }
+
     public void deleteUsuario(Usuario u) {
         try {
             Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);

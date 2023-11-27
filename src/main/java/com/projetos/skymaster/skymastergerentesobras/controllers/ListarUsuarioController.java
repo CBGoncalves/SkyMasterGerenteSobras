@@ -1,9 +1,11 @@
 package com.projetos.skymaster.skymastergerentesobras.controllers;
 
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -14,7 +16,12 @@ public class ListarUsuarioController {
     @FXML
     private AnchorPane root;
 
+    @FXML
+    private TableView tableView;
+
     public void initialize() throws SQLException {
+
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/NavigationBar.fxml"));
@@ -34,5 +41,11 @@ public class ListarUsuarioController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void handleEditarButtonAction(ActionEvent event) {
+    }
+
+    public void handleDeletarButtonAction(ActionEvent event) {
     }
 }

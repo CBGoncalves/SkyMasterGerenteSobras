@@ -76,7 +76,7 @@ public class ListarUsuarioController {
 
     }
 
-    public void handleEditarButtonAction(ActionEvent event) throws IOException{
+    public void handleEditarButtonAction(ActionEvent event) throws IOException {
         Usuario usuario = (Usuario) tableView.getSelectionModel().getSelectedItem();
         boolean vazio = usuarioVazio(usuario);
         if (vazio == true) {
@@ -86,11 +86,20 @@ public class ListarUsuarioController {
         }
 
 
-
     }
 
-    public void handleDeletarButtonAction(ActionEvent event){
-
+    public void handleDeletarButtonAction(ActionEvent event) {
+        Usuario usuario = (Usuario) tableView.getSelectionModel().getSelectedItem();
+        boolean vazio = usuarioVazio(usuario);
+        if (vazio == true) {
+            showAlert(Alert.AlertType.WARNING, "Erro ao Editar",
+                    "Você precisa selecionar um usuário para edição!");
+            return;
+        }
+        usuarioDao.deleteUsuario(usuario);
+        showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
+                "Usuario deletado com sucesso!");
+        tableView.getItems().remove(usuario);
     }
 
     public boolean usuarioVazio(Usuario usuario) {

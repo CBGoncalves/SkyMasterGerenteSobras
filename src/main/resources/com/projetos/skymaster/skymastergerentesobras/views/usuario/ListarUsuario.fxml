@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.Button?>
-<AnchorPane fx:controller="com.projetos.skymaster.skymastergerentesobras.controllers.ListarUsuarioController"
+<AnchorPane fx:controller="com.projetos.skymaster.skymastergerentesobras.controllers.usuario.ListarUsuarioController"
             xmlns:fx="http://javafx.com/fxml"
             styleClass="root" fx:id="root"
             prefWidth="900.0" prefHeight="600.0">

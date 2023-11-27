@@ -1,5 +1,7 @@
-package com.projetos.skymaster.skymastergerentesobras.controllers;
+package com.projetos.skymaster.skymastergerentesobras.controllers.usuario;
 
+import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
+import com.projetos.skymaster.skymastergerentesobras.dao.TipoUsuarioDao;
 import com.projetos.skymaster.skymastergerentesobras.dao.UsuarioDao;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
 import com.projetos.skymaster.skymastergerentesobras.models.Usuario;
@@ -7,11 +9,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -32,6 +38,8 @@ public class ListarUsuarioController {
     private TableColumn<Usuario, String> senhaColumn;
     @FXML
     private TableColumn<Usuario, String> tipoUsuarioColumn;
+    @FXML
+    private Button btnEditar;
 
     private UsuarioDao usuarioDao;
 
@@ -76,24 +84,40 @@ public class ListarUsuarioController {
 
     }
 
-    public void handleEditarButtonAction(ActionEvent event) throws IOException {
-        Usuario usuario = (Usuario) tableView.getSelectionModel().getSelectedItem();
-        boolean vazio = usuarioVazio(usuario);
-        if (vazio == true) {
+    public void handleEditarButtonAction(ActionEvent event) throws SQLException {
+        Usuario usuario = null;
+        usuario = (Usuario) tableView.getSelectionModel().getSelectedItem();
+        if (usuario == null) {
             showAlert(Alert.AlertType.WARNING, "Erro ao Editar",
                     "Você precisa selecionar um usuário para edição!");
             return;
         }
+        try {
+            Stage stageListar = (Stage) btnEditar.getScene().getWindow();
+            stageListar.close();
 
+            Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
 
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/usuario/EditarUsuario.fxml"));
+            EditarUsuarioController controller = new EditarUsuarioController(new TipoUsuarioDao(), usuario);
+            loader.setController(controller);
+            Parent root = loader.load();
 
-
+            Stage editarUsuario = new Stage();
+            editarUsuario.setTitle("Editar Usuário");
+            editarUsuario.setScene(new Scene(root));
+            editarUsuario.setResizable(false);
+            editarUsuario.getIcons().add(icon);
+            editarUsuario.show();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void handleDeletarButtonAction(ActionEvent event) {
-        Usuario usuario = (Usuario) tableView.getSelectionModel().getSelectedItem();
-        boolean vazio = usuarioVazio(usuario);
-        if (vazio == true) {
+        Usuario usuario = null;
+        usuario = (Usuario) tableView.getSelectionModel().getSelectedItem();
+        if (usuario == null) {
             showAlert(Alert.AlertType.WARNING, "Erro ao Editar",
                     "Você precisa selecionar um usuário para edição!");
             return;
@@ -102,10 +126,6 @@ public class ListarUsuarioController {
         showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
                 "Usuario deletado com sucesso!");
         tableView.getItems().remove(usuario);
-    }
-
-    public boolean usuarioVazio(Usuario usuario) {
-        return usuario.getNome() == null && usuario.getSenha() == null && usuario.getTipo() == null;
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {

@@ -1,5 +1,6 @@
 package com.projetos.skymaster.skymastergerentesobras.controllers;
 
+import com.projetos.skymaster.skymastergerentesobras.controllers.usuario.CadastrarUsuarioController;
 import com.projetos.skymaster.skymastergerentesobras.dao.TipoUsuarioDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

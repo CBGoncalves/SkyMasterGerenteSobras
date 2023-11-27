@@ -1,5 +1,6 @@
-package com.projetos.skymaster.skymastergerentesobras.controllers;
+package com.projetos.skymaster.skymastergerentesobras.controllers.item;
 
+import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class CadastrarSaidaController {
+public class ListarItemController {
     @FXML
     private AnchorPane root;
 

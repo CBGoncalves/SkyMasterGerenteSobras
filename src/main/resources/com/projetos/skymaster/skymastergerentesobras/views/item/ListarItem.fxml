@@ -4,7 +4,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import java.net.URL?>
-<AnchorPane fx:controller="com.projetos.skymaster.skymastergerentesobras.controllers.ListarItemController"
+<AnchorPane fx:controller="com.projetos.skymaster.skymastergerentesobras.controllers.item.ListarItemController"
             xmlns:fx="http://javafx.com/fxml"
             styleClass="root" fx:id="root"
             prefWidth="900.0" prefHeight="600.0">

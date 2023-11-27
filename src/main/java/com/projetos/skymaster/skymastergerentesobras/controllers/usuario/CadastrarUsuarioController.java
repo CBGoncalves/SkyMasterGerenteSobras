@@ -1,5 +1,6 @@
-package com.projetos.skymaster.skymastergerentesobras.controllers;
+package com.projetos.skymaster.skymastergerentesobras.controllers.usuario;
 
+import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
 import com.projetos.skymaster.skymastergerentesobras.dao.TipoUsuarioDao;
 import com.projetos.skymaster.skymastergerentesobras.dao.UsuarioDao;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuario;

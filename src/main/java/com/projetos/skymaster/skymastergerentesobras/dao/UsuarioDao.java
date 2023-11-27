@@ -1,6 +1,8 @@
 package com.projetos.skymaster.skymastergerentesobras.dao;
 
+import com.projetos.skymaster.skymastergerentesobras.models.Registro;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
+import com.projetos.skymaster.skymastergerentesobras.models.Usuario;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,6 +12,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UsuarioDao {
 
@@ -18,6 +22,30 @@ public class UsuarioDao {
     private static final String DB_PASS = "root";
 
     public String tipoUsuario;
+
+    public List<Usuario> selectAllUsers() throws SQLException {
+        List<Usuario> userList = new ArrayList<>();
+        try {
+            Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+
+            PreparedStatement preparedStatement = con.prepareStatement("SELECT usuario.codUsuario, usuario.nomeUsuario, usuario.senhaUsuario, tipousuario.nomeTipoUsuario \n" +
+                    "FROM usuario \n" +
+                    "INNER JOIN tipousuario ON usuario.codTipoUsuario = tipousuario.codTipoUsuario;");
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                Usuario usuario = new Usuario();
+                usuario.setCodUsuario(rs.getInt("codUsuario"));
+                usuario.setNome(rs.getString("nomeUsuario"));
+                usuario.setSenha(rs.getString("senhaUsuario"));
+                usuario.setTipo(rs.getString("nomeTipoUsuario"));
+                userList.add(usuario);
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+
+        return userList;
+    }
 
     public String selectUserFromLogin(String usuario, String senha, Stage stageLogin) throws SQLException {
         try {
@@ -73,20 +101,20 @@ public class UsuarioDao {
 
     public void createUsuario(String usuario, String senha, String tipoUsuario) throws SQLException {
         int idTipoUsuario = 0;
-        if (tipoUsuario.equals("Administrador")){
+        if (tipoUsuario.equals("Administrador")) {
             idTipoUsuario = 1;
         } else if (tipoUsuario.equals("Funcionário")) {
             idTipoUsuario = 2;
         }
         try {
-            Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
             PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO usuario(nomeUsuario,senhaUsuario,codTipoUsuario)VALUES(?,?,?);");
-            preparedStatement.setString(1,usuario);
-            preparedStatement.setString(2,senha);
-            preparedStatement.setInt(3,idTipoUsuario);
+            preparedStatement.setString(1, usuario);
+            preparedStatement.setString(2, senha);
+            preparedStatement.setInt(3, idTipoUsuario);
             preparedStatement.executeUpdate();
 
-            showAlert(Alert.AlertType.CONFIRMATION,"Sucesso!",
+            showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
                     "Usuário cadastrado com sucesso!");
 
         } catch (SQLException e) {
@@ -94,6 +122,17 @@ public class UsuarioDao {
         }
     }
 
+    public void deleteUsuario(Usuario u) {
+        try {
+            Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            PreparedStatement preparedStatement = con.prepareStatement("DELETE FROM usuario WHERE codUsuario = ?;");
+            preparedStatement.setInt(1, u.getCodUsuario());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+
+    }
     public static void printSQLException(SQLException exception) {
         for (Throwable e : exception) {
             if (e instanceof SQLException) {
@@ -118,4 +157,6 @@ public class UsuarioDao {
         alert.initOwner(null);
         alert.show();
     }
+
+
 }

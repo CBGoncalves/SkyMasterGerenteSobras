@@ -46,6 +46,24 @@ public class MarcaDao {
             printSQLException(e);
             showAlert(Alert.AlertType.ERROR, "Erro no Cadastro!",
                     "Valores inválidos ou marca já existente!");
+            return;
+        }
+    }
+
+    public void updateMarca(int codMarca, String nomeMarca, int codigoParametro) throws SQLException {
+        try {
+            Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            PreparedStatement preparedStatement = con.prepareStatement("UPDATE marca SET codMarca=?, nomeMarca=? WHERE codMarca=?;");
+            preparedStatement.setInt(1, codMarca);
+            preparedStatement.setString(2, nomeMarca);
+            preparedStatement.setInt(3, codigoParametro);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            printSQLException(e);
+            showAlert(Alert.AlertType.ERROR, "Erro na Edição!",
+                    "Valores inválidos ou marca já existente!");
+            return;
         }
     }
 

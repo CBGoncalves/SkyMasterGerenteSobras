@@ -119,6 +119,8 @@ public class UsuarioDao {
 
         } catch (SQLException e) {
             printSQLException(e);
+            showAlert(Alert.AlertType.ERROR, "Erro no Cadastro!",
+                    "Valores inválidos ou usuário já existente!");
         }
     }
 
@@ -141,6 +143,8 @@ public class UsuarioDao {
 
         } catch(SQLException e) {
             printSQLException(e);
+            showAlert(Alert.AlertType.ERROR, "Erro na Edição!",
+                    "Valores inválidos ou marca já existente!");
         }
     }
 

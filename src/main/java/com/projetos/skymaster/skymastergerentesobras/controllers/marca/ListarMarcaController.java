@@ -32,9 +32,9 @@ public class ListarMarcaController {
     @FXML
     private TableView tableView;
     @FXML
-    private TableColumn<Usuario, Integer> codMarcaColumn;
+    private TableColumn<Marca, Integer> codMarcaColumn;
     @FXML
-    private TableColumn<Usuario, String> nomeMarcaColumn;
+    private TableColumn<Marca, String> nomeMarcaColumn;
     @FXML
     private Button btnEditar;
     @FXML

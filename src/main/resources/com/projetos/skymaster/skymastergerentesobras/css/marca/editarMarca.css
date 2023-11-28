@@ -1,0 +1,22 @@
+@font-face {
+    font-family: 'Poppins Medium';
+    src: url("../../fonts/Poppins-Medium.ttf");
+}
+
+.root {
+    -fx-font-family: 'Poppins Medium';
+    -fx-font-size: 14px;
+    -fx-background-color: #FFFFFF;
+}
+
+#campoNomeMarca, #campoCodMarca {
+    -fx-min-width: 289px;
+    -fx-min-height: 33px;
+}
+
+#btnEditar, #btnCancelar {
+    -fx-background-color: #011A5D;
+    -fx-text-fill: #FFFFFF;
+    -fx-min-width: 145px;
+    -fx-min-height: 41px;
+}

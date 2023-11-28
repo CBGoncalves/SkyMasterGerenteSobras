@@ -1,7 +1,9 @@
 package com.projetos.skymaster.skymastergerentesobras.controllers.marca;
 
 import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
+import com.projetos.skymaster.skymastergerentesobras.controllers.usuario.EditarUsuarioController;
 import com.projetos.skymaster.skymastergerentesobras.dao.MarcaDao;
+import com.projetos.skymaster.skymastergerentesobras.dao.TipoUsuarioDao;
 import com.projetos.skymaster.skymastergerentesobras.dao.UsuarioDao;
 import com.projetos.skymaster.skymastergerentesobras.models.Marca;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
@@ -10,12 +12,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -76,6 +81,33 @@ public class ListarMarcaController {
     }
 
     public void handleEditarButtonAction(ActionEvent event) {
+        Marca marca = null;
+        marca = (Marca) tableView.getSelectionModel().getSelectedItem();
+        if (marca == null) {
+            showAlert(Alert.AlertType.WARNING, "Erro ao Editar",
+                    "Você precisa selecionar uma marca para edição!");
+            return;
+        }
+        try {
+            Stage stageListar = (Stage) btnEditar.getScene().getWindow();
+            stageListar.close();
+
+            Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/marca/EditarMarca.fxml"));
+            EditarMarcaController controller = new EditarMarcaController(marca);
+            loader.setController(controller);
+            Parent root = loader.load();
+
+            Stage editarMarca = new Stage();
+            editarMarca.setTitle("Editar Marca");
+            editarMarca.setScene(new Scene(root));
+            editarMarca.setResizable(false);
+            editarMarca.getIcons().add(icon);
+            editarMarca.show();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void handleDeletarButtonAction(ActionEvent event) {

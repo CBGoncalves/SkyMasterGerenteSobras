@@ -18,6 +18,11 @@
         <MenuItem text="Listar Usuário" onAction="#handleListarUsuario"/>
     </Menu>
 
+    <Menu text="Tipos de Item" fx:id="TipoItem">
+        <MenuItem text="Cadastrar Tipo de Item" onAction="#handleCadastrarTipoItem"/>
+        <MenuItem text="Listar Tipo de Item" onAction="#handleListarTipoItem"/>
+    </Menu>
+
     <Menu text="Itens">
         <MenuItem text="Cadastrar Itens" onAction="#handleCadastrarItens"/>
         <MenuItem text="Listar Itens" onAction="#handleListarItens"/>

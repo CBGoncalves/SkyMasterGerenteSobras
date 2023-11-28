@@ -20,6 +20,8 @@ public class NavigationBarController {
     private MenuBar menuBar;
     @FXML
     private Menu UsuarioItem;
+    @FXML
+    private Menu TipoItem;
 
     Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
 
@@ -63,6 +65,45 @@ public class NavigationBarController {
 
         } catch (IOException e) {
 
+        }
+    }
+
+    public void handleCadastrarTipoItem(ActionEvent event) {
+        try {
+            Stage stageAtual = (Stage) menuBar.getScene().getWindow();
+            stageAtual.close();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/tipoItem/CadastrarTipoItem.fxml"));
+            Parent root = loader.load();
+
+            Stage cadastrarTipoItem = new Stage();
+            cadastrarTipoItem.setTitle("Cadastrar Tipo de Item");
+            cadastrarTipoItem.setScene(new Scene(root));
+            cadastrarTipoItem.setResizable(false);
+            cadastrarTipoItem.getIcons().add(icon);
+            cadastrarTipoItem.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void handleListarTipoItem(ActionEvent event) {
+        try {
+            Stage stageAtual = (Stage) menuBar.getScene().getWindow();
+            stageAtual.close();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/tipoItem/ListarTipoItem.fxml"));
+            Parent root = loader.load();
+
+            Stage listarTipoItem = new Stage();
+            listarTipoItem.setTitle("Listar Tipo de Item");
+            listarTipoItem.setScene(new Scene(root));
+            listarTipoItem.setResizable(false);
+            listarTipoItem.getIcons().add(icon);
+            listarTipoItem.show();
+
+        } catch (IOException e) {
         }
     }
 
@@ -268,9 +309,11 @@ public class NavigationBarController {
 
     public void exibirOpcoesAdmin() {
         UsuarioItem.setVisible(true);
+        TipoItem.setVisible(true);
     }
 
     public void exibirOpcoesFuncionario() {
         UsuarioItem.setVisible(false);
+        TipoItem.setVisible(false);
     }
 }

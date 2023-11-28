@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.*?>
 <?import java.net.URL?>
-<AnchorPane fx:controller="com.projetos.skymaster.skymastergerentesobras.controllers.tipoItem.EditarTipoItemController"
-            xmlns:fx="http://javafx.com/fxml"
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
             styleClass="root" fx:id="root"
             prefWidth="900.0" prefHeight="600.0">
 
@@ -13,7 +13,7 @@
         <URL value="@../../css/tipoItem/editarTipoItem.css"/>
     </stylesheets>
 
-    <fx:include fx:id="navFuncionario" source="../NavigationBar.fxml" />
+    <fx:include fx:id="navFuncionario" source="../NavigationBar.fxml"/>
 
     <ImageView
             fx:id="logoSky"
@@ -24,6 +24,20 @@
             <Image url="@../../img/logo_sky.jpg"/>
         </image>
     </ImageView>
+
+    <Label text="Código do Tipo de Item"
+           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="191"/>
+    <TextField fx:id="campoCodTipoItem"
+               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="211"/>
+    <Label text="Nome do Tipo de Item"
+           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="264"/>
+    <TextField fx:id="campoNomeTipoItem"
+               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="284"/>
+
+    <Button fx:id="btnEditar" text="Editar" onAction="#handleEditarButtonAction"
+            AnchorPane.leftAnchor="462" AnchorPane.topAnchor="432"/>
+    <Button fx:id="btnCancelar" text="Cancelar" onAction="#handleCancelarButtonAction"
+            AnchorPane.leftAnchor="293" AnchorPane.topAnchor="432"/>
 
 
 </AnchorPane>

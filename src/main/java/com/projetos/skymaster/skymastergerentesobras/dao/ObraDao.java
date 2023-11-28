@@ -76,4 +76,14 @@ public class ObraDao {
     }
 
 
+    public void deleteObra(Obra o) {
+        try {
+            Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            PreparedStatement preparedStatement = con.prepareStatement("DELETE FROM obra WHERE codObra = ?;");
+            preparedStatement.setInt(1, o.getCodObra());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+    }
 }

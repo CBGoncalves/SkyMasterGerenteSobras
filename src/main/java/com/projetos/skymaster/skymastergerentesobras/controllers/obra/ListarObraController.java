@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -76,5 +77,25 @@ public class ListarObraController {
     }
 
     public void handleDeletarButtonAction(ActionEvent event) {
+        Obra obra = null;
+        obra = (Obra) tableView.getSelectionModel().getSelectedItem();
+        if (obra == null) {
+            showAlert(Alert.AlertType.WARNING, "Erro ao Deletar",
+                    "Você precisa selecionar uma obra para remover!");
+            return;
+        }
+        obraDao.deleteObra(obra);
+        showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
+                "Obra deletada com sucesso!");
+        tableView.getItems().remove(obra);
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.initOwner(null);
+        alert.show();
     }
 }

@@ -1,17 +1,21 @@
 package com.projetos.skymaster.skymastergerentesobras.controllers.marca;
 
 import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
+import com.projetos.skymaster.skymastergerentesobras.dao.MarcaDao;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
+import com.projetos.skymaster.skymastergerentesobras.models.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -50,7 +54,28 @@ public class CadastrarMarcaController {
         }
     }
 
-    public void handleCadastrarButtonAction(ActionEvent event) {
+    public void handleCadastrarButtonAction(ActionEvent event) throws SQLException {
+        Window owner = btnCadastrar.getScene().getWindow();
+
+        String codigoMarca = campoCodMarca.getText();
+        String nomeMarca = campoNomeMarca.getText();
+
+        if (codigoMarca.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, owner, "Erro no Cadastro",
+                    "Preencha o campo de Código da Marca!");
+            return;
+        }
+
+        if (nomeMarca.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, owner, "Erro no Cadastro",
+                    "Preencha o campo do Nome da Marca!");
+            return;
+        }
+
+        int codMarca = Integer.parseInt(codigoMarca);
+
+        MarcaDao marcaDao = new MarcaDao();
+        marcaDao.createMarca(codMarca, nomeMarca);
     }
 
     public void handleCancelarButtonAction(ActionEvent event) throws IOException{
@@ -68,5 +93,14 @@ public class CadastrarMarcaController {
         telaInicial.setResizable(false);
         telaInicial.getIcons().add(icon);
         telaInicial.show();
+    }
+
+    private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.initOwner(owner);
+        alert.show();
     }
 }

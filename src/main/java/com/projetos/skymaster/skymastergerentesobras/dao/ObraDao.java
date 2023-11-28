@@ -1,16 +1,36 @@
 package com.projetos.skymaster.skymastergerentesobras.dao;
 
+import com.projetos.skymaster.skymastergerentesobras.models.Marca;
+import com.projetos.skymaster.skymastergerentesobras.models.Obra;
 import javafx.scene.control.Alert;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ObraDao {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/smgerentesobra";
     private static final String DB_USER = "root";
     private static final String DB_PASS = "root";
+
+    public List<Obra> selectAllObras() throws SQLException{
+        List<Obra> obraList = new ArrayList<>();
+        try {
+            Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            PreparedStatement preparedStatement = con.prepareStatement("SELECT codObra, nomeObra FROM obra");
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                Obra obra = new Obra();
+                obra.setCodObra(rs.getInt("codObra"));
+                obra.setNomeObra(rs.getString("nomeObra"));
+                obraList.add(obra);
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+
+        return obraList;
+    }
 
     public void createObra(int codObra, String nomeObra) {
         try {
@@ -54,4 +74,6 @@ public class ObraDao {
         alert.initOwner(null);
         alert.show();
     }
+
+
 }

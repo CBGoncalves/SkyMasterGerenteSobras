@@ -1,16 +1,35 @@
 package com.projetos.skymaster.skymastergerentesobras.dao;
 
+import com.projetos.skymaster.skymastergerentesobras.models.Marca;
 import javafx.scene.control.Alert;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MarcaDao {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/smgerentesobra";
     private static final String DB_USER = "root";
     private static final String DB_PASS = "root";
+
+    public List<Marca> selectAllMarcas() throws SQLException {
+        List<Marca> marcaList = new ArrayList<>();
+        try {
+            Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            PreparedStatement preparedStatement = con.prepareStatement("SELECT codMarca, nomeMarca FROM marca");
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                Marca marca = new Marca();
+                marca.setCodMarca(rs.getInt("codMarca"));
+                marca.setNomeMarca(rs.getString("nomeMarca"));
+                marcaList.add(marca);
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+
+        return marcaList;
+    }
 
     public void createMarca(int codMarca, String nomeMarca) throws SQLException {
         try {

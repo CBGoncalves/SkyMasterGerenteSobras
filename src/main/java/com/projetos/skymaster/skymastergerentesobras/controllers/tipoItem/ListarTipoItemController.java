@@ -1,6 +1,7 @@
 package com.projetos.skymaster.skymastergerentesobras.controllers.tipoItem;
 
 import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
+import com.projetos.skymaster.skymastergerentesobras.controllers.marca.EditarMarcaController;
 import com.projetos.skymaster.skymastergerentesobras.dao.MarcaDao;
 import com.projetos.skymaster.skymastergerentesobras.dao.TipoItemDao;
 import com.projetos.skymaster.skymastergerentesobras.models.Marca;
@@ -10,12 +11,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -74,6 +78,33 @@ public class ListarTipoItemController {
     }
 
     public void handleEditarButtonAction(ActionEvent event) {
+        TipoItem tipoItem = null;
+        tipoItem = (TipoItem) tableView.getSelectionModel().getSelectedItem();
+        if (tipoItem == null) {
+            showAlert(Alert.AlertType.WARNING, "Erro ao Editar",
+                    "Você precisa selecionar um tipo de item para edição!");
+            return;
+        }
+        try {
+            Stage stageListar = (Stage) btnEditar.getScene().getWindow();
+            stageListar.close();
+
+            Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/tipoItem/EditarTipoItem.fxml"));
+            EditarTipoItemController controller = new EditarTipoItemController(tipoItem);
+            loader.setController(controller);
+            Parent root = loader.load();
+
+            Stage editarTipoItem = new Stage();
+            editarTipoItem.setTitle("Editar Tipo de Item");
+            editarTipoItem.setScene(new Scene(root));
+            editarTipoItem.setResizable(false);
+            editarTipoItem.getIcons().add(icon);
+            editarTipoItem.show();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void handleDeletarButtonAction(ActionEvent event) {

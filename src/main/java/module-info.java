@@ -21,5 +21,7 @@ module com.projetos.skymaster.skymastergerentesobras {
     opens com.projetos.skymaster.skymastergerentesobras.controllers.obra to javafx.fxml;
     exports com.projetos.skymaster.skymastergerentesobras.controllers.usuario;
     opens com.projetos.skymaster.skymastergerentesobras.controllers.usuario to javafx.fxml;
+    exports com.projetos.skymaster.skymastergerentesobras.controllers.tipoItem;
+    opens com.projetos.skymaster.skymastergerentesobras.controllers.tipoItem to javafx.fxml;
 
 }

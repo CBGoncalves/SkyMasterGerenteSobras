@@ -1,6 +1,7 @@
 package com.projetos.skymaster.skymastergerentesobras.dao;
 
 import com.projetos.skymaster.skymastergerentesobras.models.Marca;
+import com.projetos.skymaster.skymastergerentesobras.models.Usuario;
 import javafx.scene.control.Alert;
 
 import java.sql.*;
@@ -46,6 +47,18 @@ public class MarcaDao {
             showAlert(Alert.AlertType.ERROR, "Erro no Cadastro!",
                     "Valores inválidos ou marca já existente!");
         }
+    }
+
+    public void deleteMarca(Marca m) {
+        try {
+            Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            PreparedStatement preparedStatement = con.prepareStatement("DELETE FROM marca WHERE codMarca = ?;");
+            preparedStatement.setInt(1, m.getCodMarca());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+
     }
 
     public static void printSQLException(SQLException exception) {

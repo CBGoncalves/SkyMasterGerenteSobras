@@ -126,6 +126,20 @@ public class EditarObraController {
     }
     @FXML
     private void handleCancelarButtonAction(ActionEvent event) throws IOException{
+        Stage stageEditar = (Stage) btnCancelar.getScene().getWindow();
+        stageEditar.close();
+
+        Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/obra/ListarObra.fxml"));
+        Parent root = loader.load();
+
+        Stage listarObra = new Stage();
+        listarObra.setTitle("Listar Obra");
+        listarObra.setScene(new Scene(root));
+        listarObra.setResizable(false);
+        listarObra.getIcons().add(icon);
+        listarObra.show();
     }
 
     private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {

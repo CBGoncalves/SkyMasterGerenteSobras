@@ -1,6 +1,8 @@
 package com.projetos.skymaster.skymastergerentesobras.controllers.obra;
 
 import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
+import com.projetos.skymaster.skymastergerentesobras.dao.MarcaDao;
+import com.projetos.skymaster.skymastergerentesobras.dao.ObraDao;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -53,6 +55,27 @@ public class CadastrarObraController {
     }
 
     public void handleCadastrarButtonAction(ActionEvent event) {
+        Window owner = btnCadastrar.getScene().getWindow();
+
+        String codigoObra = campoCodObra.getText();
+        String nomeObra = campoNomeObra.getText();
+
+        if (codigoObra.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, owner, "Erro no Cadastro",
+                    "Preencha o campo de Código da Obra!");
+            return;
+        }
+
+        if (nomeObra.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, owner, "Erro no Cadastro",
+                    "Preencha o campo do Nome da Obra!");
+            return;
+        }
+
+        int codObra = Integer.parseInt(codigoObra);
+
+        ObraDao obraDao = new ObraDao();
+        obraDao.createObra(codObra, nomeObra);
     }
 
     public void handleCancelarButtonAction(ActionEvent event) throws IOException{

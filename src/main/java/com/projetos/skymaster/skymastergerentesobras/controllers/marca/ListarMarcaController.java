@@ -3,6 +3,7 @@ package com.projetos.skymaster.skymastergerentesobras.controllers.marca;
 import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
 import com.projetos.skymaster.skymastergerentesobras.dao.MarcaDao;
 import com.projetos.skymaster.skymastergerentesobras.dao.UsuarioDao;
+import com.projetos.skymaster.skymastergerentesobras.models.Marca;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
 import com.projetos.skymaster.skymastergerentesobras.models.Usuario;
 import javafx.event.ActionEvent;
@@ -17,6 +18,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class ListarMarcaController {
     @FXML
@@ -56,6 +58,19 @@ public class ListarMarcaController {
         }
 
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+
+        marcaDao = new MarcaDao();
+
+        codMarcaColumn.setCellValueFactory(new PropertyValueFactory<>("codMarca"));
+        nomeMarcaColumn.setCellValueFactory(new PropertyValueFactory<>("nomeMarca"));
+
+        try {
+            List<Marca> marcas = marcaDao.selectAllMarcas();
+            tableView.getItems().addAll(marcas);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 

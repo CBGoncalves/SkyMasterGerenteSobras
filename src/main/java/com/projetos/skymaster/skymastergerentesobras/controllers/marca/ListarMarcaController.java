@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -78,5 +79,25 @@ public class ListarMarcaController {
     }
 
     public void handleDeletarButtonAction(ActionEvent event) {
+        Marca marca = null;
+        marca = (Marca) tableView.getSelectionModel().getSelectedItem();
+        if (marca == null) {
+            showAlert(Alert.AlertType.WARNING, "Erro ao Deletar",
+                    "Você precisa selecionar uma marca para remover!");
+            return;
+        }
+        marcaDao.deleteMarca(marca);
+        showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
+                "Marca deletada com sucesso!");
+        tableView.getItems().remove(marca);
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.initOwner(null);
+        alert.show();
     }
 }

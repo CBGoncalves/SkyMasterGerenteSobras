@@ -118,8 +118,8 @@ public class ListarUsuarioController {
         Usuario usuario = null;
         usuario = (Usuario) tableView.getSelectionModel().getSelectedItem();
         if (usuario == null) {
-            showAlert(Alert.AlertType.WARNING, "Erro ao Editar",
-                    "Você precisa selecionar um usuário para edição!");
+            showAlert(Alert.AlertType.WARNING, "Erro ao Deletar",
+                    "Você precisa selecionar um usuário para remover!");
             return;
         }
         usuarioDao.deleteUsuario(usuario);

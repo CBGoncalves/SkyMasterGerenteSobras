@@ -4,6 +4,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import java.net.URL?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.Button?>
 <AnchorPane fx:controller="com.projetos.skymaster.skymastergerentesobras.controllers.tipoItem.ListarTipoItemController"
             xmlns:fx="http://javafx.com/fxml"
             styleClass="root" fx:id="root"
@@ -24,6 +27,21 @@
             <Image url="@../../img/logo_sky.jpg"/>
         </image>
     </ImageView>
+
+    <TableView fx:id="tableView"
+               AnchorPane.leftAnchor="198" AnchorPane.topAnchor="131"
+               minWidth="680" minHeight="450" >
+        <columns>
+            <TableColumn fx:id="codTipoItemColumn" text="Código do Tipo de Item"/>
+            <TableColumn fx:id="nomeTipoItemColumn" text="Nome do Tipo de Item"/>
+        </columns>
+    </TableView>
+
+    <Button fx:id="btnEditar" text="Editar" onAction="#handleEditarButtonAction"
+            AnchorPane.leftAnchor="45" AnchorPane.topAnchor="206"/>
+
+    <Button fx:id="btnDeletar" text="Deletar" onAction="#handleDeletarButtonAction"
+            AnchorPane.leftAnchor="45" AnchorPane.topAnchor="252"/>
 
 
 </AnchorPane>

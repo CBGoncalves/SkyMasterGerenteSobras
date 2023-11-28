@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -76,5 +77,25 @@ public class ListarTipoItemController {
     }
 
     public void handleDeletarButtonAction(ActionEvent event) {
+        TipoItem tipoItem = null;
+        tipoItem = (TipoItem) tableView.getSelectionModel().getSelectedItem();
+        if (tipoItem == null) {
+            showAlert(Alert.AlertType.WARNING, "Erro ao Deletar",
+                    "Você precisa selecionar um tipo de item para remover!");
+            return;
+        }
+        tipoItemDao.deleteTipoItem(tipoItem);
+        showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
+                "Tipo de Item deletado com sucesso!");
+        tableView.getItems().remove(tipoItem);
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.initOwner(null);
+        alert.show();
     }
 }

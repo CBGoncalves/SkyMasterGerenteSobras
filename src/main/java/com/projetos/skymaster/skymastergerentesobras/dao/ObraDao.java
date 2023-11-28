@@ -75,6 +75,23 @@ public class ObraDao {
         alert.show();
     }
 
+    public void updateObra(int codObra, String nomeObra, int codigoParametro) throws SQLException {
+        try {
+            Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            PreparedStatement preparedStatement = con.prepareStatement("UPDATE obra SET codObra=?, nomeObra=? WHERE codObra=?;");
+            preparedStatement.setInt(1, codObra);
+            preparedStatement.setString(2, nomeObra);
+            preparedStatement.setInt(3, codigoParametro);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            printSQLException(e);
+            showAlert(Alert.AlertType.ERROR, "Erro na Edição!",
+                    "Valores inválidos ou obra já existente!");
+            return;
+        }
+    }
+
 
     public void deleteObra(Obra o) {
         try {

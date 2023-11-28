@@ -4,6 +4,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
 <AnchorPane fx:controller="com.projetos.skymaster.skymastergerentesobras.controllers.marca.CadastrarMarcaController"
             xmlns:fx="http://javafx.com/fxml"
             styleClass="root" fx:id="root"
@@ -25,5 +28,16 @@
         </image>
     </ImageView>
 
-
+    <Label text="Código da Marca"
+           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="191"/>
+    <TextField fx:id="campoCodMarca"
+               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="211"/>
+    <Label text="Nome da Marca"
+           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="264"/>
+    <TextField fx:id="campoNomeMarca"
+               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="284"/>
+    <Button fx:id="btnCadastrar" text="Cadastrar" onAction="#handleCadastrarButtonAction"
+            AnchorPane.leftAnchor="462" AnchorPane.topAnchor="367"/>
+    <Button fx:id="btnCancelar" text="Cancelar" onAction="#handleCancelarButtonAction"
+            AnchorPane.leftAnchor="293" AnchorPane.topAnchor="367"/>
 </AnchorPane>

@@ -1,11 +1,21 @@
 package com.projetos.skymaster.skymastergerentesobras.controllers.marca;
 
 import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
+import com.projetos.skymaster.skymastergerentesobras.dao.MarcaDao;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
+import com.projetos.skymaster.skymastergerentesobras.models.Usuario;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -13,6 +23,14 @@ import java.sql.SQLException;
 public class CadastrarMarcaController {
     @FXML
     private AnchorPane root;
+    @FXML
+    private TextField campoCodMarca;
+    @FXML
+    private TextField campoNomeMarca;
+    @FXML
+    private Button btnCadastrar;
+    @FXML
+    private Button btnCancelar;
 
     public void initialize() throws SQLException {
 
@@ -34,5 +52,55 @@ public class CadastrarMarcaController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void handleCadastrarButtonAction(ActionEvent event) throws SQLException {
+        Window owner = btnCadastrar.getScene().getWindow();
+
+        String codigoMarca = campoCodMarca.getText();
+        String nomeMarca = campoNomeMarca.getText();
+
+        if (codigoMarca.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, owner, "Erro no Cadastro",
+                    "Preencha o campo de Código da Marca!");
+            return;
+        }
+
+        if (nomeMarca.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, owner, "Erro no Cadastro",
+                    "Preencha o campo do Nome da Marca!");
+            return;
+        }
+
+        int codMarca = Integer.parseInt(codigoMarca);
+
+        MarcaDao marcaDao = new MarcaDao();
+        marcaDao.createMarca(codMarca, nomeMarca);
+    }
+
+    public void handleCancelarButtonAction(ActionEvent event) throws IOException{
+        Stage stageCadastroMarca = (Stage) btnCancelar.getScene().getWindow();
+        stageCadastroMarca.close();
+
+        Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/TelaInicial.fxml"));
+        Parent root = loader.load();
+
+        Stage telaInicial = new Stage();
+        telaInicial.setTitle("Tela Inicial");
+        telaInicial.setScene(new Scene(root));
+        telaInicial.setResizable(false);
+        telaInicial.getIcons().add(icon);
+        telaInicial.show();
+    }
+
+    private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.initOwner(owner);
+        alert.show();
     }
 }

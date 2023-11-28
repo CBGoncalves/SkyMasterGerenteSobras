@@ -8,9 +8,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -78,5 +83,28 @@ public class EditarMarcaController {
     }
     @FXML
     private void handleCancelarButtonAction(ActionEvent event) throws IOException{
+        Stage stageEditar = (Stage) btnCancelar.getScene().getWindow();
+        stageEditar.close();
+
+        Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/marca/ListarMarca.fxml"));
+        Parent root = loader.load();
+
+        Stage listarMarca = new Stage();
+        listarMarca.setTitle("Listar Marca");
+        listarMarca.setScene(new Scene(root));
+        listarMarca.setResizable(false);
+        listarMarca.getIcons().add(icon);
+        listarMarca.show();
+    }
+
+    private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.initOwner(owner);
+        alert.show();
     }
 }

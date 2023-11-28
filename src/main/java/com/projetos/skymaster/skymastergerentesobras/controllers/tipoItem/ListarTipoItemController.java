@@ -13,10 +13,12 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class ListarTipoItemController {
     @FXML
@@ -56,6 +58,18 @@ public class ListarTipoItemController {
         }
 
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        tipoItemDao = new TipoItemDao();
+
+        codTipoItemColumn.setCellValueFactory(new PropertyValueFactory<>("codTipoItem"));
+        nomeTipoItemColumn.setCellValueFactory(new PropertyValueFactory<>("nomeTipoItem"));
+
+        try {
+            List<TipoItem> tiposItem = tipoItemDao.selectAllTiposItem();
+            tableView.getItems().addAll(tiposItem);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void handleEditarButtonAction(ActionEvent event) {

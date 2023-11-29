@@ -13,10 +13,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -104,5 +107,19 @@ public class EditarItemController {
 
     @FXML
     private void handleCancelarButtonAction(ActionEvent event) throws IOException{
+        Stage stageEditar = (Stage) btnCancelar.getScene().getWindow();
+        stageEditar.close();
+
+        Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/item/ListarItem.fxml"));
+        Parent root = loader.load();
+
+        Stage listarItem = new Stage();
+        listarItem.setTitle("Listar Item");
+        listarItem.setScene(new Scene(root));
+        listarItem.setResizable(false);
+        listarItem.getIcons().add(icon);
+        listarItem.show();
     }
 }

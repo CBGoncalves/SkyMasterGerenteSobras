@@ -5,6 +5,15 @@ public class Item {
     private String nomeTipoItem;
     private String descricaoItem;
     private String nomeMarca;
+    private Double quantidadeItem;
+
+    public Double getQuantidadeItem() {
+        return quantidadeItem;
+    }
+
+    public void setQuantidadeItem(Double quantidadeItem) {
+        this.quantidadeItem = quantidadeItem;
+    }
 
     public int getCodItem() {
         return codItem;

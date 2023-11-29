@@ -144,7 +144,7 @@ public class UsuarioDao {
         } catch(SQLException e) {
             printSQLException(e);
             showAlert(Alert.AlertType.ERROR, "Erro na Edição!",
-                    "Valores inválidos ou marca já existente!");
+                    "Valores inválidos ou usuario já existente!");
         }
     }
 

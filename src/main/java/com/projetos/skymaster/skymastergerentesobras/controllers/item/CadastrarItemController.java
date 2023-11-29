@@ -1,19 +1,48 @@
 package com.projetos.skymaster.skymastergerentesobras.controllers.item;
 
 import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
+import com.projetos.skymaster.skymastergerentesobras.dao.*;
+import com.projetos.skymaster.skymastergerentesobras.models.Marca;
+import com.projetos.skymaster.skymastergerentesobras.models.TipoItem;
+import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuario;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class CadastrarItemController {
     @FXML
     private AnchorPane root;
+    @FXML
+    private TextField campoCodItem;
+    @FXML
+    private ChoiceBox<TipoItem> campoTipoItem;
+    @FXML
+    private TextField campoDescricao;
+    @FXML
+    private ChoiceBox<Marca> campoMarca;
+    @FXML
+    private Button btnCadastrar;
+    @FXML
+    private Button btnCancelar;
+    private TipoItemDao tipoItemDao;
+    private MarcaDao marcaDao;
+
+    public CadastrarItemController(TipoItemDao tipoItemDao, MarcaDao marcaDao) {
+        this.tipoItemDao = tipoItemDao;
+        this.marcaDao = marcaDao;
+
+    }
 
     public void initialize() throws SQLException {
 
@@ -35,11 +64,88 @@ public class CadastrarItemController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        try {
+            List<TipoItem> tiposItem = tipoItemDao.selectAllTiposItem();
+            ObservableList<TipoItem> observableList = FXCollections.observableArrayList(tiposItem);
+            campoTipoItem.setItems(observableList);
+
+            List<Marca> marcas = marcaDao.selectAllMarcas();
+            ObservableList<Marca> observableListMarca = FXCollections.observableArrayList(marcas);
+            campoMarca.setItems(observableListMarca);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        btnCadastrar.setOnAction(event -> {
+            try {
+                handleCadastrarButtonAction(event);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        btnCancelar.setOnAction(event -> {
+            try {
+                handleCancelarButtonAction(event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
-    public void handleCadastrarButtonAction(ActionEvent event) {
+    public void handleCadastrarButtonAction(ActionEvent event) throws SQLException{
+        Window owner = btnCadastrar.getScene().getWindow();
+
+        String codigoItem = campoCodItem.getText();
+        String nomeTipoItem;
+        String descricaoItem = campoDescricao.getText();
+        String nomeMarca;
+        try {
+            nomeTipoItem = campoTipoItem.getValue().toString();
+            nomeMarca = campoMarca.getValue().toString();
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, owner, "Falha no Cadastro!",
+                    "Preencha os campos!");
+            return;
+        }
+
+        if (codigoItem.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, owner, "Falha no Cadastro!",
+                    "Preencha o campo de Código do Item!");
+            return;
+        }
+        if (nomeTipoItem.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, owner, "Falha no Cadastro!",
+                    "Selecione um Tipo de Item!");
+            return;
+        }
+        if (descricaoItem.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR,owner,"Falha no Cadastro!",
+                    "Preencha o campo de Descrição do Item!");
+            return;
+        }
+        if (nomeMarca.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, owner, "Falha no Cadastro!",
+                    "Selecione o Nome da Marca do item!");
+            return;
+        }
+
+        int codItem = Integer.parseInt(codigoItem);
+
+        ItemDao itemDao = new ItemDao();
+        itemDao.createItem(codItem, nomeTipoItem, descricaoItem, nomeMarca);
     }
 
-    public void handleCancelarButtonAction(ActionEvent event) {
+    public void handleCancelarButtonAction(ActionEvent event) throws IOException{
+    }
+
+    private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.initOwner(owner);
+        alert.show();
     }
 }

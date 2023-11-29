@@ -116,6 +116,17 @@ public class ListarItemController {
     }
 
     public void handleDeletarButtonAction(ActionEvent event) {
+        Item item = null;
+        item = (Item) tableView.getSelectionModel().getSelectedItem();
+        if (item == null) {
+            showAlert(Alert.AlertType.WARNING, "Erro ao Deletar",
+                    "Você precisa selecionar um item para remover!");
+            return;
+        }
+        itemDao.deleteItem(item);
+        showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
+                "Item deletado com sucesso!");
+        tableView.getItems().remove(item);
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {

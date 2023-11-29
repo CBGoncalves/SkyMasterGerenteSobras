@@ -1,6 +1,7 @@
 package com.projetos.skymaster.skymastergerentesobras.controllers.item;
 
 import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
+import com.projetos.skymaster.skymastergerentesobras.dao.ItemDao;
 import com.projetos.skymaster.skymastergerentesobras.dao.MarcaDao;
 import com.projetos.skymaster.skymastergerentesobras.dao.TipoItemDao;
 import com.projetos.skymaster.skymastergerentesobras.models.Item;
@@ -14,12 +15,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -85,6 +88,9 @@ public class EditarItemController {
             e.printStackTrace();
         }
 
+        campoCodItem.setText(Integer.toString(item.getCodItem()));
+        campoDescricao.setText(item.getDescricaoItem());
+
         btnEditar.setOnAction(event -> {
             try {
                 handleEditarButtonAction(event);
@@ -103,6 +109,68 @@ public class EditarItemController {
 
     @FXML
     private void handleEditarButtonAction(ActionEvent event) throws SQLException{
+        Window owner = btnEditar.getScene().getWindow();
+
+        int codigoItemAntigo = item.getCodItem();
+        String codigoItem = campoCodItem.getText();
+        String nomeTipoItem;
+        String descricaoItem = campoDescricao.getText();
+        String nomeMarca;
+        try {
+            nomeTipoItem = campoTipoItem.getValue().toString();
+            nomeMarca = campoMarca.getValue().toString();
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, owner, "Falha na Edição!",
+                    "Preencha os campos!");
+            return;
+        }
+
+        if (codigoItem.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, owner, "Falha na Edição!",
+                    "Preencha o campo de Código do Item!");
+            return;
+        }
+        if (nomeTipoItem.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, owner, "Falha na Edição!",
+                    "Selecione um Tipo de Item!");
+            return;
+        }
+        if (descricaoItem.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR,owner,"Falha na Edição!",
+                    "Preencha o campo de Descrição do Item!");
+            return;
+        }
+        if (nomeMarca.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, owner, "Falha na Edição!",
+                    "Selecione o Nome da Marca do item!");
+            return;
+        }
+
+        int codItem = Integer.parseInt(codigoItem);
+        ItemDao itemDao = new ItemDao();
+        itemDao.updateItem(codigoItemAntigo, codItem, nomeTipoItem, descricaoItem, nomeMarca);
+
+        try {
+            Stage stageEditar = (Stage) btnEditar.getScene().getWindow();
+            stageEditar.close();
+
+            Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/item/ListarItem.fxml"));
+            Parent root = loader.load();
+
+            Stage listarItem = new Stage();
+            listarItem.setTitle("Listar Item");
+            listarItem.setScene(new Scene(root));
+            listarItem.setResizable(false);
+            listarItem.getIcons().add(icon);
+            listarItem.show();
+
+            showAlert(Alert.AlertType.CONFIRMATION, owner,"Sucesso!",
+                    "Item Editado com Sucesso!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -121,5 +189,14 @@ public class EditarItemController {
         listarItem.setResizable(false);
         listarItem.getIcons().add(icon);
         listarItem.show();
+    }
+
+    private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.initOwner(owner);
+        alert.show();
     }
 }

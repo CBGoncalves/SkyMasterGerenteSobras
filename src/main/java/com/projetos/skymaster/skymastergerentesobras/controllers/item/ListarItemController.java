@@ -1,15 +1,12 @@
 package com.projetos.skymaster.skymastergerentesobras.controllers.item;
 
 import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
-import com.projetos.skymaster.skymastergerentesobras.controllers.marca.EditarMarcaController;
 import com.projetos.skymaster.skymastergerentesobras.dao.ItemDao;
 import com.projetos.skymaster.skymastergerentesobras.dao.MarcaDao;
 import com.projetos.skymaster.skymastergerentesobras.dao.TipoItemDao;
-import com.projetos.skymaster.skymastergerentesobras.dao.UsuarioDao;
 import com.projetos.skymaster.skymastergerentesobras.models.Item;
 import com.projetos.skymaster.skymastergerentesobras.models.Marca;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
-import com.projetos.skymaster.skymastergerentesobras.models.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -102,7 +99,7 @@ public class ListarItemController {
 
             Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/item/EdicaoItem.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/item/EditarItem.fxml"));
             EditarItemController controller = new EditarItemController(item, new TipoItemDao(), new MarcaDao());
             loader.setController(controller);
             Parent root = loader.load();

@@ -19,4 +19,9 @@ public class TipoItem {
     public void setNomeTipoItem(String nomeTipoItem) {
         this.nomeTipoItem = nomeTipoItem;
     }
+
+    @Override
+    public String toString() {
+        return nomeTipoItem;
+    }
 }

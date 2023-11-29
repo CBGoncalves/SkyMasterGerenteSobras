@@ -21,10 +21,34 @@ public class ItemDao {
         try {
             Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 
-            PreparedStatement preparedStatement = con.prepareStatement("SELECT item.codItem, tipoitem.nomeTipoItem, item.descricaoItem, marca.nomeMarca\n" +
-                    "FROM tipoitem\n" +
-                    "INNER JOIN item ON tipoitem.codTipoItem = item.codTipoItem\n" +
-                    "INNER JOIN marca ON item.codMarca = marca.codMarca;");
+            PreparedStatement preparedStatement = con.prepareStatement("SELECT\n" +
+                    "    i.codItem,\n" +
+                    "    tipoitem.nomeTipoItem,\n" +
+                    "    i.descricaoItem,\n" +
+                    "    marca.nomeMarca,\n" +
+                    "    i.quantidadeItem + COALESCE(qtdEntradas, 0) - COALESCE(qtdSaidas, 0) AS quantidadeTotal\n" +
+                    "FROM\n" +
+                    "    Item i\n" +
+                    "LEFT JOIN (\n" +
+                    "    SELECT\n" +
+                    "        codItem,\n" +
+                    "        COALESCE(SUM(qtdEntrada), 0) AS qtdEntradas\n" +
+                    "    FROM\n" +
+                    "        RegistroEntrada\n" +
+                    "    GROUP BY\n" +
+                    "        codItem\n" +
+                    ") re ON i.codItem = re.codItem\n" +
+                    "INNER JOIN tipoitem ON i.codTipoItem = tipoitem.codTipoItem\n" +
+                    "INNER JOIN marca ON i.codMarca = marca.codMarca\n" +
+                    "LEFT JOIN (\n" +
+                    "    SELECT\n" +
+                    "        codItem,\n" +
+                    "        COALESCE(SUM(qtdSaida), 0) AS qtdSaidas\n" +
+                    "    FROM\n" +
+                    "        RegistroSaida\n" +
+                    "    GROUP BY\n" +
+                    "        codItem\n" +
+                    ") rs ON i.codItem = rs.codItem;\n");
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 Item item = new Item();
@@ -32,6 +56,7 @@ public class ItemDao {
                 item.setNomeTipoItem(rs.getString("nomeTipoItem"));
                 item.setDescricaoItem(rs.getString("descricaoItem"));
                 item.setNomeMarca(rs.getString("nomeMarca"));
+                item.setQuantidadeItem(rs.getDouble("quantidadeTotal"));
                 itemList.add(item);
             }
         } catch (SQLException e) {
@@ -40,6 +65,8 @@ public class ItemDao {
 
         return itemList;
     }
+
+
 
     public void createItem(int codItem, String nomeTipoItem, String descricaoItem, String nomeMarca) throws SQLException {
         int codTipoItem = getCodTipoItemByNome(nomeTipoItem);

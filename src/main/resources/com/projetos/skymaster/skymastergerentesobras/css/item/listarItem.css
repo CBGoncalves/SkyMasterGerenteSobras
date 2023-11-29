@@ -1,0 +1,26 @@
+@font-face {
+    font-family: 'Poppins Medium';
+    src: url("../../fonts/Poppins-Medium.ttf");
+}
+
+.root {
+    -fx-font-family: 'Poppins Medium';
+    -fx-font-size: 14px;
+    -fx-background-color: #FFFFFF;
+}
+
+.button {
+    -fx-background-color: #011A5D;
+    -fx-text-fill: #FFFFFF;
+    -fx-min-width: 104px;
+    -fx-min-height: 27px;
+}
+
+.table-view {
+    -fx-background-radius: 5;
+}
+
+.column-header .label {
+    -fx-background-color: #011A5D;
+    -fx-text-fill: #FFFFFF;
+}

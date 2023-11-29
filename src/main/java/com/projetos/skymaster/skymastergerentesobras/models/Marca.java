@@ -19,4 +19,9 @@ public class Marca {
     public void setNomeMarca(String nomeMarca) {
         this.nomeMarca = nomeMarca;
     }
+
+    @Override
+    public String toString() {
+        return nomeMarca;
+    }
 }

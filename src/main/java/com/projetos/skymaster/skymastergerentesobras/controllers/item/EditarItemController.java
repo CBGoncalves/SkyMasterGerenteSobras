@@ -1,10 +1,12 @@
 package com.projetos.skymaster.skymastergerentesobras.controllers.item;
 
 import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
-import com.projetos.skymaster.skymastergerentesobras.dao.*;
+import com.projetos.skymaster.skymastergerentesobras.dao.ItemDao;
+import com.projetos.skymaster.skymastergerentesobras.dao.MarcaDao;
+import com.projetos.skymaster.skymastergerentesobras.dao.TipoItemDao;
+import com.projetos.skymaster.skymastergerentesobras.models.Item;
 import com.projetos.skymaster.skymastergerentesobras.models.Marca;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoItem;
-import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuario;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,7 +15,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -23,7 +28,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class CadastrarItemController {
+public class EditarItemController {
+
     @FXML
     private AnchorPane root;
     @FXML
@@ -35,16 +41,17 @@ public class CadastrarItemController {
     @FXML
     private ChoiceBox<Marca> campoMarca;
     @FXML
-    private Button btnCadastrar;
+    private Button btnEditar;
     @FXML
     private Button btnCancelar;
     private TipoItemDao tipoItemDao;
     private MarcaDao marcaDao;
+    private Item item;
 
-    public CadastrarItemController(TipoItemDao tipoItemDao, MarcaDao marcaDao) {
+    public EditarItemController(Item item, TipoItemDao tipoItemDao, MarcaDao marcaDao) {
+        this.item = item;
         this.tipoItemDao = tipoItemDao;
         this.marcaDao = marcaDao;
-
     }
 
     public void initialize() throws SQLException {
@@ -81,9 +88,12 @@ public class CadastrarItemController {
             e.printStackTrace();
         }
 
-        btnCadastrar.setOnAction(event -> {
+        campoCodItem.setText(Integer.toString(item.getCodItem()));
+        campoDescricao.setText(item.getDescricaoItem());
+
+        btnEditar.setOnAction(event -> {
             try {
-                handleCadastrarButtonAction(event);
+                handleEditarButtonAction(event);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -97,9 +107,11 @@ public class CadastrarItemController {
         });
     }
 
-    public void handleCadastrarButtonAction(ActionEvent event) throws SQLException{
-        Window owner = btnCadastrar.getScene().getWindow();
+    @FXML
+    private void handleEditarButtonAction(ActionEvent event) throws SQLException{
+        Window owner = btnEditar.getScene().getWindow();
 
+        int codigoItemAntigo = item.getCodItem();
         String codigoItem = campoCodItem.getText();
         String nomeTipoItem;
         String descricaoItem = campoDescricao.getText();
@@ -108,53 +120,75 @@ public class CadastrarItemController {
             nomeTipoItem = campoTipoItem.getValue().toString();
             nomeMarca = campoMarca.getValue().toString();
         } catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR, owner, "Falha no Cadastro!",
+            showAlert(Alert.AlertType.ERROR, owner, "Falha na Edição!",
                     "Preencha os campos!");
             return;
         }
 
         if (codigoItem.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, owner, "Falha no Cadastro!",
+            showAlert(Alert.AlertType.ERROR, owner, "Falha na Edição!",
                     "Preencha o campo de Código do Item!");
             return;
         }
         if (nomeTipoItem.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, owner, "Falha no Cadastro!",
+            showAlert(Alert.AlertType.ERROR, owner, "Falha na Edição!",
                     "Selecione um Tipo de Item!");
             return;
         }
         if (descricaoItem.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR,owner,"Falha no Cadastro!",
+            showAlert(Alert.AlertType.ERROR,owner,"Falha na Edição!",
                     "Preencha o campo de Descrição do Item!");
             return;
         }
         if (nomeMarca.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, owner, "Falha no Cadastro!",
+            showAlert(Alert.AlertType.ERROR, owner, "Falha na Edição!",
                     "Selecione o Nome da Marca do item!");
             return;
         }
 
         int codItem = Integer.parseInt(codigoItem);
-
         ItemDao itemDao = new ItemDao();
-        itemDao.createItem(codItem, nomeTipoItem, descricaoItem, nomeMarca);
+        itemDao.updateItem(codigoItemAntigo, codItem, nomeTipoItem, descricaoItem, nomeMarca);
+
+        try {
+            Stage stageEditar = (Stage) btnEditar.getScene().getWindow();
+            stageEditar.close();
+
+            Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/item/ListarItem.fxml"));
+            Parent root = loader.load();
+
+            Stage listarItem = new Stage();
+            listarItem.setTitle("Listar Item");
+            listarItem.setScene(new Scene(root));
+            listarItem.setResizable(false);
+            listarItem.getIcons().add(icon);
+            listarItem.show();
+
+            showAlert(Alert.AlertType.CONFIRMATION, owner,"Sucesso!",
+                    "Item Editado com Sucesso!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void handleCancelarButtonAction(ActionEvent event) throws IOException{
-        Stage stageCadastroItem = (Stage) btnCancelar.getScene().getWindow();
-        stageCadastroItem.close();
+    @FXML
+    private void handleCancelarButtonAction(ActionEvent event) throws IOException{
+        Stage stageEditar = (Stage) btnCancelar.getScene().getWindow();
+        stageEditar.close();
 
         Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/TelaInicial.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/item/ListarItem.fxml"));
         Parent root = loader.load();
 
-        Stage telaInicial = new Stage();
-        telaInicial.setTitle("Tela Inicial");
-        telaInicial.setScene(new Scene(root));
-        telaInicial.setResizable(false);
-        telaInicial.getIcons().add(icon);
-        telaInicial.show();
+        Stage listarItem = new Stage();
+        listarItem.setTitle("Listar Item");
+        listarItem.setScene(new Scene(root));
+        listarItem.setResizable(false);
+        listarItem.getIcons().add(icon);
+        listarItem.show();
     }
 
     private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {

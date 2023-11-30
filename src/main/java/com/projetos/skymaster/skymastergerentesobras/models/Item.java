@@ -46,4 +46,9 @@ public class Item {
     public void setNomeMarca(String nomeMarca) {
         this.nomeMarca = nomeMarca;
     }
+
+    @Override
+    public String toString() {
+        return nomeTipoItem + " " + descricaoItem;
+    }
 }

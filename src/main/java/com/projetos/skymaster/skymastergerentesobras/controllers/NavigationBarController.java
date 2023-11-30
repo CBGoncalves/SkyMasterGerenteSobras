@@ -1,10 +1,9 @@
 package com.projetos.skymaster.skymastergerentesobras.controllers;
 
 import com.projetos.skymaster.skymastergerentesobras.controllers.item.CadastrarItemController;
+import com.projetos.skymaster.skymastergerentesobras.controllers.registro.CadastrarEntradaController;
 import com.projetos.skymaster.skymastergerentesobras.controllers.usuario.CadastrarUsuarioController;
-import com.projetos.skymaster.skymastergerentesobras.dao.MarcaDao;
-import com.projetos.skymaster.skymastergerentesobras.dao.TipoItemDao;
-import com.projetos.skymaster.skymastergerentesobras.dao.TipoUsuarioDao;
+import com.projetos.skymaster.skymastergerentesobras.dao.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -238,6 +238,8 @@ public class NavigationBarController {
             stageAtual.close();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/registro/CadastrarEntrada.fxml"));
+            CadastrarEntradaController controller = new CadastrarEntradaController(new ItemDao(), new ObraDao());
+            loader.setController(controller);
             Parent root = loader.load();
 
             Stage cadastrarEntrada = new Stage();

@@ -3,6 +3,7 @@ package com.projetos.skymaster.skymastergerentesobras.dao;
 import com.projetos.skymaster.skymastergerentesobras.models.Registro;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
 import com.projetos.skymaster.skymastergerentesobras.models.Usuario;
+import com.projetos.skymaster.skymastergerentesobras.models.UsuarioHolder;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -64,6 +65,8 @@ public class UsuarioDao {
                 System.out.println(tipoUsuario);
 
                 TipoUsuarioNav.getInstance().setTipoUsuario(tipoUsuario);
+                UsuarioHolder usuarioHolder = UsuarioHolder.getInstance();
+                usuarioHolder.setNome(rs.getString("nomeUsuario"));
 
                 try {
                     stageLogin.close();

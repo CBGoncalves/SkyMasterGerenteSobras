@@ -3,13 +3,18 @@ package com.projetos.skymaster.skymastergerentesobras.controllers;
 import com.projetos.skymaster.skymastergerentesobras.dao.RegistroDao;
 import com.projetos.skymaster.skymastergerentesobras.models.Registro;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
+import com.projetos.skymaster.skymastergerentesobras.models.Usuario;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -42,7 +47,6 @@ public class TelaInicialController {
     private TableColumn<Registro, LocalDate> dataColumn;
 
     private RegistroDao registroDao;
-
 
     public void initialize() throws SQLException {
 
@@ -84,8 +88,5 @@ public class TelaInicialController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
     }
 }

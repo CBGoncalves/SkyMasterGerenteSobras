@@ -66,8 +66,6 @@ public class ItemDao {
         return itemList;
     }
 
-
-
     public void createItem(int codItem, String nomeTipoItem, String descricaoItem, String nomeMarca) throws SQLException {
         int codTipoItem = getCodTipoItemByNome(nomeTipoItem);
         System.out.println(codTipoItem);

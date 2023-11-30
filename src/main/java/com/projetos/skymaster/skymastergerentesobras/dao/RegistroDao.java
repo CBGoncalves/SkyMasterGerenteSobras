@@ -1,9 +1,16 @@
 package com.projetos.skymaster.skymastergerentesobras.dao;
 
+import com.projetos.skymaster.skymastergerentesobras.models.Item;
+import com.projetos.skymaster.skymastergerentesobras.models.Obra;
 import com.projetos.skymaster.skymastergerentesobras.models.Registro;
+import com.projetos.skymaster.skymastergerentesobras.models.Usuario;
+import javafx.scene.control.Alert;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 public class RegistroDao {
@@ -54,6 +61,88 @@ public class RegistroDao {
         return list;
     }
 
+    public void createRegistroEntrada(String tipoItem, String descricaoItem, String nomeObra, int qtdEntrada, String numNotaEntrada, String nomeUsuario) throws SQLException {
+        int codUsuario = getCodUsuarioByNome(nomeUsuario);
+        int codItem = getCodItem(tipoItem, descricaoItem);
+        int codObra = getCodObraByNome(nomeObra);
+
+        try {
+            Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+            PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO RegistroEntrada (numNotaEntrada, qtdEntrada, dataEntrada, codItem, codObra, codUsuario)\n" +
+                    "VALUES (?,?,NOW(),?,?,?);");
+            preparedStatement.setString(1, numNotaEntrada);
+            preparedStatement.setInt(2, qtdEntrada);
+            preparedStatement.setInt(3, codItem);
+            preparedStatement.setInt(4, codObra);
+            preparedStatement.setInt(5, codUsuario);
+            preparedStatement.executeUpdate();
+
+            showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
+                    "Entrada de item registrada com sucesso!");
+
+        } catch (SQLException e) {
+            printSQLException(e);
+            showAlert(Alert.AlertType.ERROR, "Erro no Registro!",
+                    "Valores inválidos ou registro já existente!");
+        }
+    }
+
+    public static int getCodItem(String tipoItem, String descricaoItem) {
+        Item i = null;
+        try {
+            Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+            PreparedStatement ps = con.prepareStatement("SELECT item.codItem\n" +
+                    "FROM item\n" +
+                    "JOIN tipoitem ON item.codTipoItem = tipoitem.codTipoItem\n" +
+                    "WHERE item.descricaoItem = ? AND tipoitem.nomeTipoItem = ?;");
+            ps.setString(1, descricaoItem);
+            ps.setString(2, tipoItem);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                i = new Item();
+                i.setCodItem(rs.getInt("codItem"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return i.getCodItem();
+    }
+
+    public static int getCodObraByNome(String nomeObra) {
+        Obra ob = null;
+        try {
+            Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+            PreparedStatement ps = con.prepareStatement("select * from obra where nomeObra=?");
+            ps.setString(1, nomeObra);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ob = new Obra();
+                ob.setCodObra(rs.getInt("codObra"));
+                ob.setNomeObra(rs.getString("nomeObra"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return ob.getCodObra();
+    }
+
+    public static int getCodUsuarioByNome(String nomeUsuario) {
+        Usuario u = null;
+        try {
+            Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+            PreparedStatement ps = con.prepareStatement("select * from usuario where nomeUsuario=?");
+            ps.setString(1, nomeUsuario);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                u = new Usuario();
+                u.setCodUsuario(rs.getInt("codUsuario"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return u.getCodUsuario();
+    }
+
     public static void printSQLException(SQLException exception) {
         for (Throwable e : exception) {
             if (e instanceof SQLException) {
@@ -68,5 +157,14 @@ public class RegistroDao {
                 }
             }
         }
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.initOwner(null);
+        alert.show();
     }
 }

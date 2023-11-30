@@ -19,4 +19,9 @@ public class Obra {
     public void setNomeObra(String nomeObra) {
         this.nomeObra = nomeObra;
     }
+
+    @Override
+    public String toString() {
+        return nomeObra;
+    }
 }

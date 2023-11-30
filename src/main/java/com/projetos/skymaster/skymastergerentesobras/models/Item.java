@@ -49,6 +49,6 @@ public class Item {
 
     @Override
     public String toString() {
-        return nomeTipoItem + " " + descricaoItem;
+        return nomeTipoItem + "-" + descricaoItem;
     }
 }

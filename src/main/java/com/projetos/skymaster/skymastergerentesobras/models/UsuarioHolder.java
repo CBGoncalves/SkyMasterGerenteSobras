@@ -1,11 +1,23 @@
 package com.projetos.skymaster.skymastergerentesobras.models;
 
-public class Usuario {
+public class UsuarioHolder {
 
+    private static UsuarioHolder instance;
     private int codUsuario;
     private String nome;
     private String senha;
     private String tipo;
+
+    private UsuarioHolder() {
+
+    }
+
+    public static UsuarioHolder getInstance() {
+        if (instance == null) {
+            instance = new UsuarioHolder();
+        }
+        return instance;
+    }
 
     public int getCodUsuario() {
         return codUsuario;

@@ -2,6 +2,7 @@ package com.projetos.skymaster.skymastergerentesobras.controllers;
 
 import com.projetos.skymaster.skymastergerentesobras.controllers.item.CadastrarItemController;
 import com.projetos.skymaster.skymastergerentesobras.controllers.registro.CadastrarEntradaController;
+import com.projetos.skymaster.skymastergerentesobras.controllers.registro.CadastrarSaidaController;
 import com.projetos.skymaster.skymastergerentesobras.controllers.usuario.CadastrarUsuarioController;
 import com.projetos.skymaster.skymastergerentesobras.dao.*;
 import javafx.event.ActionEvent;
@@ -260,6 +261,8 @@ public class NavigationBarController {
             stageAtual.close();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/registro/CadastrarSaida.fxml"));
+            CadastrarSaidaController controller = new CadastrarSaidaController(new ItemDao(), new ObraDao());
+            loader.setController(controller);
             Parent root = loader.load();
 
             Stage cadastrarSaida = new Stage();

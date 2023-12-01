@@ -2,12 +2,14 @@ package com.projetos.skymaster.skymastergerentesobras.controllers.registro;
 
 import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
 import com.projetos.skymaster.skymastergerentesobras.dao.RegistroDao;
+import com.projetos.skymaster.skymastergerentesobras.models.Item;
 import com.projetos.skymaster.skymastergerentesobras.models.Registro;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -92,5 +94,34 @@ public class HistoricoRegistroController {
     }
 
     public void handleDeletarButtonAction(ActionEvent event) {
+        Registro registro = null;
+        registro = (Registro) tableView.getSelectionModel().getSelectedItem();
+        if (registro == null) {
+            showAlert(Alert.AlertType.WARNING, "Erro ao Deletar",
+                    "Você precisa selecionar um registro para remover!");
+            return;
+        }
+        String tipoRegistro = registro.getTipo();
+
+        if (tipoRegistro.equals("entrada")) {
+            registroDao.deleteRegistroEntrada(registro);
+            showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
+                    "Registro deletado com sucesso!");
+            tableView.getItems().remove(registro);
+        } else if (tipoRegistro.equals("saida")) {
+            registroDao.deleteRegistroSaida(registro);
+            showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
+                    "Registro deletado com sucesso!");
+            tableView.getItems().remove(registro);
+        }
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.initOwner(null);
+        alert.show();
     }
 }

@@ -4,6 +4,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
 <AnchorPane fx:controller="com.projetos.skymaster.skymastergerentesobras.controllers.registro.CadastrarSaidaController"
             xmlns:fx="http://javafx.com/fxml"
             styleClass="root" fx:id="root"
@@ -24,6 +28,31 @@
             <Image url="@../../img/logo_sky.jpg"/>
         </image>
     </ImageView>
+
+    <Label text="Item"
+           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="165"/>
+    <ChoiceBox fx:id="campoItem"
+               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="185"/>
+
+    <Label text="Obra"
+           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="225"/>
+    <ChoiceBox fx:id="campoObra"
+               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="245"/>
+
+    <Label text="Quantidade da Saída"
+           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="285"/>
+    <TextField fx:id="campoQuantidade"
+               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="305"/>
+
+    <Label text="Número da NF da Saída"
+           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="345"/>
+    <TextField fx:id="campoNotaFiscal"
+               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="365"/>
+
+    <Button fx:id="btnRegistrar" text="Registrar" onAction="#handleRegistrarButtonAction"
+            AnchorPane.leftAnchor="462" AnchorPane.topAnchor="432"/>
+    <Button fx:id="btnCancelar" text="Cancelar" onAction="#handleCancelarButtonAction"
+            AnchorPane.leftAnchor="293" AnchorPane.topAnchor="432"/>
 
 
 </AnchorPane>

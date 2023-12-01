@@ -2,6 +2,7 @@ package com.projetos.skymaster.skymastergerentesobras.controllers.registro;
 
 import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,5 +35,11 @@ public class CadastrarSaidaController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void handleRegistrarButtonAction(ActionEvent event) {
+    }
+
+    public void handleCancelarButtonAction(ActionEvent event) {
     }
 }

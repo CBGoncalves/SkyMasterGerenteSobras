@@ -3,6 +3,8 @@ package com.projetos.skymaster.skymastergerentesobras.models;
 import java.time.LocalDate;
 
 public class Registro {
+
+    private int codRegistro;
     private String tipo;
     private String numNotaEntrada;
     private int quantidade;
@@ -12,6 +14,14 @@ public class Registro {
     private String nomeObra;
     private String nomeUsuario;
     private LocalDate data;
+
+    public int getCodRegistro() {
+        return codRegistro;
+    }
+
+    public void setCodRegistro(int codRegistro) {
+        this.codRegistro = codRegistro;
+    }
 
     public String getTipo() {
         return tipo;

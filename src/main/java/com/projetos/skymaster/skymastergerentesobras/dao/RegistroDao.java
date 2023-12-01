@@ -156,6 +156,48 @@ public class RegistroDao {
         }
     }
 
+    public void updateRegistroEntrada(String numNotaEntrada, double qtdEntrada, String tipoItem, String descricaoItem, String nomeObra, int codEntrada) throws SQLException {
+        int codItem = getCodItem(tipoItem, descricaoItem);
+        int codObra = getCodObraByNome(nomeObra);
+
+        try {
+            Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            PreparedStatement preparedStatement = con.prepareStatement("UPDATE registroentrada SET registroentrada.numNotaEntrada=?, registroentrada.qtdEntrada=?, registroentrada.codItem=?, registroentrada.codObra=? WHERE registroentrada.codEntrada=?;");
+            preparedStatement.setString(1, numNotaEntrada);
+            preparedStatement.setDouble(2, qtdEntrada);
+            preparedStatement.setInt(3, codItem);
+            preparedStatement.setInt(4, codObra);
+            preparedStatement.setInt(5, codEntrada);
+            preparedStatement.executeUpdate();
+
+        } catch(SQLException e) {
+            printSQLException(e);
+            showAlert(Alert.AlertType.ERROR, "Erro na Edição!",
+                    "Valores inválidos ou registro já existente!");
+        }
+    }
+
+    public void updateRegistroSaida(String numNotaSaida, double qtdSaida, String tipoItem, String descricaoItem, String nomeObra, int codSaida) throws SQLException {
+        int codItem = getCodItem(tipoItem, descricaoItem);
+        int codObra = getCodObraByNome(nomeObra);
+
+        try {
+            Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            PreparedStatement preparedStatement = con.prepareStatement("UPDATE registrosaida SET registrosaida.numNotaSaida=?, registrosaida.qtdSaida=?, registrosaida.codItem=?, registrosaida.codObra=? WHERE registrosaida.codSaida=?;");
+            preparedStatement.setString(1, numNotaSaida);
+            preparedStatement.setDouble(2, qtdSaida);
+            preparedStatement.setInt(3, codItem);
+            preparedStatement.setInt(4, codObra);
+            preparedStatement.setInt(5, codSaida);
+            preparedStatement.executeUpdate();
+
+        } catch(SQLException e) {
+            printSQLException(e);
+            showAlert(Alert.AlertType.ERROR, "Erro na Edição!",
+                    "Valores inválidos ou registro já existente!");
+        }
+    }
+
     public void deleteRegistroEntrada(Registro r) {
         try {
             Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);

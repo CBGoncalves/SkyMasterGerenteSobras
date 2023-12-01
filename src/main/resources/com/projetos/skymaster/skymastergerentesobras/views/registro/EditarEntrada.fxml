@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            styleClass="root" fx:id="root"
+            prefWidth="900.0" prefHeight="600.0">
+
+    <stylesheets>
+        <URL value="@../../css/registro/editarEntrada.css"/>
+    </stylesheets>
+
+    <fx:include fx:id="navFuncionario" source="../NavigationBar.fxml"/>
+
+    <ImageView
+            fx:id="logoSky"
+            fitWidth="100" fitHeight="65"
+            preserveRatio="true"
+            AnchorPane.leftAnchor="18" AnchorPane.topAnchor="70">
+        <image>
+            <Image url="@../../img/logo_sky.jpg"/>
+        </image>
+    </ImageView>
+
+    <Label text="Item"
+           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="165"/>
+    <ChoiceBox fx:id="campoItem"
+               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="185"/>
+
+    <Label text="Obra"
+           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="225"/>
+    <ChoiceBox fx:id="campoObra"
+               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="245"/>
+
+    <Label text="Quantidade da Entrada"
+           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="285"/>
+    <TextField fx:id="campoQuantidade"
+               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="305"/>
+
+    <Label text="Número da NF da Entrada"
+           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="345"/>
+    <TextField fx:id="campoNotaFiscal"
+               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="365"/>
+
+    <Button fx:id="btnEditar" text="Editar" onAction="#handleEditarButtonAction"
+            AnchorPane.leftAnchor="462" AnchorPane.topAnchor="432"/>
+    <Button fx:id="btnCancelar" text="Cancelar" onAction="#handleCancelarButtonAction"
+            AnchorPane.leftAnchor="293" AnchorPane.topAnchor="432"/>
+
+
+</AnchorPane>

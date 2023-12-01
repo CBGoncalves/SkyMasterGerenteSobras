@@ -3,10 +3,8 @@ package com.projetos.skymaster.skymastergerentesobras.controllers.registro;
 import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
 import com.projetos.skymaster.skymastergerentesobras.dao.ItemDao;
 import com.projetos.skymaster.skymastergerentesobras.dao.ObraDao;
-import com.projetos.skymaster.skymastergerentesobras.models.Item;
-import com.projetos.skymaster.skymastergerentesobras.models.Obra;
-import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
-import com.projetos.skymaster.skymastergerentesobras.models.Usuario;
+import com.projetos.skymaster.skymastergerentesobras.dao.RegistroDao;
+import com.projetos.skymaster.skymastergerentesobras.models.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,6 +24,8 @@ import javafx.stage.Window;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CadastrarSaidaController {
     @FXML
@@ -47,6 +47,7 @@ public class CadastrarSaidaController {
 
     private ItemDao itemDao;
     private ObraDao obraDao;
+
     public CadastrarSaidaController(ItemDao itemDao, ObraDao obraDao) {
         this.itemDao = itemDao;
         this.obraDao = obraDao;
@@ -102,10 +103,74 @@ public class CadastrarSaidaController {
         });
     }
 
-    public void handleRegistrarButtonAction(ActionEvent event) throws SQLException{
+    public void handleRegistrarButtonAction(ActionEvent event) throws SQLException {
+        Window owner = btnRegistrar.getScene().getWindow();
+
+        UsuarioHolder usuarioHolder = UsuarioHolder.getInstance();
+        String nomeUsuario = usuarioHolder.getNome();
+        String nomeItem;
+        String nomeObra;
+        String quantidadeSaida = campoQuantidade.getText();
+        String numNotaSaida = campoNotaFiscal.getText();
+
+        String tipoItem = "";
+        String descricaoItem = "";
+
+        try {
+            nomeItem = campoItem.getValue().toString();
+            nomeObra = campoObra.getValue().toString();
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, owner, "Falha no Cadastro!",
+                    "Preencha os campos!");
+            return;
+        }
+
+        if (nomeItem.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, owner, "Falha no Cadastro!",
+                    "Selecione um Item!");
+            return;
+        }
+        if (nomeObra.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, owner, "Falha no Cadastro!",
+                    "Selecione uma Obra!");
+            return;
+        }
+        if (quantidadeSaida.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, owner, "Falha no Cadastro!",
+                    "Digite a quantidade da entrada!");
+            return;
+        }
+        if (numNotaSaida.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, owner, "Falha no Cadastro!",
+                    "Preencha o número da NF!");
+            return;
+        }
+        if (nomeUsuario.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, owner, "Falha no Cadastro!",
+                    "Selecione um Usuario!");
+            return;
+        }
+
+        String padraoRegex = "^([\\S ]+)-([\\S ]+)";
+
+        Pattern padrao = Pattern.compile(padraoRegex);
+
+        Matcher matcher = padrao.matcher(nomeItem);
+
+        if (matcher.find()) {
+            tipoItem = matcher.group(1);
+            descricaoItem = matcher.group(2);
+        } else {
+            System.out.println("Nenhuma correspondência encontrada.");
+        }
+
+        int qtdSaida = Integer.parseInt(quantidadeSaida);
+
+        RegistroDao registroDao = new RegistroDao();
+        registroDao.createRegistroSaida(tipoItem, descricaoItem, nomeObra, qtdSaida, numNotaSaida, nomeUsuario);
     }
 
-    public void handleCancelarButtonAction(ActionEvent event) throws IOException{
+    public void handleCancelarButtonAction(ActionEvent event) throws IOException {
         Stage stageRegistroSaida = (Stage) btnCancelar.getScene().getWindow();
         stageRegistroSaida.close();
 

@@ -113,7 +113,7 @@ public class HistoricoRegistroController {
                 Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/registro/EditarEntrada.fxml"));
-                EditarEntradaController controller = new EditarEntradaController(new ItemDao(), new ObraDao());
+                EditarEntradaController controller = new EditarEntradaController(registro, new ItemDao(), new ObraDao());
                 loader.setController(controller);
                 Parent root = loader.load();
 
@@ -130,7 +130,7 @@ public class HistoricoRegistroController {
                 Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/registro/EditarSaida.fxml"));
-                EditarSaidaController controller = new EditarSaidaController(new ItemDao(), new ObraDao());
+                EditarSaidaController controller = new EditarSaidaController(registro, new ItemDao(), new ObraDao());
                 loader.setController(controller);
                 Parent root = loader.load();
 

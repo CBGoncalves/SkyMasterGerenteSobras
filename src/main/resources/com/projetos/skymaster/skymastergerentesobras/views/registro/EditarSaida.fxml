@@ -49,7 +49,7 @@
     <TextField fx:id="campoNotaFiscal"
                AnchorPane.leftAnchor="306" AnchorPane.topAnchor="365"/>
 
-    <Button fx:id="btnEditar" text="Registrar" onAction="#handleEditarButtonAction"
+    <Button fx:id="btnEditar" text="Editar" onAction="#handleEditarButtonAction"
             AnchorPane.leftAnchor="462" AnchorPane.topAnchor="432"/>
     <Button fx:id="btnCancelar" text="Cancelar" onAction="#handleCancelarButtonAction"
             AnchorPane.leftAnchor="293" AnchorPane.topAnchor="432"/>

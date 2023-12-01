@@ -13,10 +13,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -101,5 +106,28 @@ public class CadastrarSaidaController {
     }
 
     public void handleCancelarButtonAction(ActionEvent event) throws IOException{
+        Stage stageRegistroSaida = (Stage) btnCancelar.getScene().getWindow();
+        stageRegistroSaida.close();
+
+        Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/TelaInicial.fxml"));
+        Parent root = loader.load();
+
+        Stage telaInicial = new Stage();
+        telaInicial.setTitle("Tela Inicial");
+        telaInicial.setScene(new Scene(root));
+        telaInicial.setResizable(false);
+        telaInicial.getIcons().add(icon);
+        telaInicial.show();
+    }
+
+    private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.initOwner(owner);
+        alert.show();
     }
 }

@@ -1,7 +1,8 @@
 package com.projetos.skymaster.skymastergerentesobras.controllers.registro;
 
 import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
-import com.projetos.skymaster.skymastergerentesobras.dao.RegistroDao;
+import com.projetos.skymaster.skymastergerentesobras.controllers.item.EditarItemController;
+import com.projetos.skymaster.skymastergerentesobras.dao.*;
 import com.projetos.skymaster.skymastergerentesobras.models.Item;
 import com.projetos.skymaster.skymastergerentesobras.models.Registro;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
@@ -9,11 +10,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -43,6 +48,8 @@ public class HistoricoRegistroController {
     private TableColumn<Registro, String> usuarioColumn;
     @FXML
     private TableColumn<Registro, LocalDate> dataColumn;
+    @FXML
+    private Button btnEditar;
 
     private RegistroDao registroDao;
 
@@ -91,6 +98,52 @@ public class HistoricoRegistroController {
     }
 
     public void handleEditarButtonAction(ActionEvent event) {
+        Registro registro = null;
+        registro = (Registro) tableView.getSelectionModel().getSelectedItem();
+        if (registro == null) {
+            showAlert(Alert.AlertType.WARNING, "Erro ao Editar",
+                    "Você precisa selecionar um registro para edição!");
+            return;
+        }
+        try {
+            if (registro.getTipo().equals("entrada")){
+                Stage stageHistorico = (Stage) btnEditar.getScene().getWindow();
+                stageHistorico.close();
+
+                Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/registro/EditarEntrada.fxml"));
+                EditarEntradaController controller = new EditarEntradaController(new ItemDao(), new ObraDao());
+                loader.setController(controller);
+                Parent root = loader.load();
+
+                Stage editarEntrada = new Stage();
+                editarEntrada.setTitle("Editar Entrada");
+                editarEntrada.setScene(new Scene(root));
+                editarEntrada.setResizable(false);
+                editarEntrada.getIcons().add(icon);
+                editarEntrada.show();
+            } else if (registro.getTipo().equals("saida")) {
+                Stage stageHistorico = (Stage) btnEditar.getScene().getWindow();
+                stageHistorico.close();
+
+                Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/registro/EditarSaida.fxml"));
+                EditarSaidaController controller = new EditarSaidaController(new ItemDao(), new ObraDao());
+                loader.setController(controller);
+                Parent root = loader.load();
+
+                Stage editarSaida = new Stage();
+                editarSaida.setTitle("Editar Saída");
+                editarSaida.setScene(new Scene(root));
+                editarSaida.setResizable(false);
+                editarSaida.getIcons().add(icon);
+                editarSaida.show();
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void handleDeletarButtonAction(ActionEvent event) {

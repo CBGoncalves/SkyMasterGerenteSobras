@@ -164,7 +164,7 @@ public class CadastrarSaidaController {
             System.out.println("Nenhuma correspondência encontrada.");
         }
 
-        int qtdSaida = Integer.parseInt(quantidadeSaida);
+        double qtdSaida = Double.parseDouble(quantidadeSaida);
 
         RegistroDao registroDao = new RegistroDao();
         registroDao.createRegistroSaida(tipoItem, descricaoItem, nomeObra, qtdSaida, numNotaSaida, nomeUsuario);

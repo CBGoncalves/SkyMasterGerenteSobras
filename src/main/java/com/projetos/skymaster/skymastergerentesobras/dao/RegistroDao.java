@@ -61,7 +61,7 @@ public class RegistroDao {
         return list;
     }
 
-    public void createRegistroEntrada(String tipoItem, String descricaoItem, String nomeObra, int qtdEntrada, String numNotaEntrada, String nomeUsuario) throws SQLException {
+    public void createRegistroEntrada(String tipoItem, String descricaoItem, String nomeObra, double qtdEntrada, String numNotaEntrada, String nomeUsuario) throws SQLException {
         int codUsuario = getCodUsuarioByNome(nomeUsuario);
         int codItem = getCodItem(tipoItem, descricaoItem);
         int codObra = getCodObraByNome(nomeObra);
@@ -71,7 +71,7 @@ public class RegistroDao {
             PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO RegistroEntrada (numNotaEntrada, qtdEntrada, dataEntrada, codItem, codObra, codUsuario)\n" +
                     "VALUES (?,?,NOW(),?,?,?);");
             preparedStatement.setString(1, numNotaEntrada);
-            preparedStatement.setInt(2, qtdEntrada);
+            preparedStatement.setDouble(2, qtdEntrada);
             preparedStatement.setInt(3, codItem);
             preparedStatement.setInt(4, codObra);
             preparedStatement.setInt(5, codUsuario);
@@ -87,7 +87,7 @@ public class RegistroDao {
         }
     }
 
-    public void createRegistroSaida(String tipoItem, String descricaoItem, String nomeObra, int qtdSaida, String numNotaSaida, String nomeUsuario) throws SQLException {
+    public void createRegistroSaida(String tipoItem, String descricaoItem, String nomeObra, double qtdSaida, String numNotaSaida, String nomeUsuario) throws SQLException {
         int codUsuario = getCodUsuarioByNome(nomeUsuario);
         int codItem = getCodItem(tipoItem, descricaoItem);
         int codObra = getCodObraByNome(nomeObra);
@@ -97,7 +97,7 @@ public class RegistroDao {
             PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO RegistroSaida (numNotaSaida, qtdSaida, dataSaida, codItem, codObra, codUsuario)\n" +
                     "VALUES (?,?,NOW(),?,?,?);");
             preparedStatement.setString(1, numNotaSaida);
-            preparedStatement.setInt(2, qtdSaida);
+            preparedStatement.setDouble(2, qtdSaida);
             preparedStatement.setInt(3, codItem);
             preparedStatement.setInt(4, codObra);
             preparedStatement.setInt(5, codUsuario);

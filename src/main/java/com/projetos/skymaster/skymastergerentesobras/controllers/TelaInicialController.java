@@ -63,7 +63,7 @@ public class TelaInicialController {
         dataColumn.setCellValueFactory(new PropertyValueFactory<>("data"));
 
         try {
-            List<Registro> registros = registroDao.selectRegistersByDate();
+            List<Registro> registros = registroDao.selectLastRegistersByDate();
 
             tableView.getItems().addAll(registros);
         } catch (SQLException e) {

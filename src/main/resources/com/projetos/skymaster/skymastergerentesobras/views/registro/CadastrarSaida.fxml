@@ -8,8 +8,7 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Button?>
-<AnchorPane fx:controller="com.projetos.skymaster.skymastergerentesobras.controllers.registro.CadastrarSaidaController"
-            xmlns:fx="http://javafx.com/fxml"
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
             styleClass="root" fx:id="root"
             prefWidth="900.0" prefHeight="600.0">
 

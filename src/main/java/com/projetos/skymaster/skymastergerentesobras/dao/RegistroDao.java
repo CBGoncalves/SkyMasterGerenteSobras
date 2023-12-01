@@ -65,7 +65,7 @@ public class RegistroDao {
         List<Registro> list = new ArrayList<>();
         try {
             Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-            PreparedStatement preparedStatement = con.prepareStatement("SELECT 'entrada' AS tipo, registroentrada.numNotaEntrada, registroentrada.qtdEntrada AS quantidade, item.descricaoItem, tipoitem.nometipoitem, marca.nomeMarca, obra.nomeobra, usuario.nomeUsuario, registroentrada.dataEntrada as data\n" +
+            PreparedStatement preparedStatement = con.prepareStatement("SELECT registroentrada.codEntrada AS codRegistro, 'entrada' AS tipo, registroentrada.numNotaEntrada, registroentrada.qtdEntrada AS quantidade, item.descricaoItem, tipoitem.nometipoitem, marca.nomeMarca, obra.nomeobra, usuario.nomeUsuario, registroentrada.dataEntrada as data\n" +
                     "FROM registroentrada\n" +
                     "INNER JOIN item ON registroentrada.codItem = item.codItem\n" +
                     "INNER JOIN tipoitem ON item.codTipoItem = tipoitem.codTipoItem\n" +
@@ -74,7 +74,7 @@ public class RegistroDao {
                     "INNER JOIN usuario ON registroentrada.codUsuario = usuario.codUsuario\n" +
                     "INNER JOIN tipousuario ON usuario.codTipoUsuario = tipousuario.codTipoUsuario\n" +
                     "UNION\n" +
-                    "SELECT 'saida' AS tipo,registrosaida.numNotaSaida, registrosaida.qtdSaida AS quantidade, item.descricaoItem, tipoitem.nometipoitem, marca.nomeMarca, obra.nomeobra, usuario.nomeUsuario, registrosaida.dataSaida as data\n" +
+                    "SELECT registrosaida.codSaida AS codRegistro, 'saida' AS tipo,registrosaida.numNotaSaida, registrosaida.qtdSaida AS quantidade, item.descricaoItem, tipoitem.nometipoitem, marca.nomeMarca, obra.nomeobra, usuario.nomeUsuario, registrosaida.dataSaida as data\n" +
                     "FROM registrosaida\n" +
                     "INNER JOIN item ON registrosaida.codItem = item.codItem\n" +
                     "INNER JOIN tipoitem ON item.codTipoItem = tipoitem.codTipoItem\n" +
@@ -85,6 +85,7 @@ public class RegistroDao {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 Registro registro = new Registro();
+                registro.setCodRegistro(rs.getInt("codRegistro"));
                 registro.setTipo(rs.getString("tipo"));
                 registro.setNumNotaEntrada(rs.getString("numNotaEntrada"));
                 registro.setQuantidade(rs.getInt("quantidade"));
@@ -153,6 +154,30 @@ public class RegistroDao {
             showAlert(Alert.AlertType.ERROR, "Erro no Registro!",
                     "Valores inválidos ou registro já existente!");
         }
+    }
+
+    public void deleteRegistroEntrada(Registro r) {
+        try {
+            Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            PreparedStatement preparedStatement = con.prepareStatement("DELETE FROM registroentrada WHERE codEntrada = ?;");
+            preparedStatement.setInt(1, r.getCodRegistro());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+
+    }
+
+    public void deleteRegistroSaida(Registro r) {
+        try {
+            Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            PreparedStatement preparedStatement = con.prepareStatement("DELETE FROM registrosaida WHERE codSaida = ?;");
+            preparedStatement.setInt(1, r.getCodRegistro());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+
     }
 
     public static int getCodItem(String tipoItem, String descricaoItem) {

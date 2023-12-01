@@ -61,7 +61,7 @@ public class RegistroDao {
         return list;
     }
 
-    public void createRegistroEntrada(String tipoItem, String descricaoItem, String nomeObra, int qtdEntrada, String numNotaEntrada, String nomeUsuario) throws SQLException {
+    public void createRegistroEntrada(String tipoItem, String descricaoItem, String nomeObra, double qtdEntrada, String numNotaEntrada, String nomeUsuario) throws SQLException {
         int codUsuario = getCodUsuarioByNome(nomeUsuario);
         int codItem = getCodItem(tipoItem, descricaoItem);
         int codObra = getCodObraByNome(nomeObra);
@@ -71,7 +71,7 @@ public class RegistroDao {
             PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO RegistroEntrada (numNotaEntrada, qtdEntrada, dataEntrada, codItem, codObra, codUsuario)\n" +
                     "VALUES (?,?,NOW(),?,?,?);");
             preparedStatement.setString(1, numNotaEntrada);
-            preparedStatement.setInt(2, qtdEntrada);
+            preparedStatement.setDouble(2, qtdEntrada);
             preparedStatement.setInt(3, codItem);
             preparedStatement.setInt(4, codObra);
             preparedStatement.setInt(5, codUsuario);
@@ -79,6 +79,32 @@ public class RegistroDao {
 
             showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
                     "Entrada de item registrada com sucesso!");
+
+        } catch (SQLException e) {
+            printSQLException(e);
+            showAlert(Alert.AlertType.ERROR, "Erro no Registro!",
+                    "Valores inválidos ou registro já existente!");
+        }
+    }
+
+    public void createRegistroSaida(String tipoItem, String descricaoItem, String nomeObra, double qtdSaida, String numNotaSaida, String nomeUsuario) throws SQLException {
+        int codUsuario = getCodUsuarioByNome(nomeUsuario);
+        int codItem = getCodItem(tipoItem, descricaoItem);
+        int codObra = getCodObraByNome(nomeObra);
+
+        try {
+            Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+            PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO RegistroSaida (numNotaSaida, qtdSaida, dataSaida, codItem, codObra, codUsuario)\n" +
+                    "VALUES (?,?,NOW(),?,?,?);");
+            preparedStatement.setString(1, numNotaSaida);
+            preparedStatement.setDouble(2, qtdSaida);
+            preparedStatement.setInt(3, codItem);
+            preparedStatement.setInt(4, codObra);
+            preparedStatement.setInt(5, codUsuario);
+            preparedStatement.executeUpdate();
+
+            showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
+                    "Saída de item registrada com sucesso!");
 
         } catch (SQLException e) {
             printSQLException(e);

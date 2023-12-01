@@ -70,14 +70,16 @@ public class ItemDao {
         int codTipoItem = getCodTipoItemByNome(nomeTipoItem);
         System.out.println(codTipoItem);
         int codMarca = getCodMarcaByNome(nomeMarca);
+        double quantidadeItem = 0.0;
 
         try {
             Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-            PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO item(codItem,descricaoItem,codMarca,codTipoItem)VALUES(?,?,?,?);");
+            PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO item(codItem,descricaoItem,quantidadeItem,codMarca,codTipoItem)VALUES(?,?,?,?,?);");
             preparedStatement.setInt(1, codItem);
             preparedStatement.setString(2, descricaoItem);
-            preparedStatement.setInt(3, codMarca);
-            preparedStatement.setInt(4, codTipoItem);
+            preparedStatement.setDouble(3, quantidadeItem);
+            preparedStatement.setInt(4, codMarca);
+            preparedStatement.setInt(5, codTipoItem);
             preparedStatement.executeUpdate();
 
             showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",

@@ -40,9 +40,10 @@
     <DatePicker fx:id="campoAte" AnchorPane.leftAnchor="305" AnchorPane.topAnchor="342"/>
 
     <Button fx:id="btnCancelar" text="Cancelar"
-            AnchorPane.leftAnchor="293" AnchorPane.topAnchor="431"/>
+            AnchorPane.leftAnchor="293" AnchorPane.topAnchor="431"
+            onAction="#handleCancelarButtonAction"/>
     <Button fx:id="btnGerar" text="Gerar"
-            AnchorPane.leftAnchor="462" AnchorPane.topAnchor="431"/>
-
+            AnchorPane.leftAnchor="462" AnchorPane.topAnchor="431"
+            onAction="#handleGerarButtonAction"/>
 
 </AnchorPane>

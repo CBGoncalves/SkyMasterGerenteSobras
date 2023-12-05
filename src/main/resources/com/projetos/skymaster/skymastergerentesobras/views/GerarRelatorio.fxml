@@ -4,6 +4,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import java.net.URL?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
 <AnchorPane fx:controller="com.projetos.skymaster.skymastergerentesobras.controllers.GerarRelatorioController"
             xmlns:fx="http://javafx.com/fxml"
             styleClass="root" fx:id="root"
@@ -13,7 +16,7 @@
         <URL value="@../css/gerarRelatorio.css"/>
     </stylesheets>
 
-    <fx:include fx:id="navFuncionario" source="NavigationBar.fxml" />
+    <fx:include fx:id="navFuncionario" source="NavigationBar.fxml"/>
 
     <ImageView
             fx:id="logoSky"
@@ -24,6 +27,22 @@
             <Image url="@../img/logo_sky.jpg"/>
         </image>
     </ImageView>
+
+    <Label text="Selecione o intervalo que deseja de registros"
+           AnchorPane.leftAnchor="302" AnchorPane.topAnchor="173"/>
+
+    <Label text="De"
+           AnchorPane.leftAnchor="305" AnchorPane.topAnchor="247"/>
+    <DatePicker fx:id="campoDe" AnchorPane.leftAnchor="305" AnchorPane.topAnchor="267"/>
+
+    <Label text="Até"
+           AnchorPane.leftAnchor="305" AnchorPane.topAnchor="322"/>
+    <DatePicker fx:id="campoAte" AnchorPane.leftAnchor="305" AnchorPane.topAnchor="342"/>
+
+    <Button fx:id="btnCancelar" text="Cancelar"
+            AnchorPane.leftAnchor="293" AnchorPane.topAnchor="431"/>
+    <Button fx:id="btnGerar" text="Gerar"
+            AnchorPane.leftAnchor="462" AnchorPane.topAnchor="431"/>
 
 
 </AnchorPane>

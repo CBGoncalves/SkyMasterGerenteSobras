@@ -5,6 +5,7 @@ module com.projetos.skymaster.skymastergerentesobras {
     requires org.controlsfx.controls;
     requires org.kordamp.ikonli.javafx;
     requires java.sql;
+    requires itextpdf;
 
     opens com.projetos.skymaster.skymastergerentesobras to javafx.fxml;
     exports com.projetos.skymaster.skymastergerentesobras;

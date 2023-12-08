@@ -7,7 +7,7 @@
 <?import java.net.URL?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             styleClass="root" fx:id="root"
-            prefWidth="900.0" prefHeight="600.0">
+            prefWidth="1366.0" prefHeight="768.0">
 
     <stylesheets>
         <URL value="@../../css/tipoItem/editarTipoItem.css"/>
@@ -26,18 +26,18 @@
     </ImageView>
 
     <Label text="Código do Tipo de Item"
-           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="191"/>
+           AnchorPane.leftAnchor="539" AnchorPane.topAnchor="275"/>
     <TextField fx:id="campoCodTipoItem"
-               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="211"/>
+               AnchorPane.leftAnchor="539" AnchorPane.topAnchor="295"/>
     <Label text="Nome do Tipo de Item"
-           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="264"/>
+           AnchorPane.leftAnchor="539" AnchorPane.topAnchor="348"/>
     <TextField fx:id="campoNomeTipoItem"
-               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="284"/>
+               AnchorPane.leftAnchor="539" AnchorPane.topAnchor="368"/>
 
     <Button fx:id="btnEditar" text="Editar" onAction="#handleEditarButtonAction"
-            AnchorPane.leftAnchor="462" AnchorPane.topAnchor="432"/>
+            AnchorPane.leftAnchor="695" AnchorPane.topAnchor="451"/>
     <Button fx:id="btnCancelar" text="Cancelar" onAction="#handleCancelarButtonAction"
-            AnchorPane.leftAnchor="293" AnchorPane.topAnchor="432"/>
+            AnchorPane.leftAnchor="526" AnchorPane.topAnchor="451"/>
 
 
 </AnchorPane>

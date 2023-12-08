@@ -18,24 +18,24 @@
             fx:id="logoSky"
             fitWidth="150" fitHeight="150"
             preserveRatio="true"
-            AnchorPane.leftAnchor="375" AnchorPane.topAnchor="130">
+            AnchorPane.leftAnchor="608" AnchorPane.topAnchor="207">
         <image>
             <Image url="@../img/logo_sky.jpg"/>
         </image>
     </ImageView>
 
     <Label text="Nome do Usuário"
-           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="280"/>
+           AnchorPane.leftAnchor="539" AnchorPane.topAnchor="357"/>
     <TextField fx:id="campoUsuario"
-           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="300"/>
+           AnchorPane.leftAnchor="539" AnchorPane.topAnchor="377"/>
 
     <Label text="Senha"
-           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="354"/>
+           AnchorPane.leftAnchor="539" AnchorPane.topAnchor="431"/>
     <PasswordField fx:id="campoSenha"
-                   AnchorPane.leftAnchor="306" AnchorPane.topAnchor="374"/>
+                   AnchorPane.leftAnchor="539" AnchorPane.topAnchor="451"/>
 
 
     <Button fx:id="btnEntrar" text="Entrar" onAction="#handleSubmitButtonAction"
-            AnchorPane.leftAnchor="378" AnchorPane.topAnchor="443"/>
+            AnchorPane.leftAnchor="611" AnchorPane.topAnchor="520"/>
 
 </AnchorPane>

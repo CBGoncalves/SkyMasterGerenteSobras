@@ -11,7 +11,7 @@
 <?import javafx.scene.image.Image?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             styleClass="root" fx:id="root"
-            prefWidth="900.0" prefHeight="600.0">
+            prefWidth="1366.0" prefHeight="768.0">
 
     <stylesheets>
         <URL value="@../../css/item/editarItem.css"/>
@@ -30,28 +30,28 @@
     </ImageView>
 
     <Label text="Código do Item"
-           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="157"/>
+           AnchorPane.leftAnchor="540" AnchorPane.topAnchor="245"/>
     <TextField fx:id="campoCodItem"
-               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="177"/>
+               AnchorPane.leftAnchor="540" AnchorPane.topAnchor="265"/>
 
     <Label text="Tipo de Item"
-           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="222"/>
+           AnchorPane.leftAnchor="540" AnchorPane.topAnchor="318"/>
     <ChoiceBox fx:id="campoTipoItem"
-               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="242"/>
+               AnchorPane.leftAnchor="540" AnchorPane.topAnchor="338"/>
 
     <Label text="Descrição"
-           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="287"/>
+           AnchorPane.leftAnchor="540" AnchorPane.topAnchor="391"/>
     <TextField fx:id="campoDescricao"
-               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="307"/>
+               AnchorPane.leftAnchor="540" AnchorPane.topAnchor="411"/>
 
     <Label text="Marca"
-           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="352"/>
+           AnchorPane.leftAnchor="540" AnchorPane.topAnchor="464"/>
     <ChoiceBox fx:id="campoMarca"
-               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="372"/>
+               AnchorPane.leftAnchor="540" AnchorPane.topAnchor="484"/>
 
     <Button fx:id="btnEditar" text="Editar" onAction="#handleEditarButtonAction"
-            AnchorPane.leftAnchor="462" AnchorPane.topAnchor="432"/>
+            AnchorPane.leftAnchor="696" AnchorPane.topAnchor="546"/>
     <Button fx:id="btnCancelar" text="Cancelar" onAction="#handleCancelarButtonAction"
-            AnchorPane.leftAnchor="293" AnchorPane.topAnchor="432"/>
+            AnchorPane.leftAnchor="527" AnchorPane.topAnchor="546"/>
 
 </AnchorPane>

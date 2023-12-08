@@ -11,7 +11,7 @@
 <?import javafx.scene.control.Button?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             styleClass="root" fx:id="root"
-            prefWidth="900.0" prefHeight="600.0">
+            prefWidth="1366.0" prefHeight="768.0">
 
     <stylesheets>
         <URL value="@../../css/usuario/editarUsuario.css"/>
@@ -30,29 +30,29 @@
     </ImageView>
 
     <Label text="Usuário"
-           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="131"/>
+           AnchorPane.leftAnchor="540" AnchorPane.topAnchor="245"/>
     <TextField fx:id="campoNome"
-               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="151"/>
+               AnchorPane.leftAnchor="540" AnchorPane.topAnchor="265"/>
 
     <Label text="Senha"
-           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="204"/>
+           AnchorPane.leftAnchor="540" AnchorPane.topAnchor="318"/>
     <PasswordField fx:id="campoSenha"
-                   AnchorPane.leftAnchor="306" AnchorPane.topAnchor="224"/>
+                   AnchorPane.leftAnchor="540" AnchorPane.topAnchor="338"/>
 
     <Label text="Confirmar Senha"
-           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="277"/>
+           AnchorPane.leftAnchor="540" AnchorPane.topAnchor="391"/>
     <PasswordField fx:id="campoConfirmarSenha"
-                   AnchorPane.leftAnchor="306" AnchorPane.topAnchor="297"/>
+                   AnchorPane.leftAnchor="540" AnchorPane.topAnchor="411"/>
 
     <Label text="Tipo de Usuário"
-           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="350"/>
+           AnchorPane.leftAnchor="540" AnchorPane.topAnchor="464"/>
     <ChoiceBox fx:id="campoTipoUsuario"
-               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="370"/>
+               AnchorPane.leftAnchor="540" AnchorPane.topAnchor="484"/>
 
     <Button fx:id="btnEditar" text="Editar" onAction="#handleEditarButtonAction"
-            AnchorPane.leftAnchor="462" AnchorPane.topAnchor="432"/>
+            AnchorPane.leftAnchor="696" AnchorPane.topAnchor="546"/>
     <Button fx:id="btnCancelar" text="Cancelar" onAction="#handleCancelarButtonAction"
-            AnchorPane.leftAnchor="293" AnchorPane.topAnchor="432"/>
+            AnchorPane.leftAnchor="527" AnchorPane.topAnchor="546"/>
 
 
 </AnchorPane>

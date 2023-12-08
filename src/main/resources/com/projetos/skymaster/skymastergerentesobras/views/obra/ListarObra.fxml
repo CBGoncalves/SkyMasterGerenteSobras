@@ -10,7 +10,7 @@
 <AnchorPane fx:controller="com.projetos.skymaster.skymastergerentesobras.controllers.obra.ListarObraController"
             xmlns:fx="http://javafx.com/fxml"
             styleClass="root" fx:id="root"
-            prefWidth="900.0" prefHeight="600.0">
+            prefWidth="1366.0" prefHeight="768.0">
 
     <stylesheets>
         <URL value="@../../css/obra/listarObra.css"/>
@@ -29,8 +29,8 @@
     </ImageView>
 
     <TableView fx:id="tableView"
-               AnchorPane.leftAnchor="198" AnchorPane.topAnchor="131"
-               minWidth="680" minHeight="450" >
+               AnchorPane.leftAnchor="198" AnchorPane.topAnchor="118"
+               minWidth="1110" minHeight="608" >
         <columns>
             <TableColumn fx:id="codObraColumn" text="Código da Obra"/>
             <TableColumn fx:id="nomeObraColumn" text="Nome da Obra"/>

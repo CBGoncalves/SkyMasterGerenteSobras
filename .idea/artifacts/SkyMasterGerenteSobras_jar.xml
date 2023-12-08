@@ -1,0 +1,23 @@
+<component name="ArtifactManager">
+  <artifact name="SkyMasterGerenteSobras:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SkyMasterGerenteSobras_jar</output-path>
+    <root id="root">
+      <element id="archive" name="SkyMasterGerenteSobras.jar">
+        <element id="module-output" name="SkyMasterGerenteSobras" />
+      </element>
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:17.0.6" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:17.0.6" />
+      <element id="library" level="project" name="Maven: org.controlsfx:controlsfx:11.1.2" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:win:17.0.6" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../Program Files (x86)/MySQL/Connector J 8.0/mysql-connector-j-8.0.33.jar" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:win:17.0.6" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:17.0.6" />
+      <element id="library" level="project" name="Maven: com.itextpdf:itextpdf:5.5.13.3" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:win:17.0.6" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:win:17.0.6" />
+      <element id="library" level="project" name="Maven: org.kordamp.ikonli:ikonli-javafx:12.3.1" />
+      <element id="library" level="project" name="Maven: org.kordamp.ikonli:ikonli-core:12.3.1" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:17.0.6" />
+    </root>
+  </artifact>
+</component>

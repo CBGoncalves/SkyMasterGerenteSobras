@@ -10,7 +10,7 @@
 <?import javafx.scene.control.Button?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             styleClass="root" fx:id="root"
-            prefWidth="900.0" prefHeight="600.0">
+            prefWidth="1366.0" prefHeight="768.0">
 
     <stylesheets>
         <URL value="@../../css/registro/cadastrarSaida.css"/>
@@ -29,29 +29,29 @@
     </ImageView>
 
     <Label text="Item"
-           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="165"/>
+           AnchorPane.leftAnchor="538" AnchorPane.topAnchor="222"/>
     <ChoiceBox fx:id="campoItem"
-               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="185"/>
+               AnchorPane.leftAnchor="538" AnchorPane.topAnchor="242"/>
 
     <Label text="Obra"
-           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="225"/>
+           AnchorPane.leftAnchor="538" AnchorPane.topAnchor="282"/>
     <ChoiceBox fx:id="campoObra"
-               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="245"/>
+               AnchorPane.leftAnchor="538" AnchorPane.topAnchor="302"/>
 
     <Label text="Quantidade da Saída"
-           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="285"/>
+           AnchorPane.leftAnchor="538" AnchorPane.topAnchor="342"/>
     <TextField fx:id="campoQuantidade"
-               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="305"/>
+               AnchorPane.leftAnchor="538" AnchorPane.topAnchor="362"/>
 
     <Label text="Número da NF da Saída"
-           AnchorPane.leftAnchor="306" AnchorPane.topAnchor="345"/>
+           AnchorPane.leftAnchor="538" AnchorPane.topAnchor="402"/>
     <TextField fx:id="campoNotaFiscal"
-               AnchorPane.leftAnchor="306" AnchorPane.topAnchor="365"/>
+               AnchorPane.leftAnchor="538" AnchorPane.topAnchor="422"/>
 
     <Button fx:id="btnRegistrar" text="Registrar" onAction="#handleRegistrarButtonAction"
-            AnchorPane.leftAnchor="462" AnchorPane.topAnchor="432"/>
+            AnchorPane.leftAnchor="695" AnchorPane.topAnchor="504"/>
     <Button fx:id="btnCancelar" text="Cancelar" onAction="#handleCancelarButtonAction"
-            AnchorPane.leftAnchor="293" AnchorPane.topAnchor="432"/>
+            AnchorPane.leftAnchor="526" AnchorPane.topAnchor="504"/>
 
 
 </AnchorPane>

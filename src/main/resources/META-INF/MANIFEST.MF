@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Main-Class: com.projetos.skymaster.skymastergerentesobras.Main
+Class-Path: javafx-fxml-17.0.6.jar javafx-base-17.0.6.jar controlsfx-11.
+ 1.2.jar javafx-fxml-17.0.6-win.jar mysql-connector-j-8.0.33.jar javafx-
+ controls-17.0.6-win.jar javafx-controls-17.0.6.jar itextpdf-5.5.13.3.ja
+ r javafx-graphics-17.0.6-win.jar javafx-base-17.0.6-win.jar ikonli-java
+ fx-12.3.1.jar ikonli-core-12.3.1.jar javafx-graphics-17.0.6.jar
+

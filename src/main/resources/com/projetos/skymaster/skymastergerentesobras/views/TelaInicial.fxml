@@ -10,7 +10,7 @@
 <AnchorPane fx:controller="com.projetos.skymaster.skymastergerentesobras.controllers.TelaInicialController"
             xmlns:fx="http://javafx.com/fxml"
             styleClass="root" fx:id="root"
-            prefWidth="900.0" prefHeight="600.0">
+            prefWidth="1366.0" prefHeight="768.0">
 
     <stylesheets>
         <URL value="@../css/telaInicial.css"/>
@@ -29,11 +29,11 @@
     </ImageView>
 
     <Label text="Últimas Movimentações" fx:id="title"
-        AnchorPane.leftAnchor="303" AnchorPane.topAnchor="145"/>
+        AnchorPane.leftAnchor="537" AnchorPane.topAnchor="146"/>
 
     <TableView fx:id="tableView"
-               AnchorPane.leftAnchor="135" AnchorPane.topAnchor="204"
-               maxWidth="630" maxHeight="340">
+               AnchorPane.leftAnchor="64" AnchorPane.topAnchor="223"
+               minWidth="1238" minHeight="538">
         <columns>
             <TableColumn fx:id="tipoColumn" text="Tipo"/>
             <TableColumn fx:id="numNotaColumn" text="NF"/>

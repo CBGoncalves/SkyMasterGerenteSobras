@@ -10,7 +10,7 @@
 <AnchorPane fx:controller="com.projetos.skymaster.skymastergerentesobras.controllers.registro.HistoricoRegistroController"
             xmlns:fx="http://javafx.com/fxml"
             styleClass="root" fx:id="root"
-            prefWidth="900.0" prefHeight="600.0">
+            prefWidth="1366.0" prefHeight="768.0">
 
     <stylesheets>
         <URL value="@../../css/registro/historicoRegistro.css"/>
@@ -29,14 +29,14 @@
     </ImageView>
 
     <Button fx:id="btnEditar" text="Editar" onAction="#handleEditarButtonAction"
-            AnchorPane.leftAnchor="573" AnchorPane.topAnchor="75"/>
+            AnchorPane.leftAnchor="1074" AnchorPane.topAnchor="119"/>
 
     <Button fx:id="btnDeletar" text="Deletar" onAction="#handleDeletarButtonAction"
-            AnchorPane.leftAnchor="688" AnchorPane.topAnchor="75"/>
+            AnchorPane.leftAnchor="1199" AnchorPane.topAnchor="118"/>
 
     <TableView fx:id="tableView"
-               AnchorPane.leftAnchor="7" AnchorPane.topAnchor="138"
-               minWidth="886" minHeight="440">
+               AnchorPane.leftAnchor="19" AnchorPane.topAnchor="194"
+               minWidth="1325" minHeight="530">
         <columns>
             <TableColumn fx:id="tipoColumn" text="Tipo"/>
             <TableColumn fx:id="numNotaColumn" text="NF"/>

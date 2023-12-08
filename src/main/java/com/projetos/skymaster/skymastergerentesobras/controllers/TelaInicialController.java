@@ -50,6 +50,8 @@ public class TelaInicialController {
 
     public void initialize() throws SQLException {
 
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
         registroDao = new RegistroDao();
 
         tipoColumn.setCellValueFactory(new PropertyValueFactory<>("tipo"));

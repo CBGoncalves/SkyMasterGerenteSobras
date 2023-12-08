@@ -12,7 +12,7 @@ public class Main extends Application {
         Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/Login.fxml"));
 
-        Scene scene = new Scene(fxmlLoader.load(), 900, 600);
+        Scene scene = new Scene(fxmlLoader.load(), 1366, 768);
 
         stage.setTitle("Bem-Vindo!");
         stage.setScene(scene);

@@ -15,6 +15,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -26,6 +28,8 @@ import java.util.List;
 public class EditarUsuarioController {
     @FXML
     private AnchorPane root;
+    @FXML
+    private ImageView logoSky;
     @FXML
     private TextField campoNome;
     @FXML
@@ -93,6 +97,13 @@ public class EditarUsuarioController {
         btnCancelar.setOnAction(event -> {
             try {
                 handleCancelarButtonAction(event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        logoSky.setOnMouseClicked(mouseEvent -> {
+            try {
+                handleTelaInicial(mouseEvent);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -193,5 +204,22 @@ public class EditarUsuarioController {
         alert.setContentText(message);
         alert.initOwner(owner);
         alert.show();
+    }
+
+    public void handleTelaInicial(MouseEvent mouseEvent) throws IOException{
+        Stage stageGerarRelatorio = (Stage) btnCancelar.getScene().getWindow();
+        stageGerarRelatorio.close();
+
+        Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/TelaInicial.fxml"));
+        Parent root = loader.load();
+
+        Stage telaInicial = new Stage();
+        telaInicial.setTitle("Tela Inicial");
+        telaInicial.setScene(new Scene(root));
+        telaInicial.setResizable(false);
+        telaInicial.getIcons().add(icon);
+        telaInicial.show();
     }
 }

@@ -1,9 +1,6 @@
 package com.projetos.skymaster.skymastergerentesobras.dao;
 
-import com.projetos.skymaster.skymastergerentesobras.models.Item;
-import com.projetos.skymaster.skymastergerentesobras.models.Marca;
-import com.projetos.skymaster.skymastergerentesobras.models.TipoItem;
-import com.projetos.skymaster.skymastergerentesobras.models.Usuario;
+import com.projetos.skymaster.skymastergerentesobras.models.*;
 import javafx.scene.control.Alert;
 
 import java.sql.*;
@@ -115,20 +112,22 @@ public class ItemDao {
         return itemList;
     }
 
-    public void createItem(int codItem, String nomeTipoItem, String descricaoItem, String nomeMarca) throws SQLException {
+    public void createItem(int codItem, String nomeTipoItem, String descricaoItem, String nomeMarca, String nomeSetor) throws SQLException {
         int codTipoItem = getCodTipoItemByNome(nomeTipoItem);
         System.out.println(codTipoItem);
         int codMarca = getCodMarcaByNome(nomeMarca);
+        int codSetor = getCodSetorByNome(nomeSetor);
         double quantidadeItem = 0.0;
 
         try {
             Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-            PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO item(codItem,descricaoItem,quantidadeItem,codMarca,codTipoItem)VALUES(?,?,?,?,?);");
+            PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO item(codItem,descricaoItem,quantidadeItem,codMarca,codSetor,codTipoItem)VALUES(?,?,?,?,?,?);");
             preparedStatement.setInt(1, codItem);
             preparedStatement.setString(2, descricaoItem);
             preparedStatement.setDouble(3, quantidadeItem);
             preparedStatement.setInt(4, codMarca);
-            preparedStatement.setInt(5, codTipoItem);
+            preparedStatement.setInt(5, codSetor);
+            preparedStatement.setInt(6, codTipoItem);
             preparedStatement.executeUpdate();
 
             showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
@@ -208,6 +207,24 @@ public class ItemDao {
             System.out.println(e);
         }
         return m.getCodMarca();
+    }
+
+    public static int getCodSetorByNome(String nomeSetor) {
+        Setor s = null;
+        try {
+            Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            PreparedStatement ps = con.prepareStatement("select * from setor where nomeSetor=?");
+            ps.setString(1, nomeSetor);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                s = new Setor();
+                s.setCodSetor(rs.getInt("codSetor"));
+                s.setNomeSetor(rs.getString("nomeSetor"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return s.getCodSetor();
     }
 
     public static void printSQLException(SQLException exception) {

@@ -109,9 +109,11 @@ public class CadastrarItemController {
         String nomeTipoItem;
         String descricaoItem = campoDescricao.getText();
         String nomeMarca;
+        String nomeSetor;
         try {
             nomeTipoItem = campoTipoItem.getValue().toString();
             nomeMarca = campoMarca.getValue().toString();
+            nomeSetor = campoSetor.getValue().toString();
         } catch (Exception e) {
             showAlert(Alert.AlertType.ERROR, owner, "Falha no Cadastro!",
                     "Preencha os campos!");
@@ -138,11 +140,16 @@ public class CadastrarItemController {
                     "Selecione o Nome da Marca do item!");
             return;
         }
+        if (nomeSetor.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, owner, "Falha no Cadastro!",
+                    "Selecione o Setor do item!");
+            return;
+        }
 
         int codItem = Integer.parseInt(codigoItem);
 
         ItemDao itemDao = new ItemDao();
-        itemDao.createItem(codItem, nomeTipoItem, descricaoItem, nomeMarca);
+        itemDao.createItem(codItem, nomeTipoItem, descricaoItem, nomeMarca, nomeSetor);
     }
 
     public void handleCancelarButtonAction(ActionEvent event) throws IOException{

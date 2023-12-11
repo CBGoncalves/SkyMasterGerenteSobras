@@ -43,6 +43,8 @@ public class HistoricoRegistroController {
     @FXML
     private TableColumn<Registro, String> marcaColumn;
     @FXML
+    private TableColumn<Registro, String> setorColumn;
+    @FXML
     private TableColumn<Registro, String> obraColumn;
     @FXML
     private TableColumn<Registro, String> usuarioColumn;
@@ -63,6 +65,7 @@ public class HistoricoRegistroController {
         descricaoColumn.setCellValueFactory(new PropertyValueFactory<>("descricaoItem"));
         tipoItemColumn.setCellValueFactory(new PropertyValueFactory<>("nomeTipoItem"));
         marcaColumn.setCellValueFactory(new PropertyValueFactory<>("nomeMarca"));
+        setorColumn.setCellValueFactory(new PropertyValueFactory<>("nomeSetor"));
         obraColumn.setCellValueFactory(new PropertyValueFactory<>("nomeObra"));
         usuarioColumn.setCellValueFactory(new PropertyValueFactory<>("nomeUsuario"));
         dataColumn.setCellValueFactory(new PropertyValueFactory<>("data"));

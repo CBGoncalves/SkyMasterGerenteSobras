@@ -16,6 +16,52 @@ public class ItemDao {
     private static final String DB_USER = "root";
     private static final String DB_PASS = "root";
 
+    public Item selectItensHome() throws SQLException {
+        Item item = new Item();
+        try {
+            Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+
+            PreparedStatement preparedStatement = con.prepareStatement("SELECT\n" +
+                    "    i.codItem,\n" +
+                    "    tipoitem.nomeTipoItem,\n" +
+                    "    i.descricaoItem,\n" +
+                    "    marca.nomeMarca,\n" +
+                    "    i.quantidadeItem + COALESCE(qtdEntradas, 0) - COALESCE(qtdSaidas, 0) AS quantidadeTotal\n" +
+                    "FROM\n" +
+                    "    Item i\n" +
+                    "LEFT JOIN (\n" +
+                    "    SELECT\n" +
+                    "        codItem,\n" +
+                    "        COALESCE(SUM(qtdEntrada), 0) AS qtdEntradas\n" +
+                    "    FROM\n" +
+                    "        RegistroEntrada\n" +
+                    "    GROUP BY\n" +
+                    "        codItem\n" +
+                    ") re ON i.codItem = re.codItem\n" +
+                    "INNER JOIN tipoitem ON i.codTipoItem = tipoitem.codTipoItem\n" +
+                    "INNER JOIN marca ON i.codMarca = marca.codMarca\n" +
+                    "LEFT JOIN (\n" +
+                    "    SELECT\n" +
+                    "        codItem,\n" +
+                    "        COALESCE(SUM(qtdSaida), 0) AS qtdSaidas\n" +
+                    "    FROM\n" +
+                    "        RegistroSaida\n" +
+                    "    GROUP BY\n" +
+                    "        codItem\n" +
+                    ") rs ON i.codItem = rs.codItem;\n");
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                item.setNomeTipoItem(rs.getString("nomeTipoItem"));
+                item.setDescricaoItem(rs.getString("descricaoItem"));
+                item.setQuantidadeItem(rs.getDouble("quantidadeTotal"));
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+
+        return item;
+    }
+
     public List<Item> selectAllItens() throws SQLException {
         List<Item> itemList = new ArrayList<>();
         try {

@@ -19,8 +19,8 @@ public class RegistroDao {
     private static final String DB_USER = "root";
     private static final String DB_PASS = "root";
 
-    public List<Registro> selectLastRegistersByDate() throws SQLException {
-        List<Registro> list = new ArrayList<>();
+    public Registro selectLastRegisterByDate() throws SQLException {
+        Registro registro = new Registro();
         try {
             Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
             PreparedStatement preparedStatement = con.prepareStatement("SELECT 'entrada' AS tipo, registroentrada.numNotaEntrada, registroentrada.qtdEntrada AS quantidade, item.descricaoItem, tipoitem.nometipoitem, marca.nomeMarca, obra.nomeobra, usuario.nomeUsuario, registroentrada.dataEntrada as data\n" +
@@ -39,10 +39,9 @@ public class RegistroDao {
                     "INNER JOIN marca ON item.codMarca = marca.codMarca\n" +
                     "INNER JOIN obra ON registrosaida.codObra = obra.codObra\n" +
                     "INNER JOIN usuario ON registrosaida.codUsuario = usuario.codUsuario\n" +
-                    "ORDER BY data DESC LIMIT 5;");
+                    "ORDER BY data DESC LIMIT 1;");
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                Registro registro = new Registro();
                 registro.setTipo(rs.getString("tipo"));
                 registro.setNumNotaEntrada(rs.getString("numNotaEntrada"));
                 registro.setQuantidade(rs.getInt("quantidade"));
@@ -52,13 +51,12 @@ public class RegistroDao {
                 registro.setNomeObra(rs.getString("nomeObra"));
                 registro.setNomeUsuario(rs.getString("nomeUsuario"));
                 registro.setData(rs.getDate("data").toLocalDate());
-                list.add(registro);
             }
         } catch (SQLException e) {
             printSQLException(e);
         }
 
-        return list;
+        return registro;
     }
 
     public List<Registro> selectRegistersByDate() throws SQLException {

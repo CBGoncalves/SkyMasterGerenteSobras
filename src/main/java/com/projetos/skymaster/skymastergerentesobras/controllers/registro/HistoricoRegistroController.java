@@ -6,15 +6,16 @@ import com.projetos.skymaster.skymastergerentesobras.dao.*;
 import com.projetos.skymaster.skymastergerentesobras.models.Item;
 import com.projetos.skymaster.skymastergerentesobras.models.Registro;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -23,11 +24,14 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class HistoricoRegistroController {
     @FXML
     private AnchorPane root;
+    @FXML
+    private TextField campoFiltro;
     @FXML
     private TableView<Registro> tableView;
     @FXML
@@ -70,10 +74,65 @@ public class HistoricoRegistroController {
         usuarioColumn.setCellValueFactory(new PropertyValueFactory<>("nomeUsuario"));
         dataColumn.setCellValueFactory(new PropertyValueFactory<>("data"));
 
+        dataColumn.setCellFactory(column -> new TableCell<Registro, LocalDate>() {
+            @Override
+            protected void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+
+                if (empty || date == null) {
+                    setText(null);
+                } else {
+                    Registro registro = getTableView().getItems().get(getIndex());
+                    setText(registro.getDataFormatada());
+                }
+            }
+        });
+
         try {
             List<Registro> registros = registroDao.selectRegistersByDate();
+            ObservableList<Registro> observableList = FXCollections.observableArrayList(registros);
 
-            tableView.getItems().addAll(registros);
+            FilteredList<Registro> filteredList = new FilteredList<>(observableList, r -> true);
+
+            campoFiltro.textProperty().addListener((observable, oldValue, newValue) -> {
+                filteredList.setPredicate(registro -> {
+
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+
+                    String lowerCaseFilter = newValue.toLowerCase();
+
+                    if (registro.getTipo().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else if (registro.getNumNotaEntrada().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    }else if (Integer.toString(registro.getQuantidade()).toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else if (registro.getDescricaoItem().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else if (registro.getNomeTipoItem().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else if (registro.getNomeMarca().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else if (registro.getNomeSetor().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else if (registro.getNomeObra().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else if (registro.getNomeUsuario().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else if (registro.getDataFormatada().toString().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    }
+                    return false;
+                });
+            });
+
+            SortedList<Registro> sortedData = new SortedList<>(filteredList);
+
+            sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+
+            tableView.setItems(sortedData);
         } catch (SQLException e) {
             e.printStackTrace();
         }

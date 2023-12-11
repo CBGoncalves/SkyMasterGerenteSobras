@@ -1,6 +1,7 @@
 package com.projetos.skymaster.skymastergerentesobras.models;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Registro {
 
@@ -98,6 +99,15 @@ public class Registro {
 
     public LocalDate getData() {
         return data;
+    }
+
+    public String getDataFormatada() {
+        if (data != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            return data.format(formatter);
+        } else {
+            return null; // ou uma string padrão, dependendo dos seus requisitos
+        }
     }
 
     public void setData(LocalDate data) {

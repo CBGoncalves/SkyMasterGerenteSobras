@@ -11,6 +11,7 @@ public class Registro {
     private String descricaoItem;
     private String nomeTipoItem;
     private String nomeMarca;
+    private String nomeSetor;
     private String nomeObra;
     private String nomeUsuario;
     private LocalDate data;
@@ -69,6 +70,14 @@ public class Registro {
 
     public void setNomeMarca(String nomeMarca) {
         this.nomeMarca = nomeMarca;
+    }
+
+    public String getNomeSetor() {
+        return nomeSetor;
+    }
+
+    public void setNomeSetor(String nomeSetor) {
+        this.nomeSetor = nomeSetor;
     }
 
     public String getNomeObra() {

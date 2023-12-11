@@ -117,7 +117,7 @@ public class NavigationBarController {
             stageAtual.close();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/item/CadastrarItem.fxml"));
-            CadastrarItemController controller = new CadastrarItemController(new TipoItemDao(), new MarcaDao());
+            CadastrarItemController controller = new CadastrarItemController(new TipoItemDao(), new MarcaDao(), new SetorDao());
             loader.setController(controller);
             Parent root = loader.load();
 

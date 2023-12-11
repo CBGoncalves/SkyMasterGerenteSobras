@@ -2,10 +2,7 @@ package com.projetos.skymaster.skymastergerentesobras.controllers.item;
 
 import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
 import com.projetos.skymaster.skymastergerentesobras.dao.*;
-import com.projetos.skymaster.skymastergerentesobras.models.Marca;
-import com.projetos.skymaster.skymastergerentesobras.models.TipoItem;
-import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuario;
-import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
+import com.projetos.skymaster.skymastergerentesobras.models.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -35,15 +32,19 @@ public class CadastrarItemController {
     @FXML
     private ChoiceBox<Marca> campoMarca;
     @FXML
+    private ChoiceBox<Setor> campoSetor;
+    @FXML
     private Button btnCadastrar;
     @FXML
     private Button btnCancelar;
     private TipoItemDao tipoItemDao;
     private MarcaDao marcaDao;
+    private SetorDao setorDao;
 
-    public CadastrarItemController(TipoItemDao tipoItemDao, MarcaDao marcaDao) {
+    public CadastrarItemController(TipoItemDao tipoItemDao, MarcaDao marcaDao, SetorDao setorDao) {
         this.tipoItemDao = tipoItemDao;
         this.marcaDao = marcaDao;
+        this.setorDao = setorDao;
 
     }
 
@@ -76,6 +77,10 @@ public class CadastrarItemController {
             List<Marca> marcas = marcaDao.selectAllMarcas();
             ObservableList<Marca> observableListMarca = FXCollections.observableArrayList(marcas);
             campoMarca.setItems(observableListMarca);
+
+            List<Setor> setores = setorDao.selectAllSetores();
+            ObservableList<Setor> observableListSetor = FXCollections.observableArrayList(setores);
+            campoSetor.setItems(observableListSetor);
 
         } catch (SQLException e) {
             e.printStackTrace();

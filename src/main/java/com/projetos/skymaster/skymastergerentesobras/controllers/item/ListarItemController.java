@@ -3,6 +3,7 @@ package com.projetos.skymaster.skymastergerentesobras.controllers.item;
 import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
 import com.projetos.skymaster.skymastergerentesobras.dao.ItemDao;
 import com.projetos.skymaster.skymastergerentesobras.dao.MarcaDao;
+import com.projetos.skymaster.skymastergerentesobras.dao.SetorDao;
 import com.projetos.skymaster.skymastergerentesobras.dao.TipoItemDao;
 import com.projetos.skymaster.skymastergerentesobras.models.Item;
 import com.projetos.skymaster.skymastergerentesobras.models.Marca;
@@ -100,7 +101,7 @@ public class ListarItemController {
             Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/item/EditarItem.fxml"));
-            EditarItemController controller = new EditarItemController(item, new TipoItemDao(), new MarcaDao());
+            EditarItemController controller = new EditarItemController(item, new TipoItemDao(), new MarcaDao(), new SetorDao());
             loader.setController(controller);
             Parent root = loader.load();
 

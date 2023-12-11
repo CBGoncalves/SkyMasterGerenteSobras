@@ -3,11 +3,9 @@ package com.projetos.skymaster.skymastergerentesobras.controllers.item;
 import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
 import com.projetos.skymaster.skymastergerentesobras.dao.ItemDao;
 import com.projetos.skymaster.skymastergerentesobras.dao.MarcaDao;
+import com.projetos.skymaster.skymastergerentesobras.dao.SetorDao;
 import com.projetos.skymaster.skymastergerentesobras.dao.TipoItemDao;
-import com.projetos.skymaster.skymastergerentesobras.models.Item;
-import com.projetos.skymaster.skymastergerentesobras.models.Marca;
-import com.projetos.skymaster.skymastergerentesobras.models.TipoItem;
-import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
+import com.projetos.skymaster.skymastergerentesobras.models.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -46,12 +44,16 @@ public class EditarItemController {
     private Button btnCancelar;
     private TipoItemDao tipoItemDao;
     private MarcaDao marcaDao;
+    @FXML
+    private ChoiceBox<Setor> campoSetor;
+    private SetorDao setorDao;
     private Item item;
 
-    public EditarItemController(Item item, TipoItemDao tipoItemDao, MarcaDao marcaDao) {
+    public EditarItemController(Item item, TipoItemDao tipoItemDao, MarcaDao marcaDao, SetorDao setorDao) {
         this.item = item;
         this.tipoItemDao = tipoItemDao;
         this.marcaDao = marcaDao;
+        this.setorDao = setorDao;
     }
 
     public void initialize() throws SQLException {
@@ -83,6 +85,10 @@ public class EditarItemController {
             List<Marca> marcas = marcaDao.selectAllMarcas();
             ObservableList<Marca> observableListMarca = FXCollections.observableArrayList(marcas);
             campoMarca.setItems(observableListMarca);
+
+            List<Setor> setores = setorDao.selectAllSetores();
+            ObservableList<Setor> observableListSetor = FXCollections.observableArrayList(setores);
+            campoSetor.setItems(observableListSetor);
 
         } catch (SQLException e) {
             e.printStackTrace();

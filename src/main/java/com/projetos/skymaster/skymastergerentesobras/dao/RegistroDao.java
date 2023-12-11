@@ -93,7 +93,7 @@ public class RegistroDao {
                 registro.setDescricaoItem(rs.getString("descricaoItem"));
                 registro.setNomeTipoItem(rs.getString("nomeTipoItem"));
                 registro.setNomeMarca(rs.getString("nomeMarca"));
-                registro.setNomeSetor(rs.getString("nomeSetorCa"));
+                registro.setNomeSetor(rs.getString("nomeSetor"));
                 registro.setNomeObra(rs.getString("nomeObra"));
                 registro.setNomeUsuario(rs.getString("nomeUsuario"));
                 registro.setData(rs.getDate("data").toLocalDate());

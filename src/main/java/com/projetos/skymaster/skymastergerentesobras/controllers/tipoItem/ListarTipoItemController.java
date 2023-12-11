@@ -5,17 +5,19 @@ import com.projetos.skymaster.skymastergerentesobras.controllers.marca.EditarMar
 import com.projetos.skymaster.skymastergerentesobras.dao.MarcaDao;
 import com.projetos.skymaster.skymastergerentesobras.dao.TipoItemDao;
 import com.projetos.skymaster.skymastergerentesobras.models.Marca;
+import com.projetos.skymaster.skymastergerentesobras.models.Obra;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoItem;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -28,6 +30,8 @@ import java.util.List;
 public class ListarTipoItemController {
     @FXML
     private AnchorPane root;
+    @FXML
+    private TextField campoFiltro;
     @FXML
     private TableView tableView;
     @FXML
@@ -71,7 +75,33 @@ public class ListarTipoItemController {
 
         try {
             List<TipoItem> tiposItem = tipoItemDao.selectAllTiposItem();
-            tableView.getItems().addAll(tiposItem);
+            ObservableList<TipoItem> observableList = FXCollections.observableArrayList(tiposItem);
+
+            FilteredList<TipoItem> filteredData = new FilteredList<>(observableList, ti -> true);
+
+            campoFiltro.textProperty().addListener((observable, oldValue, newValue) -> {
+                filteredData.setPredicate(tipoItem -> {
+
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+
+                    String lowerCaseFilter = newValue.toLowerCase();
+
+                    if (Integer.toString(tipoItem.getCodTipoItem()).toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    }else if (tipoItem.getNomeTipoItem().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    }
+                    return false;
+                });
+            });
+
+            SortedList<TipoItem> sortedData = new SortedList<>(filteredData);
+
+            sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+
+            tableView.setItems(sortedData);
         } catch (SQLException e) {
             e.printStackTrace();
         }

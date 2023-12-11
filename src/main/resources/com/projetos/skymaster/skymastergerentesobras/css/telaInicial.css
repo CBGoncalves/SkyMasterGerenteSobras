@@ -9,49 +9,16 @@
     -fx-background-color: #FFFFFF;
 }
 
-#title {
+#boxRegistro, #boxItens {
+    -fx-border-radius: 5;
+    -fx-border-color: #011A5D;
+}
+
+#titleItens, #titleRegistro {
     -fx-font-size: 24px;
 }
 
-.table-view {
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
-    -fx-border-color: #011A5D;
-}
-
-.table-view .column-header-background {
-    -fx-background-color: #011A5D;
-}
-
-.table-view .column-header,
-.table-view .table-cell {
-    -fx-border-width: 0 0 1 0;
-    -fx-border-color: #011A5D;
-}
-
-.table-view .column-header,
-.table-view .table-cell {
-    -fx-background-color: #ffffff;
-    -fx-text-fill: #011A5D;
-}
-
-.table-view .table-cell {
-    -fx-padding: 5;
-}
-
-.table-view .column-header .label {
+.button {
     -fx-background-color: #011A5D;
     -fx-text-fill: #FFFFFF;
-    -fx-padding: 10;
-    -fx-font-weight: bold;
-}
-
-.table-view .scroll-bar:vertical {
-    -fx-opacity: 0;
-    -fx-pref-width: 0;
-}
-
-.table-row-cell {
-    -fx-min-height: 55;
-    -fx-max-height: 55;
 }

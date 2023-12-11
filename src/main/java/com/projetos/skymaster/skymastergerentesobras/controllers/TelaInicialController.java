@@ -1,6 +1,8 @@
 package com.projetos.skymaster.skymastergerentesobras.controllers;
 
+import com.projetos.skymaster.skymastergerentesobras.dao.ItemDao;
 import com.projetos.skymaster.skymastergerentesobras.dao.RegistroDao;
+import com.projetos.skymaster.skymastergerentesobras.models.Item;
 import com.projetos.skymaster.skymastergerentesobras.models.Registro;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
 import com.projetos.skymaster.skymastergerentesobras.models.Usuario;
@@ -9,9 +11,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -26,48 +32,50 @@ public class TelaInicialController {
     @FXML
     private AnchorPane root;
     @FXML
-    private TableView<Registro> tableView;
+    private Label tipoItem;
     @FXML
-    private TableColumn<Registro, String> tipoColumn;
+    private Label descricaoItem;
     @FXML
-    private TableColumn<Registro, String> numNotaColumn;
+    private Label qtd;
     @FXML
-    private TableColumn<Registro, Integer> qtdColumn;
+    private Label tipo;
     @FXML
-    private TableColumn<Registro, String> descricaoColumn;
+    private Label descricao;
     @FXML
-    private TableColumn<Registro, String> tipoItemColumn;
+    private Label quantidade;
     @FXML
-    private TableColumn<Registro, String> marcaColumn;
+    private Label responsavel;
     @FXML
-    private TableColumn<Registro, String> obraColumn;
+    private Button btnHistorico;
     @FXML
-    private TableColumn<Registro, String> usuarioColumn;
-    @FXML
-    private TableColumn<Registro, LocalDate> dataColumn;
+    private Button btnListaItens;
+
+    Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
 
     private RegistroDao registroDao;
+    private ItemDao itemDao;
 
     public void initialize() throws SQLException {
-
-        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
         registroDao = new RegistroDao();
-
-        tipoColumn.setCellValueFactory(new PropertyValueFactory<>("tipo"));
-        numNotaColumn.setCellValueFactory(new PropertyValueFactory<>("numNotaEntrada"));
-        qtdColumn.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
-        descricaoColumn.setCellValueFactory(new PropertyValueFactory<>("descricaoItem"));
-        tipoItemColumn.setCellValueFactory(new PropertyValueFactory<>("nomeTipoItem"));
-        marcaColumn.setCellValueFactory(new PropertyValueFactory<>("nomeMarca"));
-        obraColumn.setCellValueFactory(new PropertyValueFactory<>("nomeObra"));
-        usuarioColumn.setCellValueFactory(new PropertyValueFactory<>("nomeUsuario"));
-        dataColumn.setCellValueFactory(new PropertyValueFactory<>("data"));
+        itemDao = new ItemDao();
 
         try {
-            List<Registro> registros = registroDao.selectLastRegistersByDate();
+            Registro registro = registroDao.selectLastRegisterByDate();
 
-            tableView.getItems().addAll(registros);
+            tipoItem.setText(registro.getNomeTipoItem());
+            descricaoItem.setText(registro.getDescricaoItem());
+            qtd.setText(Integer.toString(registro.getQuantidade()));
+            responsavel.setText(registro.getNomeUsuario());
+
+            Item item = itemDao.selectItensHome();
+
+            tipo.setText(item.getNomeTipoItem());
+            descricao.setText(item.getDescricaoItem());
+            quantidade.setText(Double.toString(item.getQuantidadeItem()));
+
+
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -89,6 +97,46 @@ public class TelaInicialController {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void handleHistoricoButtonAction(ActionEvent event) {
+        try {
+            Stage stageAtual = (Stage) btnHistorico.getScene().getWindow();
+            stageAtual.close();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/registro/HistoricoRegistro.fxml"));
+            Parent root = loader.load();
+
+            Stage historicoRegistro = new Stage();
+            historicoRegistro.setTitle("Histórico Registro");
+            historicoRegistro.setScene(new Scene(root));
+            historicoRegistro.setResizable(false);
+            historicoRegistro.getIcons().add(icon);
+            historicoRegistro.show();
+
+        } catch (IOException e) {
+
+        }
+    }
+
+    public void handleListarItensButtonAction(ActionEvent event) {
+        try {
+            Stage stageAtual = (Stage) btnListaItens.getScene().getWindow();
+            stageAtual.close();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/item/ListarItem.fxml"));
+            Parent root = loader.load();
+
+            Stage listarItem = new Stage();
+            listarItem.setTitle("Listar Item");
+            listarItem.setScene(new Scene(root));
+            listarItem.setResizable(false);
+            listarItem.getIcons().add(icon);
+            listarItem.show();
+
+        } catch (IOException e) {
+
         }
     }
 }

@@ -36,6 +36,7 @@
             <TableColumn fx:id="nomeTipoItemColumn" text="Tipo de Item"/>
             <TableColumn fx:id="descricaoItemColumn" text="Descrição do Item"/>
             <TableColumn fx:id="nomeMarcaColumn" text="Marca"/>
+            <TableColumn fx:id="nomeSetorColumn" text="Setor"/>
             <TableColumn fx:id="quantidadeColumn" text="Quantidade"/>
         </columns>
     </TableView>

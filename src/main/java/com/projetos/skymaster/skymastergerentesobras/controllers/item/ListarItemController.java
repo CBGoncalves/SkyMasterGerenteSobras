@@ -40,6 +40,8 @@ public class ListarItemController {
     @FXML
     private TableColumn<Item, String> nomeMarcaColumn;
     @FXML
+    private TableColumn<Item, String> nomeSetorColumn;
+    @FXML
     private TableColumn<Item, Double> quantidadeColumn;
     @FXML
     private Button btnEditar;
@@ -75,6 +77,7 @@ public class ListarItemController {
         nomeTipoItemColumn.setCellValueFactory(new PropertyValueFactory<>("nomeTipoItem"));
         descricaoItemColumn.setCellValueFactory(new PropertyValueFactory<>("descricaoItem"));
         nomeMarcaColumn.setCellValueFactory(new PropertyValueFactory<>("nomeMarca"));
+        nomeSetorColumn.setCellValueFactory(new PropertyValueFactory<>("nomeSetor"));
         quantidadeColumn.setCellValueFactory(new PropertyValueFactory<>("quantidadeItem"));
 
         try {

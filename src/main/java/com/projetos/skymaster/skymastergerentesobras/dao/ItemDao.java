@@ -72,6 +72,7 @@ public class ItemDao {
                     "    tipoitem.nomeTipoItem,\n" +
                     "    i.descricaoItem,\n" +
                     "    marca.nomeMarca,\n" +
+                    "    setor.nomeSetor,\n" +
                     "    i.quantidadeItem + COALESCE(qtdEntradas, 0) - COALESCE(qtdSaidas, 0) AS quantidadeTotal\n" +
                     "FROM\n" +
                     "    Item i\n" +
@@ -86,6 +87,7 @@ public class ItemDao {
                     ") re ON i.codItem = re.codItem\n" +
                     "INNER JOIN tipoitem ON i.codTipoItem = tipoitem.codTipoItem\n" +
                     "INNER JOIN marca ON i.codMarca = marca.codMarca\n" +
+                    "INNER JOIN setor ON i.codSetor = setor.codSetor\n" +
                     "LEFT JOIN (\n" +
                     "    SELECT\n" +
                     "        codItem,\n" +
@@ -102,6 +104,7 @@ public class ItemDao {
                 item.setNomeTipoItem(rs.getString("nomeTipoItem"));
                 item.setDescricaoItem(rs.getString("descricaoItem"));
                 item.setNomeMarca(rs.getString("nomeMarca"));
+                item.setNomeSetor(rs.getString("nomeSetor"));
                 item.setQuantidadeItem(rs.getDouble("quantidadeTotal"));
                 itemList.add(item);
             }

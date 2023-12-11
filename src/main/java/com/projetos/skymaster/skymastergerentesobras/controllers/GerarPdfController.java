@@ -51,11 +51,11 @@ public class GerarPdfController {
                 doc.add(new Paragraph(" "));
                 doc.add(new Paragraph(" "));
 
-                PdfPTable table = new PdfPTable(10);
+                PdfPTable table = new PdfPTable(11);
                 table.setWidthPercentage(100);
 
                 // Defina a largura das colunas
-                float[] columnWidths = {50f, 50f, 50f, 50f, 50f, 50f, 50f, 50f, 50f, 50f};
+                float[] columnWidths = {50f, 50f, 50f, 50f, 50f, 50f, 50f, 50f, 50f, 50f, 50f};
                 table.setWidths(columnWidths);
 
                 Paragraph paragrafoTipo = new Paragraph("Tipo de Registro", new
@@ -82,6 +82,10 @@ public class GerarPdfController {
                         Font(Font.FontFamily.HELVETICA, 12f, Font.BOLD));
                 title.setAlignment(Element.ALIGN_CENTER);
 
+                Paragraph paragrafoSetor = new Paragraph("Setor", new
+                        Font(Font.FontFamily.HELVETICA, 12f, Font.BOLD));
+                title.setAlignment(Element.ALIGN_CENTER);
+
                 Paragraph paragrafoObra = new Paragraph("Obra", new
                         Font(Font.FontFamily.HELVETICA, 12f, Font.BOLD));
                 title.setAlignment(Element.ALIGN_CENTER);
@@ -104,6 +108,7 @@ public class GerarPdfController {
                 PdfPCell tipoItem = new PdfPCell(paragrafoTipoItem);
                 PdfPCell descricao = new PdfPCell(paragrafoDescItem);
                 PdfPCell marca = new PdfPCell(paragrafoMarca);
+                PdfPCell setor = new PdfPCell(paragrafoSetor);
                 PdfPCell obra = new PdfPCell(paragrafoObra);
                 PdfPCell usuario = new PdfPCell(paragrafoUsuario);
                 PdfPCell tipoUsuario = new PdfPCell(paragrafoTipoUsuario);
@@ -115,6 +120,7 @@ public class GerarPdfController {
                 table.addCell(tipoItem);
                 table.addCell(descricao);
                 table.addCell(marca);
+                table.addCell(setor);
                 table.addCell(obra);
                 table.addCell(usuario);
                 table.addCell(tipoUsuario);
@@ -135,6 +141,7 @@ public class GerarPdfController {
                         table.addCell(rs.getString("nomeTipoItem"));
                         table.addCell(rs.getString("descricaoItem"));
                         table.addCell(rs.getString("nomeMarca"));
+                        table.addCell(rs.getString("nomeSetor"));
                         table.addCell(rs.getString("nomeObra"));
                         table.addCell(rs.getString("nomeUsuario"));
                         table.addCell(rs.getString("nomeTipoUsuario"));

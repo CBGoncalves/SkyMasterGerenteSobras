@@ -29,27 +29,32 @@
     </ImageView>
 
     <Label text="Código do Item"
-           AnchorPane.leftAnchor="540" AnchorPane.topAnchor="245"/>
+           AnchorPane.leftAnchor="540" AnchorPane.topAnchor="216"/>
     <TextField fx:id="campoCodItem"
-               AnchorPane.leftAnchor="540" AnchorPane.topAnchor="265"/>
+               AnchorPane.leftAnchor="540" AnchorPane.topAnchor="236"/>
 
     <Label text="Tipo de Item"
-           AnchorPane.leftAnchor="540" AnchorPane.topAnchor="318"/>
+           AnchorPane.leftAnchor="540" AnchorPane.topAnchor="281"/>
     <ChoiceBox fx:id="campoTipoItem"
-               AnchorPane.leftAnchor="540" AnchorPane.topAnchor="338"/>
+               AnchorPane.leftAnchor="540" AnchorPane.topAnchor="301"/>
 
     <Label text="Descrição"
-           AnchorPane.leftAnchor="540" AnchorPane.topAnchor="391"/>
+           AnchorPane.leftAnchor="540" AnchorPane.topAnchor="346"/>
     <TextField fx:id="campoDescricao"
-               AnchorPane.leftAnchor="540" AnchorPane.topAnchor="411"/>
+               AnchorPane.leftAnchor="540" AnchorPane.topAnchor="366"/>
 
     <Label text="Marca"
-           AnchorPane.leftAnchor="540" AnchorPane.topAnchor="464"/>
+           AnchorPane.leftAnchor="540" AnchorPane.topAnchor="411"/>
     <ChoiceBox fx:id="campoMarca"
-               AnchorPane.leftAnchor="540" AnchorPane.topAnchor="484"/>
+               AnchorPane.leftAnchor="540" AnchorPane.topAnchor="431"/>
+
+    <Label text="Setor"
+           AnchorPane.leftAnchor="540" AnchorPane.topAnchor="476"/>
+    <ChoiceBox fx:id="campoSetor"
+               AnchorPane.leftAnchor="540" AnchorPane.topAnchor="493"/>
 
     <Button fx:id="btnCadastrar" text="Cadastrar" onAction="#handleCadastrarButtonAction"
-            AnchorPane.leftAnchor="696" AnchorPane.topAnchor="546"/>
+            AnchorPane.leftAnchor="696" AnchorPane.topAnchor="563"/>
     <Button fx:id="btnCancelar" text="Cancelar" onAction="#handleCancelarButtonAction"
-            AnchorPane.leftAnchor="527" AnchorPane.topAnchor="546"/>
+            AnchorPane.leftAnchor="527" AnchorPane.topAnchor="563"/>
 </AnchorPane>

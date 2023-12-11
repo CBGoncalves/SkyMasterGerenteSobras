@@ -5,6 +5,7 @@ public class Item {
     private String nomeTipoItem;
     private String descricaoItem;
     private String nomeMarca;
+    private String nomeSetor;
     private Double quantidadeItem;
 
     public Double getQuantidadeItem() {
@@ -45,6 +46,14 @@ public class Item {
 
     public void setNomeMarca(String nomeMarca) {
         this.nomeMarca = nomeMarca;
+    }
+
+    public String getNomeSetor() {
+        return nomeSetor;
+    }
+
+    public void setNomeSetor(String nomeSetor) {
+        this.nomeSetor = nomeSetor;
     }
 
     @Override

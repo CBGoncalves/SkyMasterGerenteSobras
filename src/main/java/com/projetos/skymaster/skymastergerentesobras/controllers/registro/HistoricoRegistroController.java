@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -238,5 +239,22 @@ public class HistoricoRegistroController {
         alert.setContentText(message);
         alert.initOwner(null);
         alert.show();
+    }
+
+    public void handleTelaInicial(MouseEvent mouseEvent) throws IOException{
+        Stage stageGerarRelatorio = (Stage) btnEditar.getScene().getWindow();
+        stageGerarRelatorio.close();
+
+        Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/TelaInicial.fxml"));
+        Parent root = loader.load();
+
+        Stage telaInicial = new Stage();
+        telaInicial.setTitle("Tela Inicial");
+        telaInicial.setScene(new Scene(root));
+        telaInicial.setResizable(false);
+        telaInicial.getIcons().add(icon);
+        telaInicial.show();
     }
 }

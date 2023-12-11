@@ -22,7 +22,8 @@
             fx:id="logoSky"
             fitWidth="100" fitHeight="65"
             preserveRatio="true"
-            AnchorPane.leftAnchor="18" AnchorPane.topAnchor="70">
+            AnchorPane.leftAnchor="18" AnchorPane.topAnchor="70"
+            onMouseClicked="#handleTelaInicial">
         <image>
             <Image url="@../img/logo_sky.jpg"/>
         </image>

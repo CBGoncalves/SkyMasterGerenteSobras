@@ -140,18 +140,20 @@ public class ItemDao {
         }
     }
 
-    public void updateItem(int codItemAntigo, int codItem, String nomeTipoItem, String descricaoItem, String nomeMarca) throws SQLException {
+    public void updateItem(int codItemAntigo, int codItem, String nomeTipoItem, String descricaoItem, String nomeMarca, String nomeSetor) throws SQLException {
         int codTipoItem = getCodTipoItemByNome(nomeTipoItem);
         int codMarca = getCodMarcaByNome(nomeMarca);
+        int codSetor = getCodSetorByNome(nomeSetor);
 
         try {
             Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
-            PreparedStatement preparedStatement = con.prepareStatement("UPDATE item SET item.codItem=?, item.descricaoItem=?, item.codMarca=?, item.codTipoItem=? WHERE item.codItem=?;");
+            PreparedStatement preparedStatement = con.prepareStatement("UPDATE item SET item.codItem=?, item.descricaoItem=?, item.codMarca=?, item.codSetor=?, item.codTipoItem=? WHERE item.codItem=?;");
             preparedStatement.setInt(1, codItem);
             preparedStatement.setString(2, descricaoItem);
             preparedStatement.setInt(3, codMarca);
-            preparedStatement.setInt(4, codTipoItem);
-            preparedStatement.setInt(5, codItemAntigo);
+            preparedStatement.setInt(4, codSetor);
+            preparedStatement.setInt(5, codTipoItem);
+            preparedStatement.setInt(6, codItemAntigo);
             preparedStatement.executeUpdate();
 
         } catch(SQLException e) {

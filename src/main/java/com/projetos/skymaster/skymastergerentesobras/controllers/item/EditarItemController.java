@@ -122,9 +122,11 @@ public class EditarItemController {
         String nomeTipoItem;
         String descricaoItem = campoDescricao.getText();
         String nomeMarca;
+        String nomeSetor;
         try {
             nomeTipoItem = campoTipoItem.getValue().toString();
             nomeMarca = campoMarca.getValue().toString();
+            nomeSetor = campoSetor.getValue().toString();
         } catch (Exception e) {
             showAlert(Alert.AlertType.ERROR, owner, "Falha na Edição!",
                     "Preencha os campos!");
@@ -151,10 +153,15 @@ public class EditarItemController {
                     "Selecione o Nome da Marca do item!");
             return;
         }
+        if (nomeSetor.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, owner, "Falha no Cadastro!",
+                    "Selecione o Setor do item!");
+            return;
+        }
 
         int codItem = Integer.parseInt(codigoItem);
         ItemDao itemDao = new ItemDao();
-        itemDao.updateItem(codigoItemAntigo, codItem, nomeTipoItem, descricaoItem, nomeMarca);
+        itemDao.updateItem(codigoItemAntigo, codItem, nomeTipoItem, descricaoItem, nomeMarca, nomeSetor);
 
         try {
             Stage stageEditar = (Stage) btnEditar.getScene().getWindow();

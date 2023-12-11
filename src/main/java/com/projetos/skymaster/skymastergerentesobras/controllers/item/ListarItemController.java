@@ -3,6 +3,7 @@ package com.projetos.skymaster.skymastergerentesobras.controllers.item;
 import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
 import com.projetos.skymaster.skymastergerentesobras.dao.ItemDao;
 import com.projetos.skymaster.skymastergerentesobras.dao.MarcaDao;
+import com.projetos.skymaster.skymastergerentesobras.dao.SetorDao;
 import com.projetos.skymaster.skymastergerentesobras.dao.TipoItemDao;
 import com.projetos.skymaster.skymastergerentesobras.models.Item;
 import com.projetos.skymaster.skymastergerentesobras.models.Marca;
@@ -39,6 +40,8 @@ public class ListarItemController {
     @FXML
     private TableColumn<Item, String> nomeMarcaColumn;
     @FXML
+    private TableColumn<Item, String> nomeSetorColumn;
+    @FXML
     private TableColumn<Item, Double> quantidadeColumn;
     @FXML
     private Button btnEditar;
@@ -74,6 +77,7 @@ public class ListarItemController {
         nomeTipoItemColumn.setCellValueFactory(new PropertyValueFactory<>("nomeTipoItem"));
         descricaoItemColumn.setCellValueFactory(new PropertyValueFactory<>("descricaoItem"));
         nomeMarcaColumn.setCellValueFactory(new PropertyValueFactory<>("nomeMarca"));
+        nomeSetorColumn.setCellValueFactory(new PropertyValueFactory<>("nomeSetor"));
         quantidadeColumn.setCellValueFactory(new PropertyValueFactory<>("quantidadeItem"));
 
         try {
@@ -100,7 +104,7 @@ public class ListarItemController {
             Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/item/EditarItem.fxml"));
-            EditarItemController controller = new EditarItemController(item, new TipoItemDao(), new MarcaDao());
+            EditarItemController controller = new EditarItemController(item, new TipoItemDao(), new MarcaDao(), new SetorDao());
             loader.setController(controller);
             Parent root = loader.load();
 

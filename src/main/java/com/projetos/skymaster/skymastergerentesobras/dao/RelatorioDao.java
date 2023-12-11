@@ -10,7 +10,7 @@ public class RelatorioDao {
         try {
             System.out.println("Chamando conexão");
             try {
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/smgerentesobra","root","root");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/smgerentesobra", "root", "root");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -28,23 +28,25 @@ public class RelatorioDao {
             PreparedStatement ps = con.prepareStatement(
                     "SELECT *\r\n"
                             + "FROM (\r\n"
-                            + "    SELECT 'entrada' AS tipo, registroentrada.numNotaEntrada, registroentrada.qtdEntrada AS quantidade, item.descricaoItem, tipoitem.nometipoitem, marca.nomeMarca, obra.nomeobra, usuario.nomeUsuario, tipousuario.nomeTipoUsuario, registroentrada.dataEntrada as data\r\n"
-                            + "    FROM registroentrada\r\n"
-                            + "    INNER JOIN item ON registroentrada.codItem = item.codItem\r\n"
-                            + "    INNER JOIN tipoitem ON item.codTipoItem = tipoitem.codTipoItem\r\n"
-                            + "    INNER JOIN marca ON item.codMarca = marca.codMarca\r\n"
-                            + "    INNER JOIN obra ON registroentrada.codObra = obra.codObra\r\n"
-                            + "    INNER JOIN usuario ON registroentrada.codUsuario = usuario.codUsuario\r\n"
-                            + "    INNER JOIN tipousuario ON usuario.codTipoUsuario = tipousuario.codTipoUsuario\r\n"
-                            + "    UNION\r\n"
-                            + "    SELECT 'saida' AS tipo,registrosaida.numNotaSaida, registrosaida.qtdSaida AS quantidade, item.descricaoItem, tipoitem.nometipoitem, marca.nomeMarca, obra.nomeobra, usuario.nomeUsuario, tipousuario.nomeTipoUsuario, registrosaida.dataSaida as data\r\n"
-                            + "    FROM registrosaida\r\n"
-                            + "    INNER JOIN item ON registrosaida.codItem = item.codItem\r\n"
-                            + "    INNER JOIN tipoitem ON item.codTipoItem = tipoitem.codTipoItem\r\n"
-                            + "    INNER JOIN marca ON item.codMarca = marca.codMarca\r\n"
-                            + "    INNER JOIN obra ON registrosaida.codObra = obra.codObra\r\n"
-                            + "    INNER JOIN usuario ON registrosaida.codUsuario = usuario.codUsuario\r\n"
-                            + "    INNER JOIN tipousuario ON usuario.codTipoUsuario = tipousuario.codTipoUsuario\r\n"
+                            + "    SELECT 'entrada' AS tipo, registroentrada.numNotaEntrada, registroentrada.qtdEntrada AS quantidade, tipoitem.nometipoitem, item.descricaoItem, marca.nomeMarca, setor.nomeSetor, obra.nomeobra, usuario.nomeUsuario, tipousuario.nomeTipoUsuario, registroentrada.dataEntrada as data\n" +
+                            "    FROM registroentrada\n" +
+                            "    INNER JOIN item ON registroentrada.codItem = item.codItem\n" +
+                            "    INNER JOIN tipoitem ON item.codTipoItem = tipoitem.codTipoItem\n" +
+                            "    INNER JOIN marca ON item.codMarca = marca.codMarca\n" +
+                            "    INNER JOIN setor ON item.codSetor = setor.codSetor\n" +
+                            "    INNER JOIN obra ON registroentrada.codObra = obra.codObra\n" +
+                            "    INNER JOIN usuario ON registroentrada.codUsuario = usuario.codUsuario\n" +
+                            "    INNER JOIN tipousuario ON usuario.codTipoUsuario = tipousuario.codTipoUsuario\n" +
+                            "    UNION\n" +
+                            "    SELECT 'saida' AS tipo,registrosaida.numNotaSaida, registrosaida.qtdSaida AS quantidade, tipoitem.nometipoitem, item.descricaoItem, marca.nomeMarca, setor.nomeSetor, obra.nomeobra, usuario.nomeUsuario, tipousuario.nomeTipoUsuario, registrosaida.dataSaida as data\n" +
+                            "    FROM registrosaida\n" +
+                            "    INNER JOIN item ON registrosaida.codItem = item.codItem\n" +
+                            "    INNER JOIN tipoitem ON item.codTipoItem = tipoitem.codTipoItem\n" +
+                            "    INNER JOIN marca ON item.codMarca = marca.codMarca\n" +
+                            "    INNER JOIN setor ON item.codSetor = setor.codSetor\n" +
+                            "    INNER JOIN obra ON registrosaida.codObra = obra.codObra\n" +
+                            "    INNER JOIN usuario ON registrosaida.codUsuario = usuario.codUsuario\n" +
+                            "    INNER JOIN tipousuario ON usuario.codTipoUsuario = tipousuario.codTipoUsuario"
                             + ") AS combined_result\r\n"
                             + "WHERE combined_result.data BETWEEN ? AND ?\r\n"
                             + "ORDER BY combined_result.data;");

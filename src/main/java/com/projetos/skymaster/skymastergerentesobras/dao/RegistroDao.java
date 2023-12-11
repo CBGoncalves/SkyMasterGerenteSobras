@@ -63,23 +63,26 @@ public class RegistroDao {
         List<Registro> list = new ArrayList<>();
         try {
             Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-            PreparedStatement preparedStatement = con.prepareStatement("SELECT registroentrada.codEntrada AS codRegistro, 'entrada' AS tipo, registroentrada.numNotaEntrada, registroentrada.qtdEntrada AS quantidade, item.descricaoItem, tipoitem.nometipoitem, marca.nomeMarca, obra.nomeobra, usuario.nomeUsuario, registroentrada.dataEntrada as data\n" +
+            PreparedStatement preparedStatement = con.prepareStatement("SELECT registroentrada.codEntrada AS codRegistro, 'entrada' AS tipo, registroentrada.numNotaEntrada, registroentrada.qtdEntrada AS quantidade, item.descricaoItem, tipoitem.nometipoitem, marca.nomeMarca, setor.nomeSetor, obra.nomeobra, usuario.nomeUsuario, tipousuario.nomeTipoUsuario, registroentrada.dataEntrada as data\n" +
                     "FROM registroentrada\n" +
                     "INNER JOIN item ON registroentrada.codItem = item.codItem\n" +
                     "INNER JOIN tipoitem ON item.codTipoItem = tipoitem.codTipoItem\n" +
                     "INNER JOIN marca ON item.codMarca = marca.codMarca\n" +
+                    "INNER JOIN setor ON item.codSetor = setor.codSetor\n" +
                     "INNER JOIN obra ON registroentrada.codObra = obra.codObra\n" +
                     "INNER JOIN usuario ON registroentrada.codUsuario = usuario.codUsuario\n" +
                     "INNER JOIN tipousuario ON usuario.codTipoUsuario = tipousuario.codTipoUsuario\n" +
                     "UNION\n" +
-                    "SELECT registrosaida.codSaida AS codRegistro, 'saida' AS tipo,registrosaida.numNotaSaida, registrosaida.qtdSaida AS quantidade, item.descricaoItem, tipoitem.nometipoitem, marca.nomeMarca, obra.nomeobra, usuario.nomeUsuario, registrosaida.dataSaida as data\n" +
+                    "SELECT registrosaida.codSaida AS codRegistro, 'saida' AS tipo,registrosaida.numNotaSaida, registrosaida.qtdSaida AS quantidade, item.descricaoItem, tipoitem.nometipoitem, marca.nomeMarca, setor.nomeSetor, obra.nomeobra, usuario.nomeUsuario, tipousuario.nomeTipoUsuario, registrosaida.dataSaida as data\n" +
                     "FROM registrosaida\n" +
                     "INNER JOIN item ON registrosaida.codItem = item.codItem\n" +
                     "INNER JOIN tipoitem ON item.codTipoItem = tipoitem.codTipoItem\n" +
                     "INNER JOIN marca ON item.codMarca = marca.codMarca\n" +
+                    "INNER JOIN setor ON item.codSetor = setor.codSetor\n" +
                     "INNER JOIN obra ON registrosaida.codObra = obra.codObra\n" +
                     "INNER JOIN usuario ON registrosaida.codUsuario = usuario.codUsuario\n" +
-                    "ORDER BY data;");
+                    "INNER JOIN tipousuario ON usuario.codTipoUsuario = tipousuario.codTipoUsuario\n" +
+                    "ORDER BY data");
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 Registro registro = new Registro();
@@ -90,6 +93,7 @@ public class RegistroDao {
                 registro.setDescricaoItem(rs.getString("descricaoItem"));
                 registro.setNomeTipoItem(rs.getString("nomeTipoItem"));
                 registro.setNomeMarca(rs.getString("nomeMarca"));
+                registro.setNomeSetor(rs.getString("nomeSetorCa"));
                 registro.setNomeObra(rs.getString("nomeObra"));
                 registro.setNomeUsuario(rs.getString("nomeUsuario"));
                 registro.setData(rs.getDate("data").toLocalDate());

@@ -1,9 +1,6 @@
 package com.projetos.skymaster.skymastergerentesobras.dao;
 
-import com.projetos.skymaster.skymastergerentesobras.models.Item;
-import com.projetos.skymaster.skymastergerentesobras.models.Marca;
-import com.projetos.skymaster.skymastergerentesobras.models.TipoItem;
-import com.projetos.skymaster.skymastergerentesobras.models.Usuario;
+import com.projetos.skymaster.skymastergerentesobras.models.*;
 import javafx.scene.control.Alert;
 
 import java.sql.*;
@@ -72,6 +69,7 @@ public class ItemDao {
                     "    tipoitem.nomeTipoItem,\n" +
                     "    i.descricaoItem,\n" +
                     "    marca.nomeMarca,\n" +
+                    "    setor.nomeSetor,\n" +
                     "    i.quantidadeItem + COALESCE(qtdEntradas, 0) - COALESCE(qtdSaidas, 0) AS quantidadeTotal\n" +
                     "FROM\n" +
                     "    Item i\n" +
@@ -86,6 +84,7 @@ public class ItemDao {
                     ") re ON i.codItem = re.codItem\n" +
                     "INNER JOIN tipoitem ON i.codTipoItem = tipoitem.codTipoItem\n" +
                     "INNER JOIN marca ON i.codMarca = marca.codMarca\n" +
+                    "INNER JOIN setor ON i.codSetor = setor.codSetor\n" +
                     "LEFT JOIN (\n" +
                     "    SELECT\n" +
                     "        codItem,\n" +
@@ -102,6 +101,7 @@ public class ItemDao {
                 item.setNomeTipoItem(rs.getString("nomeTipoItem"));
                 item.setDescricaoItem(rs.getString("descricaoItem"));
                 item.setNomeMarca(rs.getString("nomeMarca"));
+                item.setNomeSetor(rs.getString("nomeSetor"));
                 item.setQuantidadeItem(rs.getDouble("quantidadeTotal"));
                 itemList.add(item);
             }
@@ -112,20 +112,22 @@ public class ItemDao {
         return itemList;
     }
 
-    public void createItem(int codItem, String nomeTipoItem, String descricaoItem, String nomeMarca) throws SQLException {
+    public void createItem(int codItem, String nomeTipoItem, String descricaoItem, String nomeMarca, String nomeSetor) throws SQLException {
         int codTipoItem = getCodTipoItemByNome(nomeTipoItem);
         System.out.println(codTipoItem);
         int codMarca = getCodMarcaByNome(nomeMarca);
+        int codSetor = getCodSetorByNome(nomeSetor);
         double quantidadeItem = 0.0;
 
         try {
             Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-            PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO item(codItem,descricaoItem,quantidadeItem,codMarca,codTipoItem)VALUES(?,?,?,?,?);");
+            PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO item(codItem,descricaoItem,quantidadeItem,codMarca,codSetor,codTipoItem)VALUES(?,?,?,?,?,?);");
             preparedStatement.setInt(1, codItem);
             preparedStatement.setString(2, descricaoItem);
             preparedStatement.setDouble(3, quantidadeItem);
             preparedStatement.setInt(4, codMarca);
-            preparedStatement.setInt(5, codTipoItem);
+            preparedStatement.setInt(5, codSetor);
+            preparedStatement.setInt(6, codTipoItem);
             preparedStatement.executeUpdate();
 
             showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
@@ -138,18 +140,20 @@ public class ItemDao {
         }
     }
 
-    public void updateItem(int codItemAntigo, int codItem, String nomeTipoItem, String descricaoItem, String nomeMarca) throws SQLException {
+    public void updateItem(int codItemAntigo, int codItem, String nomeTipoItem, String descricaoItem, String nomeMarca, String nomeSetor) throws SQLException {
         int codTipoItem = getCodTipoItemByNome(nomeTipoItem);
         int codMarca = getCodMarcaByNome(nomeMarca);
+        int codSetor = getCodSetorByNome(nomeSetor);
 
         try {
             Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
-            PreparedStatement preparedStatement = con.prepareStatement("UPDATE item SET item.codItem=?, item.descricaoItem=?, item.codMarca=?, item.codTipoItem=? WHERE item.codItem=?;");
+            PreparedStatement preparedStatement = con.prepareStatement("UPDATE item SET item.codItem=?, item.descricaoItem=?, item.codMarca=?, item.codSetor=?, item.codTipoItem=? WHERE item.codItem=?;");
             preparedStatement.setInt(1, codItem);
             preparedStatement.setString(2, descricaoItem);
             preparedStatement.setInt(3, codMarca);
-            preparedStatement.setInt(4, codTipoItem);
-            preparedStatement.setInt(5, codItemAntigo);
+            preparedStatement.setInt(4, codSetor);
+            preparedStatement.setInt(5, codTipoItem);
+            preparedStatement.setInt(6, codItemAntigo);
             preparedStatement.executeUpdate();
 
         } catch(SQLException e) {
@@ -205,6 +209,24 @@ public class ItemDao {
             System.out.println(e);
         }
         return m.getCodMarca();
+    }
+
+    public static int getCodSetorByNome(String nomeSetor) {
+        Setor s = null;
+        try {
+            Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            PreparedStatement ps = con.prepareStatement("select * from setor where nomeSetor=?");
+            ps.setString(1, nomeSetor);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                s = new Setor();
+                s.setCodSetor(rs.getInt("codSetor"));
+                s.setNomeSetor(rs.getString("nomeSetor"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return s.getCodSetor();
     }
 
     public static void printSQLException(SQLException exception) {

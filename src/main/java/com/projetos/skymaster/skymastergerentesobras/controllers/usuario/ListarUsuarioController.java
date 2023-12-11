@@ -3,17 +3,19 @@ package com.projetos.skymaster.skymastergerentesobras.controllers.usuario;
 import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
 import com.projetos.skymaster.skymastergerentesobras.dao.TipoUsuarioDao;
 import com.projetos.skymaster.skymastergerentesobras.dao.UsuarioDao;
+import com.projetos.skymaster.skymastergerentesobras.models.Obra;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
 import com.projetos.skymaster.skymastergerentesobras.models.Usuario;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -27,7 +29,8 @@ public class ListarUsuarioController {
 
     @FXML
     private AnchorPane root;
-
+    @FXML
+    private TextField campoFiltro;
     @FXML
     private TableView tableView;
     @FXML
@@ -77,7 +80,35 @@ public class ListarUsuarioController {
         try {
             List<Usuario> usuarios = usuarioDao.selectAllUsers();
 
-            tableView.getItems().addAll(usuarios);
+            ObservableList<Usuario> observableList = FXCollections.observableArrayList(usuarios);
+
+            FilteredList<Usuario> filteredData = new FilteredList<>(observableList, u -> true);
+
+            campoFiltro.textProperty().addListener((observable, oldValue, newValue) -> {
+                filteredData.setPredicate(usuario -> {
+
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+
+                    String lowerCaseFilter = newValue.toLowerCase();
+
+                    if (usuario.getNome().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    }else if (usuario.getTipo().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    }else if (usuario.getSenha().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    }
+                    return false;
+                });
+            });
+
+            SortedList<Usuario> sortedData = new SortedList<>(filteredData);
+
+            sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+
+            tableView.setItems(sortedData);
         } catch (SQLException e) {
             e.printStackTrace();
         }

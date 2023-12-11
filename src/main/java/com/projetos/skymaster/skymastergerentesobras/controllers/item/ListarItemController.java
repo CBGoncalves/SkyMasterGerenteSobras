@@ -8,15 +8,16 @@ import com.projetos.skymaster.skymastergerentesobras.dao.TipoItemDao;
 import com.projetos.skymaster.skymastergerentesobras.models.Item;
 import com.projetos.skymaster.skymastergerentesobras.models.Marca;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -29,6 +30,8 @@ import java.util.List;
 public class ListarItemController {
     @FXML
     private AnchorPane root;
+    @FXML
+    private TextField campoFiltro;
     @FXML
     private TableView tableView;
     @FXML
@@ -82,8 +85,42 @@ public class ListarItemController {
 
         try {
             List<Item> itens = itemDao.selectAllItens();
+            ObservableList<Item> observableList = FXCollections.observableArrayList(itens);
 
-            tableView.getItems().addAll(itens);
+            FilteredList<Item> filteredData = new FilteredList<>(observableList, i -> true);
+
+            campoFiltro.textProperty().addListener((observable, oldValue, newValue) -> {
+                filteredData.setPredicate(item -> {
+
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+
+                    String lowerCaseFilter = newValue.toLowerCase();
+
+                    if (item.getNomeTipoItem().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else if (Integer.toString(item.getCodItem()).toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    }else if (item.getDescricaoItem().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else if (item.getNomeMarca().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else if (item.getNomeSetor().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else if (Double.toString(item.getQuantidadeItem()).toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    }
+                    return false;
+                });
+            });
+
+            SortedList<Item> sortedData = new SortedList<>(filteredData);
+
+            sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+
+            tableView.setItems(sortedData);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -114,7 +151,7 @@ public class ListarItemController {
             editarItem.setResizable(false);
             editarItem.getIcons().add(icon);
             editarItem.show();
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

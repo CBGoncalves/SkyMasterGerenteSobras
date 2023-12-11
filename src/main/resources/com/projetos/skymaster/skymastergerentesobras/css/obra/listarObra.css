@@ -16,6 +16,11 @@ font-face {
     -fx-min-height: 27px;
 }
 
+#campoFiltro {
+    -fx-min-width: 233px;
+    -fx-min-height: 21px;
+}
+
 .table-view {
     -fx-background-radius: 5;
 }

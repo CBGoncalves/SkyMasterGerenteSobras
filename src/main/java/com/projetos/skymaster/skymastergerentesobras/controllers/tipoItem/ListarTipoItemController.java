@@ -4,10 +4,7 @@ import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarCo
 import com.projetos.skymaster.skymastergerentesobras.controllers.marca.EditarMarcaController;
 import com.projetos.skymaster.skymastergerentesobras.dao.MarcaDao;
 import com.projetos.skymaster.skymastergerentesobras.dao.TipoItemDao;
-import com.projetos.skymaster.skymastergerentesobras.models.Marca;
-import com.projetos.skymaster.skymastergerentesobras.models.Obra;
-import com.projetos.skymaster.skymastergerentesobras.models.TipoItem;
-import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
+import com.projetos.skymaster.skymastergerentesobras.models.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -138,7 +135,7 @@ public class ListarTipoItemController {
         }
     }
 
-    public void handleDeletarButtonAction(ActionEvent event) {
+    public void handleDeletarButtonAction(ActionEvent event) throws SQLException {
         TipoItem tipoItem = null;
         tipoItem = (TipoItem) tableView.getSelectionModel().getSelectedItem();
         if (tipoItem == null) {
@@ -149,7 +146,13 @@ public class ListarTipoItemController {
         tipoItemDao.deleteTipoItem(tipoItem);
         showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
                 "Tipo de Item deletado com sucesso!");
-        tableView.getItems().remove(tipoItem);
+        reloadTableView();
+    }
+
+    private void reloadTableView () throws SQLException {
+        List<TipoItem> tiposItem = tipoItemDao.selectAllTiposItem();
+        ObservableList<TipoItem> observableList = FXCollections.observableArrayList(tiposItem);
+        tableView.setItems(observableList);
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {

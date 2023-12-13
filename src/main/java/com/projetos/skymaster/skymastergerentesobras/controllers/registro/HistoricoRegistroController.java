@@ -209,9 +209,9 @@ public class HistoricoRegistroController {
         }
     }
 
-    public void handleDeletarButtonAction(ActionEvent event) {
+    public void handleDeletarButtonAction(ActionEvent event) throws SQLException {
         Registro registro = null;
-        registro = (Registro) tableView.getSelectionModel().getSelectedItem();
+        registro = tableView.getSelectionModel().getSelectedItem();
         if (registro == null) {
             showAlert(Alert.AlertType.WARNING, "Erro ao Deletar",
                     "Você precisa selecionar um registro para remover!");
@@ -223,13 +223,18 @@ public class HistoricoRegistroController {
             registroDao.deleteRegistroEntrada(registro);
             showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
                     "Registro deletado com sucesso!");
-            tableView.getItems().remove(registro);
+            reloadTableView();
         } else if (tipoRegistro.equals("saida")) {
             registroDao.deleteRegistroSaida(registro);
             showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
                     "Registro deletado com sucesso!");
-            tableView.getItems().remove(registro);
-        }
+            reloadTableView();        }
+    }
+
+    private void reloadTableView () throws SQLException {
+        List<Registro> registros = registroDao.selectRegistersByDate();
+        ObservableList<Registro> observableList = FXCollections.observableArrayList(registros);
+        tableView.setItems(observableList);
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {

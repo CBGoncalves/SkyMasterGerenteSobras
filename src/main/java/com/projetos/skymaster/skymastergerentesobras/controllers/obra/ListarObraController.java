@@ -134,7 +134,7 @@ public class ListarObraController {
         }
     }
 
-    public void handleDeletarButtonAction(ActionEvent event) {
+    public void handleDeletarButtonAction(ActionEvent event) throws SQLException{
         Obra obra = null;
         obra = (Obra) tableView.getSelectionModel().getSelectedItem();
         if (obra == null) {
@@ -145,7 +145,13 @@ public class ListarObraController {
         obraDao.deleteObra(obra);
         showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
                 "Obra deletada com sucesso!");
-        tableView.getItems().remove(obra);
+        reloadTableView();
+    }
+
+    private void reloadTableView () throws SQLException {
+        List<Obra> obras = obraDao.selectAllObras();
+        ObservableList<Obra> observableList = FXCollections.observableArrayList(obras);
+        tableView.setItems(observableList);
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {

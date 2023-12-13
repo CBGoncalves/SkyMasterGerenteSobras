@@ -7,6 +7,7 @@ import com.projetos.skymaster.skymastergerentesobras.dao.SetorDao;
 import com.projetos.skymaster.skymastergerentesobras.dao.TipoItemDao;
 import com.projetos.skymaster.skymastergerentesobras.models.Item;
 import com.projetos.skymaster.skymastergerentesobras.models.Marca;
+import com.projetos.skymaster.skymastergerentesobras.models.Registro;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -157,7 +158,7 @@ public class ListarItemController {
         }
     }
 
-    public void handleDeletarButtonAction(ActionEvent event) {
+    public void handleDeletarButtonAction(ActionEvent event) throws SQLException{
         Item item = null;
         item = (Item) tableView.getSelectionModel().getSelectedItem();
         if (item == null) {
@@ -168,7 +169,12 @@ public class ListarItemController {
         itemDao.deleteItem(item);
         showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
                 "Item deletado com sucesso!");
-        tableView.getItems().remove(item);
+        reloadTableView();
+    }
+    private void reloadTableView () throws SQLException {
+        List<Item> itens = itemDao.selectAllItens();
+        ObservableList<Item> observableList = FXCollections.observableArrayList(itens);
+        tableView.setItems(observableList);
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {

@@ -106,6 +106,42 @@ public class RegistroDao {
         return list;
     }
 
+    public List<Registro> selectReposicoes() throws SQLException {
+        List<Registro> list = new ArrayList<>();
+        try {
+            Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+            PreparedStatement preparedStatement = con.prepareStatement("SELECT registrosaida.codSaida, registrosaida.qtdSaida AS quantidade, item.descricaoItem, tipoitem.nometipoitem, marca.nomeMarca, setor.nomeSetor, obra.nomeobra, usuario.nomeUsuario, registrosaida.dataSaida as data, registrosaida.reporSaida\n" +
+                    "FROM registrosaida\n" +
+                    "INNER JOIN item ON registrosaida.codItem = item.codItem\n" +
+                    "INNER JOIN tipoitem ON item.codTipoItem = tipoitem.codTipoItem\n" +
+                    "INNER JOIN marca ON item.codMarca = marca.codMarca\n" +
+                    "INNER JOIN setor ON item.codSetor = setor.codSetor\n" +
+                    "INNER JOIN obra ON registrosaida.codObra = obra.codObra\n" +
+                    "INNER JOIN usuario ON registrosaida.codUsuario = usuario.codUsuario\n" +
+                    "INNER JOIN tipousuario ON usuario.codTipoUsuario = tipousuario.codTipoUsuario\n" +
+                    "WHERE registrosaida.reporSaida = true;");
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                Registro registro = new Registro();
+                registro.setCodRegistro(rs.getInt("codSaida"));
+                registro.setQuantidade(rs.getInt("quantidade"));
+                registro.setDescricaoItem(rs.getString("descricaoItem"));
+                registro.setNomeTipoItem(rs.getString("nomeTipoItem"));
+                registro.setNomeMarca(rs.getString("nomeMarca"));
+                registro.setNomeSetor(rs.getString("nomeSetor"));
+                registro.setNomeObra(rs.getString("nomeObra"));
+                registro.setNomeUsuario(rs.getString("nomeUsuario"));
+                registro.setData(rs.getDate("data").toLocalDate());
+                registro.setReporSaida(rs.getBoolean("reporSaida"));
+                list.add(registro);
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+
+        return list;
+    }
+
     public void createRegistroEntrada(String tipoItem, String descricaoItem, String nomeObra, double qtdEntrada, String numNotaEntrada, String nomeUsuario) throws SQLException {
         int codUsuario = getCodUsuarioByNome(nomeUsuario);
         int codItem = getCodItem(tipoItem, descricaoItem);
@@ -132,20 +168,21 @@ public class RegistroDao {
         }
     }
 
-    public void createRegistroSaida(String tipoItem, String descricaoItem, String nomeObra, double qtdSaida, String numNotaSaida, String nomeUsuario) throws SQLException {
+    public void createRegistroSaida(String tipoItem, String descricaoItem, String nomeObra, double qtdSaida, String numNotaSaida, String nomeUsuario, boolean reporSaida) throws SQLException {
         int codUsuario = getCodUsuarioByNome(nomeUsuario);
         int codItem = getCodItem(tipoItem, descricaoItem);
         int codObra = getCodObraByNome(nomeObra);
 
         try {
             Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-            PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO RegistroSaida (numNotaSaida, qtdSaida, dataSaida, codItem, codObra, codUsuario)\n" +
-                    "VALUES (?,?,NOW(),?,?,?);");
+            PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO RegistroSaida (numNotaSaida, qtdSaida, dataSaida, reporSaida, codItem, codObra, codUsuario)\n" +
+                    "VALUES (?,?,NOW(),?,?,?,?);");
             preparedStatement.setString(1, numNotaSaida);
             preparedStatement.setDouble(2, qtdSaida);
-            preparedStatement.setInt(3, codItem);
-            preparedStatement.setInt(4, codObra);
-            preparedStatement.setInt(5, codUsuario);
+            preparedStatement.setBoolean(3, reporSaida);
+            preparedStatement.setInt(4, codItem);
+            preparedStatement.setInt(5, codObra);
+            preparedStatement.setInt(6, codUsuario);
             preparedStatement.executeUpdate();
 
             showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
@@ -163,7 +200,7 @@ public class RegistroDao {
         int codObra = getCodObraByNome(nomeObra);
 
         try {
-            Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
             PreparedStatement preparedStatement = con.prepareStatement("UPDATE registroentrada SET registroentrada.numNotaEntrada=?, registroentrada.qtdEntrada=?, registroentrada.codItem=?, registroentrada.codObra=? WHERE registroentrada.codEntrada=?;");
             preparedStatement.setString(1, numNotaEntrada);
             preparedStatement.setDouble(2, qtdEntrada);
@@ -172,10 +209,32 @@ public class RegistroDao {
             preparedStatement.setInt(5, codEntrada);
             preparedStatement.executeUpdate();
 
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             printSQLException(e);
             showAlert(Alert.AlertType.ERROR, "Erro na Edição!",
                     "Valores inválidos ou registro já existente!");
+        }
+    }
+
+    public void updateReposicoes(Registro registro) throws SQLException {
+
+        int codSaida = registro.getCodRegistro();
+
+        System.out.println(codSaida);
+
+        try {
+            Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+            PreparedStatement preparedStatement = con.prepareStatement("UPDATE registrosaida SET registrosaida.reporSaida=0 WHERE registrosaida.codSaida=?;");
+            preparedStatement.setInt(1, codSaida);
+            preparedStatement.executeUpdate();
+
+            showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
+                    "Reposição registrada com sucesso!");
+
+        } catch (SQLException e) {
+            printSQLException(e);
+            showAlert(Alert.AlertType.ERROR, "Erro na Reposição!",
+                    "Valores inválidos ou falha na reposição!");
         }
     }
 
@@ -184,7 +243,7 @@ public class RegistroDao {
         int codObra = getCodObraByNome(nomeObra);
 
         try {
-            Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
             PreparedStatement preparedStatement = con.prepareStatement("UPDATE registrosaida SET registrosaida.numNotaSaida=?, registrosaida.qtdSaida=?, registrosaida.codItem=?, registrosaida.codObra=? WHERE registrosaida.codSaida=?;");
             preparedStatement.setString(1, numNotaSaida);
             preparedStatement.setDouble(2, qtdSaida);
@@ -193,7 +252,7 @@ public class RegistroDao {
             preparedStatement.setInt(5, codSaida);
             preparedStatement.executeUpdate();
 
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             printSQLException(e);
             showAlert(Alert.AlertType.ERROR, "Erro na Edição!",
                     "Valores inválidos ou registro já existente!");
@@ -202,7 +261,7 @@ public class RegistroDao {
 
     public void deleteRegistroEntrada(Registro r) {
         try {
-            Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
             PreparedStatement preparedStatement = con.prepareStatement("DELETE FROM registroentrada WHERE codEntrada = ?;");
             preparedStatement.setInt(1, r.getCodRegistro());
             preparedStatement.executeUpdate();
@@ -214,7 +273,7 @@ public class RegistroDao {
 
     public void deleteRegistroSaida(Registro r) {
         try {
-            Connection con = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
             PreparedStatement preparedStatement = con.prepareStatement("DELETE FROM registrosaida WHERE codSaida = ?;");
             preparedStatement.setInt(1, r.getCodRegistro());
             preparedStatement.executeUpdate();

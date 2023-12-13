@@ -3,6 +3,7 @@ package com.projetos.skymaster.skymastergerentesobras.controllers.usuario;
 import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
 import com.projetos.skymaster.skymastergerentesobras.dao.TipoUsuarioDao;
 import com.projetos.skymaster.skymastergerentesobras.dao.UsuarioDao;
+import com.projetos.skymaster.skymastergerentesobras.models.Item;
 import com.projetos.skymaster.skymastergerentesobras.models.Obra;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
 import com.projetos.skymaster.skymastergerentesobras.models.Usuario;
@@ -146,7 +147,7 @@ public class ListarUsuarioController {
         }
     }
 
-    public void handleDeletarButtonAction(ActionEvent event) {
+    public void handleDeletarButtonAction(ActionEvent event) throws SQLException {
         Usuario usuario = null;
         usuario = (Usuario) tableView.getSelectionModel().getSelectedItem();
         if (usuario == null) {
@@ -157,7 +158,13 @@ public class ListarUsuarioController {
         usuarioDao.deleteUsuario(usuario);
         showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
                 "Usuario deletado com sucesso!");
-        tableView.getItems().remove(usuario);
+        reloadTableView();
+    }
+
+    private void reloadTableView () throws SQLException {
+        List<Usuario> usuarios = usuarioDao.selectAllUsers();
+        ObservableList<Usuario> observableList = FXCollections.observableArrayList(usuarios);
+        tableView.setItems(observableList);
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {

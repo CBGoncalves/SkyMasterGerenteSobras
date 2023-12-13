@@ -12,10 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -48,6 +45,8 @@ public class CadastrarSaidaController {
     private TextField campoNotaFiscal;
     @FXML
     private ChoiceBox<Usuario> campoUsuario;
+    @FXML
+    private CheckBox campoRepor;
 
     private ItemDao itemDao;
     private ObraDao obraDao;
@@ -91,6 +90,14 @@ public class CadastrarSaidaController {
             e.printStackTrace();
         }
 
+        campoRepor.setOnAction(event -> {
+            try {
+                handleCheckBoxAction(event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         btnRegistrar.setOnAction(event -> {
             try {
                 handleRegistrarButtonAction(event);
@@ -114,6 +121,14 @@ public class CadastrarSaidaController {
         });
     }
 
+    public void handleCheckBoxAction(ActionEvent event) throws IOException{
+        if (campoRepor.isSelected()){
+            campoNotaFiscal.setDisable(true);
+        } else if (!campoRepor.isSelected()) {
+            campoNotaFiscal.setDisable(false);
+        }
+    }
+
     public void handleRegistrarButtonAction(ActionEvent event) throws SQLException {
         Window owner = btnRegistrar.getScene().getWindow();
 
@@ -123,6 +138,7 @@ public class CadastrarSaidaController {
         String nomeObra;
         String quantidadeSaida = campoQuantidade.getText();
         String numNotaSaida = campoNotaFiscal.getText();
+        boolean reporSaida = campoRepor.isSelected();
 
         String tipoItem = "";
         String descricaoItem = "";
@@ -151,10 +167,12 @@ public class CadastrarSaidaController {
                     "Digite a quantidade da entrada!");
             return;
         }
-        if (numNotaSaida.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, owner, "Falha no Cadastro!",
-                    "Preencha o número da NF!");
-            return;
+        if (!reporSaida) {
+            if (numNotaSaida.isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, owner, "Falha no Cadastro!",
+                        "Preencha o número da NF!");
+                return;
+            }
         }
         if (nomeUsuario.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, owner, "Falha no Cadastro!",
@@ -178,7 +196,7 @@ public class CadastrarSaidaController {
         double qtdSaida = Double.parseDouble(quantidadeSaida);
 
         RegistroDao registroDao = new RegistroDao();
-        registroDao.createRegistroSaida(tipoItem, descricaoItem, nomeObra, qtdSaida, numNotaSaida, nomeUsuario);
+        registroDao.createRegistroSaida(tipoItem, descricaoItem, nomeObra, qtdSaida, numNotaSaida, nomeUsuario, reporSaida);
     }
 
     public void handleCancelarButtonAction(ActionEvent event) throws IOException {

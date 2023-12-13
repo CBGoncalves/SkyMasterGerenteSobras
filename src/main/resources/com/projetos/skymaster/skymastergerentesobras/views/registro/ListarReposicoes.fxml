@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.projetos.skymaster.skymastergerentesobras.controllers.registro.ListarReposicoesController"
+            styleClass="root" fx:id="root"
+            prefWidth="1366.0" prefHeight="768.0">
+
+    <stylesheets>
+        <URL value="@../../css/registro/listarReposicoes.css"/>
+    </stylesheets>
+
+    <fx:include fx:id="navFuncionario" source="../NavigationBar.fxml" />
+
+    <ImageView
+            fx:id="logoSky"
+            fitWidth="100" fitHeight="65"
+            preserveRatio="true"
+            AnchorPane.leftAnchor="18" AnchorPane.topAnchor="70"
+            onMouseClicked="#handleTelaInicial">
+        <image>
+            <Image url="@../../img/logo_sky.jpg"/>
+        </image>
+    </ImageView>
+
+    <Label text="Pesquisar Registros:"
+           AnchorPane.leftAnchor="155" AnchorPane.topAnchor="75"/>
+    <TextField fx:id="campoFiltro"
+               AnchorPane.leftAnchor="298" AnchorPane.topAnchor="70"/>
+
+    <Button fx:id="btnRepor" text="Repor Item" onAction="#handleReporItensButtonAction"
+            AnchorPane.leftAnchor="28" AnchorPane.topAnchor="206"/>
+
+    <TableView fx:id="tableView"
+               AnchorPane.leftAnchor="159" AnchorPane.topAnchor="118"
+               minWidth="1179" minHeight="595">
+        <columns>
+            <TableColumn fx:id="qtdColumn" text="Quantidade"/>
+            <TableColumn fx:id="descricaoColumn" text="Descrição Item"/>
+            <TableColumn fx:id="tipoItemColumn" text="Tipo de Item"/>
+            <TableColumn fx:id="marcaColumn" text="Marca"/>
+            <TableColumn fx:id="setorColumn" text="Setor"/>
+            <TableColumn fx:id="obraColumn" text="Obra"/>
+            <TableColumn fx:id="usuarioColumn" text="Usuário"/>
+            <TableColumn fx:id="dataColumn" text="Data"/>
+            <TableColumn fx:id="reporColumn" text="Reposição"/>
+        </columns>
+    </TableView>
+</AnchorPane>

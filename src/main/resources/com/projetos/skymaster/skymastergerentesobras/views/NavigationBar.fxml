@@ -42,6 +42,7 @@
         <MenuItem text="Cadastrar Entradas" onAction="#handleCadastrarEntradas"/>
         <MenuItem text="Cadastrar Saídas" onAction="#handleCadastrarSaidas"/>
         <MenuItem text="Histórico de Registros" onAction="#handleHistorico"/>
+        <MenuItem text="Lista de Reposiçoes" onAction="#handleListarReposicoes"/>
     </Menu>
 
     <Menu text="Relatórios">

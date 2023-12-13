@@ -1,9 +1,7 @@
 package com.projetos.skymaster.skymastergerentesobras.controllers.registro;
 
 import com.projetos.skymaster.skymastergerentesobras.controllers.NavigationBarController;
-import com.projetos.skymaster.skymastergerentesobras.controllers.item.EditarItemController;
-import com.projetos.skymaster.skymastergerentesobras.dao.*;
-import com.projetos.skymaster.skymastergerentesobras.models.Item;
+import com.projetos.skymaster.skymastergerentesobras.dao.RegistroDao;
 import com.projetos.skymaster.skymastergerentesobras.models.Registro;
 import com.projetos.skymaster.skymastergerentesobras.models.TipoUsuarioNav;
 import javafx.collections.FXCollections;
@@ -25,20 +23,17 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class HistoricoRegistroController {
+public class ListarReposicoesController {
     @FXML
     private AnchorPane root;
     @FXML
     private TextField campoFiltro;
     @FXML
+    private Button btnRepor;
+    @FXML
     private TableView<Registro> tableView;
-    @FXML
-    private TableColumn<Registro, String> tipoColumn;
-    @FXML
-    private TableColumn<Registro, String> numNotaColumn;
     @FXML
     private TableColumn<Registro, Integer> qtdColumn;
     @FXML
@@ -56,7 +51,7 @@ public class HistoricoRegistroController {
     @FXML
     private TableColumn<Registro, LocalDate> dataColumn;
     @FXML
-    private Button btnEditar;
+    private TableColumn<Registro, String> reporColumn;
 
     private RegistroDao registroDao;
 
@@ -64,8 +59,6 @@ public class HistoricoRegistroController {
 
         registroDao = new RegistroDao();
 
-        tipoColumn.setCellValueFactory(new PropertyValueFactory<>("tipo"));
-        numNotaColumn.setCellValueFactory(new PropertyValueFactory<>("numNotaEntrada"));
         qtdColumn.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
         descricaoColumn.setCellValueFactory(new PropertyValueFactory<>("descricaoItem"));
         tipoItemColumn.setCellValueFactory(new PropertyValueFactory<>("nomeTipoItem"));
@@ -74,6 +67,7 @@ public class HistoricoRegistroController {
         obraColumn.setCellValueFactory(new PropertyValueFactory<>("nomeObra"));
         usuarioColumn.setCellValueFactory(new PropertyValueFactory<>("nomeUsuario"));
         dataColumn.setCellValueFactory(new PropertyValueFactory<>("data"));
+        reporColumn.setCellValueFactory(new PropertyValueFactory<>("reporSaida"));
 
         dataColumn.setCellFactory(column -> new TableCell<Registro, LocalDate>() {
             @Override
@@ -90,7 +84,7 @@ public class HistoricoRegistroController {
         });
 
         try {
-            List<Registro> registros = registroDao.selectRegistersByDate();
+            List<Registro> registros = registroDao.selectReposicoes();
             ObservableList<Registro> observableList = FXCollections.observableArrayList(registros);
 
             FilteredList<Registro> filteredList = new FilteredList<>(observableList, r -> true);
@@ -104,9 +98,7 @@ public class HistoricoRegistroController {
 
                     String lowerCaseFilter = newValue.toLowerCase();
 
-                    if (registro.getTipo().toLowerCase().contains(lowerCaseFilter)) {
-                        return true;
-                    } else if (registro.getNumNotaEntrada().toLowerCase().contains(lowerCaseFilter)) {
+                    if (registro.getNumNotaEntrada().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
                     }else if (Integer.toString(registro.getQuantidade()).toLowerCase().contains(lowerCaseFilter)) {
                         return true;
@@ -123,6 +115,8 @@ public class HistoricoRegistroController {
                     } else if (registro.getNomeUsuario().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
                     } else if (registro.getDataFormatada().toString().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else if (Boolean.toString(registro.getReporSaida()).toLowerCase().contains(lowerCaseFilter)) {
                         return true;
                     }
                     return false;
@@ -159,95 +153,33 @@ public class HistoricoRegistroController {
 
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
-
-    public void handleEditarButtonAction(ActionEvent event) {
-        Registro registro = null;
-        registro = (Registro) tableView.getSelectionModel().getSelectedItem();
-        if (registro == null) {
-            showAlert(Alert.AlertType.WARNING, "Erro ao Editar",
-                    "Você precisa selecionar um registro para edição!");
-            return;
-        }
-        try {
-            if (registro.getTipo().equals("entrada")){
-                Stage stageHistorico = (Stage) btnEditar.getScene().getWindow();
-                stageHistorico.close();
-
-                Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/registro/EditarEntrada.fxml"));
-                EditarEntradaController controller = new EditarEntradaController(registro, new ItemDao(), new ObraDao());
-                loader.setController(controller);
-                Parent root = loader.load();
-
-                Stage editarEntrada = new Stage();
-                editarEntrada.setTitle("Editar Entrada");
-                editarEntrada.setScene(new Scene(root));
-                editarEntrada.setResizable(false);
-                editarEntrada.getIcons().add(icon);
-                editarEntrada.show();
-            } else if (registro.getTipo().equals("saida")) {
-                Stage stageHistorico = (Stage) btnEditar.getScene().getWindow();
-                stageHistorico.close();
-
-                Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/registro/EditarSaida.fxml"));
-                EditarSaidaController controller = new EditarSaidaController(registro, new ItemDao(), new ObraDao());
-                loader.setController(controller);
-                Parent root = loader.load();
-
-                Stage editarSaida = new Stage();
-                editarSaida.setTitle("Editar Saída");
-                editarSaida.setScene(new Scene(root));
-                editarSaida.setResizable(false);
-                editarSaida.getIcons().add(icon);
-                editarSaida.show();
-            }
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void handleDeletarButtonAction(ActionEvent event) throws SQLException {
+    public void handleReporItensButtonAction(ActionEvent event) throws SQLException{
         Registro registro = null;
         registro = tableView.getSelectionModel().getSelectedItem();
+
         if (registro == null) {
-            showAlert(Alert.AlertType.WARNING, "Erro ao Deletar",
-                    "Você precisa selecionar um registro para remover!");
+            showAlert(Alert.AlertType.WARNING, "Erro na Reposição",
+                    "Você precisa selecionar um registro para fazer a reposição no estoque!");
             return;
         }
-        String tipoRegistro = registro.getTipo();
 
-        if (tipoRegistro.equals("entrada")) {
-            registroDao.deleteRegistroEntrada(registro);
-            showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
-                    "Registro deletado com sucesso!");
-            reloadTableView();
-        } else if (tipoRegistro.equals("saida")) {
-            registroDao.deleteRegistroSaida(registro);
-            showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
-                    "Registro deletado com sucesso!");
-            reloadTableView();        }
+        int codSaida = registro.getCodRegistro();
+        System.out.println(codSaida);
+
+        RegistroDao registroDao = new RegistroDao();
+        registroDao.updateReposicoes(registro);
+
+        reloadTableView();
     }
 
     private void reloadTableView () throws SQLException {
-        List<Registro> registros = registroDao.selectRegistersByDate();
+        List<Registro> registros = registroDao.selectReposicoes();
         ObservableList<Registro> observableList = FXCollections.observableArrayList(registros);
         tableView.setItems(observableList);
     }
 
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.initOwner(null);
-        alert.show();
-    }
-
-    public void handleTelaInicial(MouseEvent mouseEvent) throws IOException{
-        Stage stageGerarRelatorio = (Stage) btnEditar.getScene().getWindow();
+    public void handleTelaInicial(MouseEvent mouseEvent) throws IOException {
+        Stage stageGerarRelatorio = (Stage) btnRepor.getScene().getWindow();
         stageGerarRelatorio.close();
 
         Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
@@ -261,5 +193,14 @@ public class HistoricoRegistroController {
         telaInicial.setResizable(false);
         telaInicial.getIcons().add(icon);
         telaInicial.show();
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.initOwner(null);
+        alert.show();
     }
 }

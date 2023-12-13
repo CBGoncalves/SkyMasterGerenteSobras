@@ -141,7 +141,7 @@ public class ListarMarcaController {
         }
     }
 
-    public void handleDeletarButtonAction(ActionEvent event) {
+    public void handleDeletarButtonAction(ActionEvent event) throws SQLException {
         Marca marca = null;
         marca = (Marca) tableView.getSelectionModel().getSelectedItem();
         if (marca == null) {
@@ -152,7 +152,13 @@ public class ListarMarcaController {
         marcaDao.deleteMarca(marca);
         showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
                 "Marca deletada com sucesso!");
-        tableView.getItems().remove(marca);
+        reloadTableView();
+    }
+
+    private void reloadTableView () throws SQLException {
+        List<Marca> marcas = marcaDao.selectAllMarcas();
+        ObservableList<Marca> observableList = FXCollections.observableArrayList(marcas);
+        tableView.setItems(observableList);
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {

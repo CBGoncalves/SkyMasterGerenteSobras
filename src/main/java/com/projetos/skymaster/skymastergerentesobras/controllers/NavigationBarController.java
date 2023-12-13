@@ -297,6 +297,26 @@ public class NavigationBarController {
         }
     }
 
+    public void handleListarReposicoes(ActionEvent event) {
+        try {
+            Stage stageAtual = (Stage) menuBar.getScene().getWindow();
+            stageAtual.close();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/registro/ListarReposicoes.fxml"));
+            Parent root = loader.load();
+
+            Stage listarReposicoes = new Stage();
+            listarReposicoes.setTitle("Reposições");
+            listarReposicoes.setScene(new Scene(root));
+            listarReposicoes.setResizable(false);
+            listarReposicoes.getIcons().add(icon);
+            listarReposicoes.show();
+
+        } catch (IOException e) {
+
+        }
+    }
+
     public void handleGerarRelatorio(ActionEvent event) {
         try {
             Stage stageAtual = (Stage) menuBar.getScene().getWindow();
@@ -326,4 +346,6 @@ public class NavigationBarController {
         UsuarioItem.setVisible(false);
         TipoItem.setVisible(false);
     }
+
+
 }

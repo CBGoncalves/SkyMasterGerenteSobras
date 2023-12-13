@@ -16,6 +16,7 @@ public class Registro {
     private String nomeObra;
     private String nomeUsuario;
     private LocalDate data;
+    private boolean reporSaida;
 
     public int getCodRegistro() {
         return codRegistro;
@@ -112,5 +113,13 @@ public class Registro {
 
     public void setData(LocalDate data) {
         this.data = data;
+    }
+
+    public boolean getReporSaida() {
+        return reporSaida;
+    }
+
+    public void setReporSaida(boolean reporSaida) {
+        this.reporSaida = reporSaida;
     }
 }

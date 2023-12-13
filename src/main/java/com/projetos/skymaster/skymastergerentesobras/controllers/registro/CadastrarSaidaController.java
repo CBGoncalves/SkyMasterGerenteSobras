@@ -90,6 +90,14 @@ public class CadastrarSaidaController {
             e.printStackTrace();
         }
 
+        campoRepor.setOnAction(event -> {
+            try {
+                handleCheckBoxAction(event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         btnRegistrar.setOnAction(event -> {
             try {
                 handleRegistrarButtonAction(event);
@@ -111,6 +119,14 @@ public class CadastrarSaidaController {
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    public void handleCheckBoxAction(ActionEvent event) throws IOException{
+        if (campoRepor.isSelected()){
+            campoNotaFiscal.setDisable(true);
+        } else if (!campoRepor.isSelected()) {
+            campoNotaFiscal.setDisable(false);
+        }
     }
 
     public void handleRegistrarButtonAction(ActionEvent event) throws SQLException {
@@ -151,10 +167,12 @@ public class CadastrarSaidaController {
                     "Digite a quantidade da entrada!");
             return;
         }
-        if (numNotaSaida.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, owner, "Falha no Cadastro!",
-                    "Preencha o número da NF!");
-            return;
+        if (!reporSaida) {
+            if (numNotaSaida.isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, owner, "Falha no Cadastro!",
+                        "Preencha o número da NF!");
+                return;
+            }
         }
         if (nomeUsuario.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, owner, "Falha no Cadastro!",

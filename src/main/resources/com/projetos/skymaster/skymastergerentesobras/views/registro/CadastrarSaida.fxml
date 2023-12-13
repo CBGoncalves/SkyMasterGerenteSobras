@@ -52,7 +52,7 @@
 
     <Label text="Repor Saída"
            AnchorPane.leftAnchor="539" AnchorPane.topAnchor="461"/>
-    <CheckBox fx:id="campoRepor"
+    <CheckBox fx:id="campoRepor" onAction="#handleCheckBoxAction"
               AnchorPane.leftAnchor="628" AnchorPane.topAnchor="454"/>
 
     <Button fx:id="btnRegistrar" text="Registrar" onAction="#handleRegistrarButtonAction"

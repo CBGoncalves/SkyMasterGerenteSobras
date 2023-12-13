@@ -35,8 +35,6 @@ public class ListarReposicoesController {
     @FXML
     private TableView<Registro> tableView;
     @FXML
-    private TableColumn<Registro, String> numNotaColumn;
-    @FXML
     private TableColumn<Registro, Integer> qtdColumn;
     @FXML
     private TableColumn<Registro, String> descricaoColumn;
@@ -61,7 +59,6 @@ public class ListarReposicoesController {
 
         registroDao = new RegistroDao();
 
-        numNotaColumn.setCellValueFactory(new PropertyValueFactory<>("numNotaEntrada"));
         qtdColumn.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
         descricaoColumn.setCellValueFactory(new PropertyValueFactory<>("descricaoItem"));
         tipoItemColumn.setCellValueFactory(new PropertyValueFactory<>("nomeTipoItem"));
@@ -156,7 +153,29 @@ public class ListarReposicoesController {
 
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
-    public void handleReporItensButtonAction(ActionEvent event) {
+    public void handleReporItensButtonAction(ActionEvent event) throws SQLException{
+        Registro registro = null;
+        registro = tableView.getSelectionModel().getSelectedItem();
+
+        if (registro == null) {
+            showAlert(Alert.AlertType.WARNING, "Erro na Reposição",
+                    "Você precisa selecionar um registro para fazer a reposição no estoque!");
+            return;
+        }
+
+        int codSaida = registro.getCodRegistro();
+        System.out.println(codSaida);
+
+        RegistroDao registroDao = new RegistroDao();
+        registroDao.updateReposicoes(registro);
+
+        reloadTableView();
+    }
+
+    private void reloadTableView () throws SQLException {
+        List<Registro> registros = registroDao.selectReposicoes();
+        ObservableList<Registro> observableList = FXCollections.observableArrayList(registros);
+        tableView.setItems(observableList);
     }
 
     public void handleTelaInicial(MouseEvent mouseEvent) throws IOException {
@@ -174,5 +193,14 @@ public class ListarReposicoesController {
         telaInicial.setResizable(false);
         telaInicial.getIcons().add(icon);
         telaInicial.show();
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.initOwner(null);
+        alert.show();
     }
 }

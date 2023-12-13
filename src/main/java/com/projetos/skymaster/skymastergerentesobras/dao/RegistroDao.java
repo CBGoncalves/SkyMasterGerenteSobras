@@ -110,7 +110,7 @@ public class RegistroDao {
         List<Registro> list = new ArrayList<>();
         try {
             Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-            PreparedStatement preparedStatement = con.prepareStatement("SELECT registrosaida.numNotaSaida, registrosaida.qtdSaida AS quantidade, item.descricaoItem, tipoitem.nometipoitem, marca.nomeMarca, setor.nomeSetor, obra.nomeobra, usuario.nomeUsuario, registrosaida.dataSaida as data, registrosaida.reporSaida\n" +
+            PreparedStatement preparedStatement = con.prepareStatement("SELECT registrosaida.codSaida, registrosaida.qtdSaida AS quantidade, item.descricaoItem, tipoitem.nometipoitem, marca.nomeMarca, setor.nomeSetor, obra.nomeobra, usuario.nomeUsuario, registrosaida.dataSaida as data, registrosaida.reporSaida\n" +
                     "FROM registrosaida\n" +
                     "INNER JOIN item ON registrosaida.codItem = item.codItem\n" +
                     "INNER JOIN tipoitem ON item.codTipoItem = tipoitem.codTipoItem\n" +
@@ -123,7 +123,7 @@ public class RegistroDao {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 Registro registro = new Registro();
-                registro.setNumNotaEntrada(rs.getString("numNotaSaida"));
+                registro.setCodRegistro(rs.getInt("codSaida"));
                 registro.setQuantidade(rs.getInt("quantidade"));
                 registro.setDescricaoItem(rs.getString("descricaoItem"));
                 registro.setNomeTipoItem(rs.getString("nomeTipoItem"));
@@ -213,6 +213,28 @@ public class RegistroDao {
             printSQLException(e);
             showAlert(Alert.AlertType.ERROR, "Erro na Edição!",
                     "Valores inválidos ou registro já existente!");
+        }
+    }
+
+    public void updateReposicoes(Registro registro) throws SQLException {
+
+        int codSaida = registro.getCodRegistro();
+
+        System.out.println(codSaida);
+
+        try {
+            Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+            PreparedStatement preparedStatement = con.prepareStatement("UPDATE registrosaida SET registrosaida.reporSaida=0 WHERE registrosaida.codSaida=?;");
+            preparedStatement.setInt(1, codSaida);
+            preparedStatement.executeUpdate();
+
+            showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",
+                    "Reposição registrada com sucesso!");
+
+        } catch (SQLException e) {
+            printSQLException(e);
+            showAlert(Alert.AlertType.ERROR, "Erro na Reposição!",
+                    "Valores inválidos ou falha na reposição!");
         }
     }
 

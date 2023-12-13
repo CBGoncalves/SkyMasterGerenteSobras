@@ -168,20 +168,21 @@ public class RegistroDao {
         }
     }
 
-    public void createRegistroSaida(String tipoItem, String descricaoItem, String nomeObra, double qtdSaida, String numNotaSaida, String nomeUsuario) throws SQLException {
+    public void createRegistroSaida(String tipoItem, String descricaoItem, String nomeObra, double qtdSaida, String numNotaSaida, String nomeUsuario, boolean reporSaida) throws SQLException {
         int codUsuario = getCodUsuarioByNome(nomeUsuario);
         int codItem = getCodItem(tipoItem, descricaoItem);
         int codObra = getCodObraByNome(nomeObra);
 
         try {
             Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-            PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO RegistroSaida (numNotaSaida, qtdSaida, dataSaida, codItem, codObra, codUsuario)\n" +
-                    "VALUES (?,?,NOW(),?,?,?);");
+            PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO RegistroSaida (numNotaSaida, qtdSaida, dataSaida, reporSaida, codItem, codObra, codUsuario)\n" +
+                    "VALUES (?,?,NOW(),?,?,?,?);");
             preparedStatement.setString(1, numNotaSaida);
             preparedStatement.setDouble(2, qtdSaida);
-            preparedStatement.setInt(3, codItem);
-            preparedStatement.setInt(4, codObra);
-            preparedStatement.setInt(5, codUsuario);
+            preparedStatement.setBoolean(3, reporSaida);
+            preparedStatement.setInt(4, codItem);
+            preparedStatement.setInt(5, codObra);
+            preparedStatement.setInt(6, codUsuario);
             preparedStatement.executeUpdate();
 
             showAlert(Alert.AlertType.CONFIRMATION, "Sucesso!",

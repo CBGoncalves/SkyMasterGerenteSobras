@@ -14,6 +14,11 @@
     -fx-min-height: 33px;
 }
 
+#campoRepor {
+    -fx-min-width: 33px;
+    -fx-min-height: 33px;
+}
+
 #btnRegistrar, #btnCancelar {
     -fx-background-color: #011A5D;
     -fx-text-fill: #FFFFFF;

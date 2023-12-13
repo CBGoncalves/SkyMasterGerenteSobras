@@ -12,10 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -48,6 +45,8 @@ public class CadastrarSaidaController {
     private TextField campoNotaFiscal;
     @FXML
     private ChoiceBox<Usuario> campoUsuario;
+    @FXML
+    private CheckBox campoRepor;
 
     private ItemDao itemDao;
     private ObraDao obraDao;
@@ -123,6 +122,7 @@ public class CadastrarSaidaController {
         String nomeObra;
         String quantidadeSaida = campoQuantidade.getText();
         String numNotaSaida = campoNotaFiscal.getText();
+        boolean reporSaida = campoRepor.isSelected();
 
         String tipoItem = "";
         String descricaoItem = "";
@@ -178,7 +178,7 @@ public class CadastrarSaidaController {
         double qtdSaida = Double.parseDouble(quantidadeSaida);
 
         RegistroDao registroDao = new RegistroDao();
-        registroDao.createRegistroSaida(tipoItem, descricaoItem, nomeObra, qtdSaida, numNotaSaida, nomeUsuario);
+        registroDao.createRegistroSaida(tipoItem, descricaoItem, nomeObra, qtdSaida, numNotaSaida, nomeUsuario, reporSaida);
     }
 
     public void handleCancelarButtonAction(ActionEvent event) throws IOException {

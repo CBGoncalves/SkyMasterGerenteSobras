@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<AnchorPane fx:controller="com.projetos.skymaster.skymastergerentesobras.controllers.GerarRelatorioController"
+            xmlns:fx="http://javafx.com/fxml"
+            styleClass="root" fx:id="root"
+            prefWidth="1366.0" prefHeight="768.0">
+
+    <stylesheets>
+        <URL value="@../css/gerarRelatorios.css"/>
+    </stylesheets>
+
+    <fx:include fx:id="navFuncionario" source="NavigationBar.fxml"/>
+
+    <ImageView
+            fx:id="logoSky"
+            fitWidth="100" fitHeight="65"
+            preserveRatio="true"
+            AnchorPane.leftAnchor="18" AnchorPane.topAnchor="70"
+            onMouseClicked="#handleTelaInicial">
+        <image>
+            <Image url="@../img/logo_sky.jpg"/>
+        </image>
+    </ImageView>
+
+    <ImageView
+            fx:id="caminhao"
+            fitWidth="189" fitHeight="128"
+            preserveRatio="true"
+            AnchorPane.leftAnchor="338" AnchorPane.topAnchor="269">
+        <image>
+            <Image url="@../img/caminhao.png"/>
+        </image>
+    </ImageView>
+
+    <Button fx:id="btnEntradaSaida" text="Relatório de Entradas e Saídas"
+            AnchorPane.leftAnchor="280" AnchorPane.topAnchor="411"
+            onAction="#handleEntradaSaidaButtonAction"/>
+
+    <ImageView
+            fx:id="reposicao"
+            fitWidth="128" fitHeight="128"
+            preserveRatio="true"
+            AnchorPane.leftAnchor="619" AnchorPane.topAnchor="269">
+        <image>
+            <Image url="@../img/caixa-de-devolucao.png"/>
+        </image>
+    </ImageView>
+
+    <Button fx:id="btnGerarReposicoes" text="Relatório de Reposições Pendentes"
+            AnchorPane.leftAnchor="556" AnchorPane.topAnchor="411"
+            onAction="#handleGerarReposicoesButtonAction"/>
+
+    <ImageView
+            fx:id="estoque"
+            fitWidth="128" fitHeight="128"
+            preserveRatio="true"
+            AnchorPane.leftAnchor="904" AnchorPane.topAnchor="269">
+        <image>
+            <Image url="@../img/estoque.png"/>
+        </image>
+    </ImageView>
+
+    <Button fx:id="btnGerarEstoque" text="Relatório de Estoque Atual"
+            AnchorPane.leftAnchor="861" AnchorPane.topAnchor="411"
+            onAction="#handleGerarEstoqueButtonAction"/>
+
+</AnchorPane>

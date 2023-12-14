@@ -13,7 +13,7 @@
             prefWidth="1366.0" prefHeight="768.0">
 
     <stylesheets>
-        <URL value="@../css/gerarRelatorio.css"/>
+        <URL value="@../css/gerarRelatorioEntradaSaida.css"/>
     </stylesheets>
 
     <fx:include fx:id="navFuncionario" source="NavigationBar.fxml"/>
@@ -43,8 +43,8 @@
     <Button fx:id="btnCancelar" text="Cancelar"
             AnchorPane.leftAnchor="526" AnchorPane.topAnchor="492"
             onAction="#handleCancelarButtonAction"/>
-    <Button fx:id="btnGerar" text="Gerar"
+    <Button fx:id="btnGerarEntradasSaidas" text="Gerar"
             AnchorPane.leftAnchor="695" AnchorPane.topAnchor="492"
-            onAction="#handleGerarButtonAction"/>
+            onAction="#handleGerarEntradasSaidasButtonAction"/>
 
 </AnchorPane>

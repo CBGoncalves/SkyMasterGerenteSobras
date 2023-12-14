@@ -14,7 +14,7 @@
     -fx-min-height: 33px;
 }
 
-#btnGerar, #btnCancelar {
+#btnGerarEntradasSaidas, #btnCancelar {
     -fx-background-color: #011A5D;
     -fx-text-fill: #FFFFFF;
     -fx-min-width: 145px;

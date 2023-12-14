@@ -12,7 +12,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -322,18 +321,18 @@ public class NavigationBarController {
             Stage stageAtual = (Stage) menuBar.getScene().getWindow();
             stageAtual.close();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/GerarRelatorio.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/GerarRelatorios.fxml"));
             Parent root = loader.load();
 
-            Stage gerarRelatorio = new Stage();
-            gerarRelatorio.setTitle("Gerar Relatório");
-            gerarRelatorio.setScene(new Scene(root));
-            gerarRelatorio.setResizable(false);
-            gerarRelatorio.getIcons().add(icon);
-            gerarRelatorio.show();
+            Stage relatorios = new Stage();
+            relatorios.setTitle("Relatórios");
+            relatorios.setScene(new Scene(root));
+            relatorios.setResizable(false);
+            relatorios.getIcons().add(icon);
+            relatorios.show();
 
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
     }
 

@@ -31,7 +31,15 @@ public class GerarRelatorioController {
     @FXML
     private Button btnCancelar;
     @FXML
-    private Button btnGerar;
+    private Button btnGerarEntradasSaidas;
+    @FXML
+    private Button btnGerarEstoque;
+    @FXML
+    private Button btnGerarReposicoes;
+    @FXML
+    private Button btnEntradaSaida;
+
+
 
     public void initialize() throws SQLException {
 
@@ -55,26 +63,55 @@ public class GerarRelatorioController {
         }
     }
 
-    public void handleGerarButtonAction(ActionEvent event) throws IOException, DocumentException, ClassNotFoundException {
-        Window owner = btnGerar.getScene().getWindow();
+    public void handleGerarEntradasSaidasButtonAction(ActionEvent event) throws IOException, DocumentException, ClassNotFoundException {
+        Window owner = btnGerarEntradasSaidas.getScene().getWindow();
+        try {
+            LocalDate de = campoDe.getValue();
+            LocalDate ate = campoAte.getValue();
 
-        String de = campoDe.getValue().toString();
-        String ate = campoAte.getValue().toString();
+            System.out.println(de + " | " + ate);
 
-        System.out.println(de + " | " + ate);
+            if (de.toString().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, owner, "Erro ao Gerar Relatório!",
+                        "Selecione as datas!");
+            }
+            if (ate.toString().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, owner, "Erro ao Gerar Relatório!",
+                        "Selecione as datas!");
+            }
 
-        if (de.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, owner, "Erro ao Gerar Relatório!",
-                    "Selecione as datas!");
+            GerarPdfController gerarPdfController = new GerarPdfController();
+            gerarPdfController.gerarPdfRelatorioEntradasSaidas(de, ate);
+            //gerarPdfController.gerarPdfRelatorioEstoque();
+            //gerarPdfController.gerarPdfRelatorioReposicoes();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, owner, "Erro!",
+                    "Preencha todos os campos e tente novamente!");
         }
-        if (ate.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, owner, "Erro ao Gerar Relatório!",
-                    "Selecione as datas!");
+    }
+
+    public void handleGerarEstoqueButtonAction(ActionEvent event) throws IOException, DocumentException, ClassNotFoundException {
+        Window owner = btnGerarEstoque.getScene().getWindow();
+        try{
+            GerarPdfController gerarPdfController = new GerarPdfController();
+            gerarPdfController.gerarPdfRelatorioEstoque();
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, owner, "Erro!",
+                    "Feche os relatórios abertos e tente novamente!");
         }
 
-        GerarPdfController gerarPdfController = new GerarPdfController();
-        gerarPdfController.gerarPdfRelatorio(de, ate);
+    }
 
+    public void handleGerarReposicoesButtonAction(ActionEvent event) throws IOException, DocumentException, ClassNotFoundException {
+        Window owner = btnGerarReposicoes.getScene().getWindow();
+        try {
+            GerarPdfController gerarPdfController = new GerarPdfController();
+            gerarPdfController.gerarPdfRelatorioReposicoes();
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, owner, "Erro!",
+                    "Feche os relatórios abertos e tente novamente!");
+        }
     }
 
     public void handleCancelarButtonAction(ActionEvent event) throws IOException{
@@ -83,15 +120,15 @@ public class GerarRelatorioController {
 
         Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/TelaInicial.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/GerarRelatorios.fxml"));
         Parent root = loader.load();
 
-        Stage telaInicial = new Stage();
-        telaInicial.setTitle("Tela Inicial");
-        telaInicial.setScene(new Scene(root));
-        telaInicial.setResizable(false);
-        telaInicial.getIcons().add(icon);
-        telaInicial.show();
+        Stage relatorios = new Stage();
+        relatorios.setTitle("Relatórios");
+        relatorios.setScene(new Scene(root));
+        relatorios.setResizable(false);
+        relatorios.getIcons().add(icon);
+        relatorios.show();
     }
 
     private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
@@ -118,5 +155,22 @@ public class GerarRelatorioController {
         telaInicial.setResizable(false);
         telaInicial.getIcons().add(icon);
         telaInicial.show();
+    }
+
+    public void handleEntradaSaidaButtonAction(ActionEvent event) throws IOException {
+        Stage stageRelatorios = (Stage) btnEntradaSaida.getScene().getWindow();
+        stageRelatorios.close();
+
+        Image icon = new Image(getClass().getResourceAsStream("/com/projetos/skymaster/skymastergerentesobras/img/logo_sky_reduzida.jpg"));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/projetos/skymaster/skymastergerentesobras/views/GerarRelatorioEntradasSaidas.fxml"));
+        Parent root = loader.load();
+
+        Stage relatorios = new Stage();
+        relatorios.setTitle("Relatórios");
+        relatorios.setScene(new Scene(root));
+        relatorios.setResizable(false);
+        relatorios.getIcons().add(icon);
+        relatorios.show();
     }
 }
